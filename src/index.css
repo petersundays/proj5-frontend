@@ -1,0 +1,21 @@
+body {
+  --white: #f9f9f9;
+  --light-grey: #c8e4e7;
+  --grey: grey;
+  --green1: #2CCCD3;
+  --green2: #21979c;
+  --green3: #223C4A;
+  --black: #0e1a21;
+  --overlay: #223c4aab;
+
+  --todo: #cffdffd7;
+  --doing: #9cfaffd5;
+  --done: #2cccd4d7;
+
+  --warningMessages: #9C3B21;
+
+  margin: 0;
+  padding: 0;
+  background-color: var(--black);
+  position: relative;
+}

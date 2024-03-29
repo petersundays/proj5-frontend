@@ -1,0 +1,180 @@
+  /* Definições da barra lateral aside */
+  aside {
+    width: 300px;
+    height: 720px;
+    float: left;
+    background-color: var(--light-grey);
+    text-align: center;
+  }
+  /* Logo */
+  .logo img {
+    padding-block: 25px;
+    max-height: 150px;
+    width: auto;
+  }
+  /* Título */
+  aside h3 {
+    text-align: center;
+    color: var(--green3);
+    text-transform: uppercase;
+    font-size: 20px;
+  }
+  /* Campos para adicionar task */
+  #addTask-h3,
+  #categories-h3 {
+    margin-top: 60px;
+  }
+  
+  #taskName,
+  #taskDescription,
+  #search-category,
+  #create-category-name,
+  #usersType,
+  #usersVisibility,
+  #search-input {
+    padding-left: 10px;
+    width: 170px;
+    background-color: var(--white);
+    font-size: 12px;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  #taskName,
+  #search-category,
+  #create-category-name,
+  #usersType,
+  #usersVisibility,
+  #search-input {
+    height: 25px;
+    margin-bottom: 10px;
+    border: var(--green3) 2px solid;
+  }
+  #search-category,
+  #usersType,
+  #usersVisibility,
+  #search-input {
+    margin-top: 20px;
+    width: 180px;
+  }
+  #create-category-name {
+    margin-top: 20px;
+  }
+  #taskDescription {
+    resize: none;
+    padding-top: 10px;
+    height: 200px;
+    line-height: 1.4;
+  }
+  /* Quando a task description não está selecionada mantém a border */
+  #taskDescription:not(:focus) {
+    border: var(--green3) 2px solid;
+  }
+  #taskDescription::placeholder {
+    font-size: 12px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 140px;
+  }
+  /* Definições do botão de adicionar task */
+  #label-priority,
+  #label-startDate,
+  #label-limitDate,
+  #label-category,
+  #label-search-username,
+  #label-user-role,
+  .usersType,
+  .usersVisibility {
+    margin-block: 20px;
+    margin-inline: 60px;
+    text-align: center;
+    color: var(--green3);
+    font-size: 13px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  #label-category {
+    margin-block: 10px;
+  }
+
+  #task-startDate,
+  #task-limitDate,
+  #task-category,
+  #user-type {
+      margin-inline: 20px;
+      text-align: center;
+      margin-block: 10px;
+      width: 180px;
+      height: 25px;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      font-weight: lighter;
+      color: color-mix(in srgb, var(--green3), var(--white) 40%);
+      font-size: 14px;
+      border: var(--green3) 2px solid;
+  }
+  #select-username{
+    margin-inline: 40px;
+    text-align: center;
+    margin-block: 10px;
+    width: 180px;
+    height: 25px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    font-weight: lighter;
+    color: color-mix(in srgb, var(--green3), var(--white) 40%);
+    font-size: 14px;
+    border: var(--green3) 2px solid;
+  }
+  /* Botão add task */
+  #addTask {
+    text-align: center;
+    margin-top: 25px;
+    width: 120px;
+    height: 32px;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: bold;
+    background-color: var(--done);
+    color: var(--green3);
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+    cursor: pointer;
+  }
+  #addTask:hover {
+    background-color: var(--green3);
+    color: var(--green1);
+  }
+
+  #username-title-aside {
+    color: var(--green3);
+    font-size: 20px;
+    font-weight: bold;
+    align-self: center;
+    text-transform: uppercase;
+    margin-top: 100px;
+  }
+
+  #edit-profile-pic-aside {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-top: 100px;
+  }
+
+  .space-between {
+    margin-top: 50px;
+  }
+  .spacebetween-users {
+    height: 25px;
+  }
+
+  #category-buttons-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }

@@ -1,0 +1,25 @@
+footer {
+    width: auto;
+    padding-block: 20px;
+    background-color: var(--black);
+    color: var(--light-grey);
+    text-align: center;
+    padding-block: 20px;
+    font-size: 17px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .footer-project {
+    display: flex;
+    margin-left: 5vw;
+  }
+  .footer-author {
+    display: flex;
+    margin-left: 5vw;
+  }
+  .footer-discipline {
+    display: flex;
+    margin-right: 5vw;
+  }
+ 
+  

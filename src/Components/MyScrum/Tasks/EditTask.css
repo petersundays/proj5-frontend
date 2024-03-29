@@ -1,0 +1,277 @@
+/* Definições do main na task.html */
+.main-task {
+    width: auto;
+    margin: auto;
+    display: flex;
+    justify-content: flex-start;
+    background-image: url("multimedia/bg_02.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  /* Media para ecrãs pequenos */
+  @media (max-width: 768px) {
+    .main-task {
+      flex-direction: column;
+    }
+  }
+  /* Definições da task */
+  .detalhes-task {
+    margin-top: 90px;
+    margin-right: 30px;
+    margin-left: 20px;
+    align-items: center;
+    text-align: center;
+  }
+  #task-bc {
+    text-transform: uppercase;
+  }
+  .main-task #titulo-task,
+  .main-task #descricao-task {
+    margin-left: 80px;
+    width: 500px;
+    padding: 20px;
+    resize: none;
+    background-color: color-mix(in srgb, var(--todo), transparent 75%);
+    color: var(--green3);
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    border-color: var(--green3);
+    border-width: 2px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  .main-task #titulo-task {
+    margin-top: 14px;
+    margin-bottom: 20px;
+    height: 25px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    font-size: 20px;
+    font-weight: 500;
+  }
+  .main-task #descricao-task {
+    height: 260px;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+  .text-task {
+    scrollbar-color: var(--green2) var(--white);
+  }
+  /* Definições dos botões save e cancel */
+  .task-save {
+    justify-content: center;
+    margin-left: 80px;
+    margin-top: 50px;
+    display: flex;
+    gap: 30px;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  #save-button,
+  #cancel-button {
+    width: 150px;
+    height: 45px;
+    padding: 10px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0px 4px 8px var(--grey);
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+  }
+  #save-button:hover,
+  #cancel-button:hover {
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.5);
+    transition: box-shadow 0.8s ease;
+    transform: translateY(4px);
+  }
+  #save-button {
+    background-color: var(--black);
+    color: var(--green1);
+    border-color: var(--todo);
+  }
+  #cancel-button {
+    background-color: var(--todo);
+    color: var(--black);
+    border-color: var(--black);
+  }
+  #warningMessage3 {
+    color: var(--warningMessages);
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 25px;
+    margin-left: 80px;
+    text-align: center;
+  }
+  
+  /* Definições gerais de status e priority */
+  .status-and-priority {
+    margin-left: 100px;
+    margin-top: 90px;
+    width: 520px;
+    height: 500px;
+    background-color: color-mix(in srgb, var(--todo), transparent 75%);
+    border: 2px solid var(--green3);
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+  }
+  .task-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .task-buttons .taskH4 {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    padding-top: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 18px;
+    color: var(--green3);
+  }
+  
+  /* Definições dos botões de status e priority */
+  .task-status .status-buttons,
+  .task-priority .priority-buttons {
+    justify-content: center;
+    display: flex;
+    gap: 35px;
+  }
+  .priority-buttons {
+    margin-bottom: -30px;
+    }
+  
+  #task-category-edit {
+    display: flex;
+    justify-content: center;
+    width: 150px;
+    height: 30px;
+    text-align: center;
+    letter-spacing: 0.5px;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0px 4px 8px var(--grey);
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+    background: transparent;
+    margin-left: 185px;
+  }
+  
+  .status-button,
+  .priority-button {
+    --button-shadow-color: #c3c3c3;
+    width: 90px;
+    height: 35px;
+    padding: 8px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0px 4px 8px var(--button-shadow-color);
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+    background-color: var(--grey);
+    transition: box-shadow 0.3s ease;
+  }
+  .status-button:hover,
+  .priority-button:hover {
+    --button-shadow-color: #808080;
+    transition: box-shadow 0.3s ease;
+  }
+  /* Definições dos botões de status */
+  .status-button {
+    border-color: var(--black);
+    color: var(--green3);
+  }
+  .status-button.todo {
+    --grey: var(--todo);
+  }
+  .status-button.doing {
+    --grey: var(--doing);
+  }
+  .status-button.done {
+    --grey: var(--done);
+  }
+  .status-button:hover {
+    background-color: color-mix(in srgb, var(--grey), var(--black) 25%);
+    transition: background-color 0.3s ease;
+  }
+  /* Definições dos botões de priority */
+  .priority-button {
+    border-color: var(--black);
+    color: var(--green3);
+  }
+  .priority-button.low {
+    --grey: #a8db27;
+  }
+  .priority-button.medium {
+    --grey: #ffd549;
+  }
+  .priority-button.high {
+    --grey: #FF3232;
+    color: color-mix(in srgb, var(--white), var(--white) 95%);
+  }
+  .priority-button:hover {
+    background-color: color-mix(in srgb, var(--grey), white 25%);
+    transition: background-color 0.3s ease;
+  }
+  /* Definições dos botões de status e priority quando selecionados */
+  .status-button.selected, 
+  .priority-button.selected {
+    border-color: #97A7B0 !important;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.5);
+    transition: box-shadow 0.8s ease;
+    transform: translateY(4px);
+  }
+  .status-button.selected {
+      background-color: color-mix(in srgb, var(--green3), white 10%) !important;
+      border-width: 2px !important;
+      color: #8AD6FF !important;
+  }
+  .priority-button.selected {
+    background-color: color-mix(in srgb, var(--grey), white 30%) !important;
+  }
+  .startDateDiv {
+    margin-top: 20px;
+    letter-spacing: 0.5px;
+    font-style: italic;
+    font-size: 15px;
+    font-weight: bold;
+    color: var(--green3);
+    text-align: left;
+  }
+  .startDateDiv {
+    margin-top: 40px;
+    display: flex;
+  }
+  .label-start-date {
+    margin-right: 10px;
+    margin-left: 40px;
+    padding-top: 7px;
+  }
+  .label-end-date {
+    padding-top: 7px;
+  }
+  #startDate-editTask,
+  #endDate-editTask{
+    margin-inline: 20px;
+    text-align: center;
+    width: 100px;
+    height: 25px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    font-weight: lighter;
+    color: color-mix(in srgb, var(--green3), var(--white) 40%);
+    font-size: 10px;
+    border: var(--green3) 2px solid;
+  }
+

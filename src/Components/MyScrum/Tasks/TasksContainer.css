@@ -1,0 +1,60 @@
+
+  /* Definições gerais dos painéis To do, Doing e Done */
+  .panel{
+    flex: 1;
+    height: 500px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    margin-top: 20px;
+    margin-right: 50px;
+    margin-left: 50px;
+    margin-bottom: 40px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 40px;
+    border: 2px solid var(--green3);
+    overflow: auto;
+    /* Estilos da scroll bar */
+    scrollbar-width: thin;
+    scrollbar-color: var(--green2) var(--white);
+  }
+  /* Cor de fundo de cada painel */
+  #todo {
+    background-color: var(--todo);
+  }
+  #doing {
+    background-color: var(--doing);
+  }
+  #done {
+    background-color: var(--done);
+  }
+  /* Estilos da scroll bar (painéis da home.html e da task no task.html) */
+  /* Tamanho da barra */
+  .panel::-webkit-scrollbar,
+  .text-task::-webkit-scrollbar
+  .table-container::-webkit-scrollbar {
+    width: 13px;
+  }
+  /* Cor da barra */
+  .panel::-webkit-scrollbar-thumb,
+  .text-task::-webkit-scrollbar-thumb,
+  .table-container::-webkit-scrollbar-thumb {
+    background-color: var(--green2);
+    border-top-right-radius: 8px;
+  }
+  /* Distância à direita a que a barra fica da border, cor do trilho e arredondamento para fazerstrengths
+  match ao arredondamento do painel (home.html) */
+  .panel::-webkit-scrollbar-track,
+  .text-task::-webkit-scrollbar-track,
+  .table-container::-webkit-scrollbar-track {
+    margin-right: 1px;
+    background-color: var(--white);
+    border-top-right-radius: 9px;
+  }
+  /* Altura da scroll bar */
+  .panel::-webkit-scrollbar,
+  .text-task::-webkit-scrollbar,
+  .table-container::-webkit-scrollbar {
+    height: calc(100% - 2px);
+    padding-right: 1px;
+  }

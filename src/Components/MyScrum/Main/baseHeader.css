@@ -1,0 +1,98 @@
+header {
+    width: auto;
+    height: 80px;
+    color: white;
+    background-color: var(--green3);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  #logo-header {
+    margin-left: 90px;
+  }
+  .nav-menu-left {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    font-size: 20px;
+    color: var(--light-grey);
+    cursor: pointer;
+  }
+  .nav-menu-right {
+    margin-right: 100px;
+  }
+  .nav-menu-left ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    overflow: hidden;
+    background-color: var(--green3);
+  }
+  .nav-menu-left li {
+    display:inline;
+    margin-right: 40px;
+    font-size: 20px;
+    color: var(--light-grey);
+    cursor: pointer;
+  }
+  .nav-menu-left a,
+  .nav-menu-right a {
+    text-decoration: var(--green2);
+    color: var(--light-grey);
+    font-size: 17px;
+  }
+  .nav-menu-left a:hover,
+  .nav-menu-right a:hover {
+    color: var(--doing);
+  }
+  .nav-menu-right {
+    display: flex;
+    align-items: center;
+  }
+  
+  #profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin: 0 30px;
+    object-fit: cover;
+  }
+  
+  /* Username */
+  #username-header {
+    color: var(--light-grey);
+    font-weight: bold;
+  }
+  /* Logout button */
+  .logout-button {
+    margin-right: 50px;
+    margin-left: 100px;
+    background-color: var(--green3);
+    color: var(--light-grey);
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-size: 17px;
+    border-radius: 5px;
+  }
+  .logout-button img {
+    width: 19px;
+    height: 20px;
+    margin-right: 9px;
+  }
+  /* Definições do link de logout no header (default e hover) */
+  .logout-link {
+    margin-right: 100px;
+    color: var(--green2);
+  }
+  .logout-button:hover {
+    background-color: var(--light-grey);
+    color: var(--green2);
+  }
+  .logout-button:hover img {
+    content: url("/multimedia/logout_hover.png");
+  }

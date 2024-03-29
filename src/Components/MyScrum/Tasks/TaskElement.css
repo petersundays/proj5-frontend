@@ -1,0 +1,123 @@
+.erased {
+    opacity: 0.6;
+    border: 2px solid var(--warningMessages);
+  }
+  .task {
+    position: relative;
+    width: 190px;
+    height: 50px; /* tamanho do espaço em que é inserido cada post-it (inclui espaçamento entre post-its) */
+    margin-top: 20px;
+    background-color: var(--grey);
+    margin-top: 30px;
+    margin-bottom: 30px;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    transition: all 0.5s ease-in-out;
+  }
+  /* Esconde o texto da description */
+  .post-it-text {
+    max-height: 0;
+    transition: all 0.5s ease;
+    overflow: hidden;
+  }
+  /* Definições do conteúdo de cada post-it */
+  .post-it {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    text-align: left;
+  }
+  .post-it h3 {
+    font-size: 15px;
+    text-transform: uppercase;
+    padding-left: 13px;
+  }
+  .post-it p {
+    font-size: 0.825rem;
+    padding-inline: 13px;
+    overflow: hidden;
+    opacity: 1;
+    display: -webkit-box; /* Define o display como flexível */
+    -webkit-line-clamp: 6; /* número de linhas que o texto vai mostrar */
+    -webkit-box-orient: vertical;
+    margin: 0;
+  }
+  /* Cores dos post-it de acordo com a prioridade */
+  .task.low {
+    --grey: #a8db27;
+  }
+  .task.medium {
+    --grey: #ffd549;
+  }
+  .task.high {
+    --grey: #FF3232;
+    color: color-mix(in srgb, var(--white), var(--white) 95%);
+  }
+  /* Expansão de cada task para mostrar description e cruz de apagar */
+  /* Dimensão da janela do post-it totalmente expandida */
+  .task:hover {
+    height: 190px;
+    transition: all 0.5s ease-in-out;
+  }
+  /* Faz o texto do post-it aparecer */
+  .task:hover .post-it-text {
+    max-height: 190px;
+    transition: all 0.5s ease;
+  }
+  /* Dragging de cada tarefa */
+  .task.dragging {
+    opacity: 0.5;
+  }
+  .task:hover {
+    background-color: color-mix(in srgb, var(--grey), white 25%);
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s ease;
+  }
+  /* Definições da cruz que apaga a task */
+  /* Não mostra na mini-janela do post-it */
+  .task .apagarButton,
+  .task .permanent-delete-button,
+  .task .restore-button {
+    opacity: 0;
+    transition: all 0.5s ease-in-out;
+  }
+  /* Mostra na mini-janela do post-it */
+  .task:hover .apagarButton,
+  .task:hover .permanent-delete-button, 
+  .task:hover .restore-button {
+    opacity: 1;
+    transition: all 0.5s ease-in-out;
+  }
+  /* Posição do botão apagar */
+  .apagarButton,
+  .permanent-delete-button {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    max-width: 17px;
+    aspect-ratio: 1;
+    cursor: pointer;
+    transition: ease-on 0.01s;
+  }
+  
+  .restore-button {
+    position: absolute;
+    left: 10px;
+    bottom: 8px;
+    max-width: 22px;
+    aspect-ratio: 1;
+    cursor: pointer;
+    transition: ease-on 0.01s;
+  }
+  
+  /* Animação do botão apagar */
+  .apagarButton:hover,
+  .permanent-delete-button:hover,
+  .restore-button:hover {
+    rotate: 360deg;
+    transition: ease 0.01s;
+  }

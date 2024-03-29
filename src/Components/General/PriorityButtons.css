@@ -1,0 +1,54 @@
+/* Botões de priority no home.html */
+.task-buttons-home {
+    display: flex;
+    flex-direction: column;
+  }
+  .priority-buttons-home {
+    justify-content: center;
+    display: flex;
+    gap: 8px;
+  }
+  .priority-button-home {
+    --button-shadow-color: #c3c3c3;
+    margin-top: 15px;
+    margin-bottom: 30px;
+    width: 56px;
+    height: 30px;
+    text-align: center;
+    text-transform: uppercase;
+    text-rendering: optimizeLegibility;
+    font-size: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0px 4px 8px var(--button-shadow-color);
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+    background-color: var(--grey);
+    transition: box-shadow 0.3s ease;
+  }
+  .priority-button-home {
+    border-color: var(--black);
+    color: var(--green3);
+  }
+  .priority-button-home.low {
+    --grey: #a8db27;
+  }
+  .priority-button-home.medium {
+    --grey: #ffd549;
+  }
+  .priority-button-home.high {
+    --grey: #FF3232;
+    color: color-mix(in srgb, var(--white), var(--white) 95%);
+  }  
+  .priority-button-home:hover {
+    background-color: color-mix(in srgb, var(--grey), white 25%);
+    transition: background-color 0.3s ease;
+  }
+  .priority-button-home.selected {
+    background-color: color-mix(in srgb, var(--grey), white 10%) !important;
+    border-width: 2px !important;
+    border-color: #97A7B0 !important;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.5);
+    transition: box-shadow 0.8s ease;
+    transform: translateY(4px);
+  }

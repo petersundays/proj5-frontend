@@ -1,0 +1,130 @@
+.container-table {
+  margin-top: 20px;
+  margin-left: 30px;
+  overflow: auto;
+  width: 98%;
+  max-height: 89%;
+  border-top-left-radius: 7px; 
+  border-top-right-radius: 7px;
+  position: relative;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-header {
+  text-align: center;
+  background-color: var(--green3);
+  color: var(--white);
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.table-body {
+  font-size: 14px;
+}
+
+.table-body tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.table th,
+.table td {
+  padding: 8px; /* Reduced padding */
+  text-align: center;
+  border-bottom: 1px solid var(--green2);
+  white-space: nowrap; /* Prevent text wrapping */
+  overflow: hidden; /* Hide overflow content */
+  text-overflow: ellipsis; /* Show ellipsis for overflow text */
+}
+
+.table th:first-child img,
+.table td:first-child img {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  object-fit: cover; 
+}
+
+.table th:nth-child(1),
+.table td:nth-child(1) {
+  width: 8%; /* Adjusted width */
+}
+
+.table th:nth-child(2),
+.table td:nth-child(2) {
+  width: 15%; /* Adjusted width */
+}
+
+.table th:nth-child(3),
+.table td:nth-child(3) {
+  width: 14%; /* Adjusted width */
+}
+
+.table th:nth-child(4),
+.table td:nth-child(4) {
+  width: 14%; /* Adjusted width */
+}
+
+.table th:nth-child(5),
+.table td:nth-child(5) {
+  width: 16%; /* Adjusted width */
+}
+
+.table th:nth-child(6),
+.table td:nth-child(6) {
+  width: 13%; /* Adjusted width */
+}
+
+.table th:nth-child(7),
+.table td:nth-child(7) {
+  width: 13%; /* Adjusted width */
+}
+
+.table th:nth-child(8),
+.table td:nth-child(8) {
+  width: 7%; /* Adjusted width */
+}
+
+.table-body tr:hover {
+  background-color: #ddd;
+}
+
+#deleteUser,
+#visibleUser {
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 0;
+  background-color: var(--doing);
+  color: var(--green3);
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+  cursor: pointer;
+}
+
+#deleteUser:hover,
+#visibleUser:hover {
+  background-color: var(--green2);
+  color: var(--green1);
+}
+
+#deleteUser {
+  margin-left: 2px;
+}
+
+.buttons-container {
+  display: flex;
+}
+
+#hide-show {
+  height: 25px;
+  width: 25px;
+  cursor: pointer;
+  margin: 3px;
+}

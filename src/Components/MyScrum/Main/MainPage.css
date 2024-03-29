@@ -1,0 +1,27 @@
+main {
+  width: calc(100% - 300px);
+  height: 720px;
+  background-color: var(--white);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+/* Definições do main home.html */
+.titulo-main,
+.titulo-retro {
+  flex: 1;
+}
+.main-home,
+.sci-title {
+  text-align: center;
+  color: var(--green3);
+  text-transform: uppercase;
+  font-size: 20px;
+  padding-top: 40px;
+  padding-bottom: 10px;
+}
+.container {
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--white);
+  }

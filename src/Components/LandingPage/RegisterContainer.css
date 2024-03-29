@@ -1,0 +1,92 @@
+/* Definições do painel de registo */
+.center-container-register {
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+  .registerPanel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 3;
+    padding: 20px;
+    font-size: 15px;
+    text-align: center;
+    color: var(--green3);
+    background-color: color-mix(in srgb, var(--light-grey), transparent 10%);
+    border-radius: 10px;
+    max-width: 500px;
+    width: 100%;
+    max-height: 500px;
+    height: 100%;
+  }
+  #logo-register {
+    margin-bottom: 20px;
+    max-height: 150px;
+    width: auto;
+  }
+  .inputs-register {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .left-inputs,
+  .right-inputs {
+      width: 200px;
+      margin: 0 10px;
+  }
+  
+  .inputRegister-fields {
+    margin-bottom: 15px;
+    padding: 5px;
+    width: 100%;
+    height: 25px;
+    border: var(--green3) 1px solid;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+  }
+  .submitButton {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  #registerButton-register {
+    width: 150px;
+    height: 32px;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: bold;
+    background-color: var(--done);
+    color: var(--green3);
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+    cursor: pointer;
+  }
+  #registerButton-register:hover {
+    background-color: var(--green3);
+    color: var(--green1);
+  }
+  .registerPanel ::placeholder {
+    color: var(--green2);
+  }
+  .registerPanel :focus::placeholder {
+    opacity: 0.5;
+  }
+  .registerPanel input[type="text"] {
+    color: var(--green3);
+  }
+  #backToLoginLink {
+    margin-top: 20px;
+    color: var(--green3);
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  #warningMessage4 {
+    color: var(--warningMessages);
+    font-size: 14px;
+    margin-top: 20px;
+  }

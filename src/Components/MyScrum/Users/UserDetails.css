@@ -1,0 +1,96 @@
+#select_role {
+    border: var(--green3) 2px solid;
+    padding: 5px;
+    width: 53%;
+    border-top-right-radius: 7px;
+    border-top-left-radius: 7px;
+  }
+  
+  .users-details-container{
+    display: flex;
+    width: 25%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .details-editProfile {
+    display: flex;
+    margin-top: 40px;
+    align-items: flex-start;
+    flex-direction: column;
+    width: 75%;
+    height: 95%;
+  }
+  .editUser-fields {
+    margin-bottom: 15px;
+    padding: 5px;
+    width: 50%;
+    height: 15px;
+    background-color: var(--white);
+    font-size: 12px;
+    border: var(--green3) 2px solid;
+    border-top-right-radius: 7px;
+    border-top-left-radius: 7px;
+  }
+  
+  .editUser-fields:focus::placeholder {
+    opacity: 0.5;
+  }
+  
+  .buttons-container {
+    display: flex;
+  }
+
+#label-user-details{
+  margin-top: 10px;
+  text-align: center;
+  color: var(--green3);
+  font-size: 10px;
+}
+#label-title {
+  text-align: center;
+  color: var(--green3);
+  font-size: 20px; 
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+  
+  #profile-clicked-pic {
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+   
+    object-fit: cover;
+  }
+
+  #edit-user-form{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 4%;
+  }
+
+  .hidden {
+    display: none;
+  }
+  
+  #save_edit {
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: bold;
+    background-color: var(--done);
+    color: var(--green3);
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+    cursor: pointer;
+  }
+  
+  #save_edit:hover {
+    background-color: var(--green3);
+    color: var(--green1);
+  }
