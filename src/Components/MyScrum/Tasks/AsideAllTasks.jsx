@@ -131,7 +131,7 @@ function AsideAllTasks() {
     }
 
     const getErasedTasks = async () => {
-        const getErasedTasks = `http://localhost:8080/proj5_backend_war_exploded/rest/users/erasedTasks`;
+        const getErasedTasks = `http://localhost:8080/proj5_backend_war_exploded/rest/tasks/erased`;
         try {
             const response = await fetch(getErasedTasks, {
                 method: 'GET',
@@ -156,7 +156,7 @@ function AsideAllTasks() {
 
     const eraseAllTasks = async () => {
 
-        const eraseAll = `http://localhost:8080/proj5_backend_war_exploded/rest/users/eraseAllTasks`;
+        const eraseAll = `http://localhost:8080/proj5_backend_war_exploded/rest/tasks/erase-all`;
         try {
             const response = await fetch(eraseAll, {
                 method: 'PUT',
@@ -183,7 +183,7 @@ function AsideAllTasks() {
     const eraseAllTasksFromUser = async () => {
 
 
-        const eraseAllFromUser = `http://localhost:8080/proj5_backend_war_exploded/rest/users/eraseAllTasks/${selectedUser}`;
+        const eraseAllFromUser = `http://localhost:8080/proj5_backend_war_exploded/rest/tasks/erase-all/${selectedUser}`;
         try {
             const response = await fetch(eraseAllFromUser, {
                 method: 'PUT',
@@ -212,7 +212,7 @@ function AsideAllTasks() {
     const restoreAllTasks = async () => {
 
         if (selectedUser === 'erased') {
-            const restoreAll = `http://localhost:8080/proj5_backend_war_exploded/rest/users/restoreAllTasks`;
+            const restoreAll = `http://localhost:8080/proj5_backend_war_exploded/rest/tasks/restore-all`;
             try {
                 const response = await fetch(restoreAll, {
                     method: 'PUT',
@@ -243,7 +243,7 @@ function AsideAllTasks() {
             showErrorMessage('Please select a user to restore tasks.');
             return;
         } else {
-            const eraseAll = `http://localhost:8080/proj5_backend_war_exploded/rest/users/restoreAllTasksFromUser/${selectedUser}`;
+            const eraseAll = `http://localhost:8080/proj5_backend_war_exploded/rest/tasks/restore-all/${selectedUser}`;
             try {
                 const response = await fetch(eraseAll, {
                     method: 'PUT',
@@ -271,7 +271,7 @@ function AsideAllTasks() {
 
     const deleteAllTasksFromUser = async () => {
 
-        const deleteAllFromUser = `http://localhost:8080/proj5_backend_war_exploded/rest/users/${selectedUser}/tasks`; 
+        const deleteAllFromUser = `http://localhost:8080/proj5_backend_war_exploded/rest/tasks/${selectedUser}`; 
         try {
             const response = await fetch(deleteAllFromUser, {
                 method: 'DELETE',
@@ -297,7 +297,7 @@ function AsideAllTasks() {
    
     const deleteAllErasedTasks = async () => {
 
-        const deleteAll = `http://localhost:8080/proj5_backend_war_exploded/rest/users/tasks`;
+        const deleteAll = `http://localhost:8080/proj5_backend_war_exploded/rest/tasks/`;
         try {
             const response = await fetch(deleteAll, {
                 method: 'DELETE',

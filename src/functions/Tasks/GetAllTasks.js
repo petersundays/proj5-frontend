@@ -1,7 +1,7 @@
 
 export const getAllTasks = async (token) => {
 
-        const getTasks = "http://localhost:8080/proj5_backend_war_exploded/rest/users/tasks";
+        const getTasks = "http://localhost:8080/proj5_backend_war_exploded/rest/tasks";
         try {
             const response = await fetch(getTasks, {
                 method: 'GET',

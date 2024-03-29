@@ -1,7 +1,7 @@
 
 export async function getTasksFromUser(username, token) {
 
-    const getTasksFromUser = `http://localhost:8080/proj5_backend_war_exploded/rest/users/${username}/tasks`;
+    const getTasksFromUser = `http://localhost:8080/proj5_backend_war_exploded/rest/tasks/${username}`;
     try {
         const response = await fetch(getTasksFromUser, {
             method: 'GET',

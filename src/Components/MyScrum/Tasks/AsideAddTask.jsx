@@ -147,7 +147,7 @@ function AsideAddTask() {
         category: category,
       };
 
-      const addTask = `http://localhost:8080/proj5_backend_war_exploded/rest/users/${username}/addTask`;
+      const addTask = `http://localhost:8080/proj5_backend_war_exploded/rest/tasks`;
       try {
         const response = await fetch(addTask, {
           method: "POST",
@@ -155,6 +155,7 @@ function AsideAddTask() {
             "Content-Type": "application/json",
             Accept: "*/*",
             token: token,
+            username: username,
           },
           body: JSON.stringify(task),
         });

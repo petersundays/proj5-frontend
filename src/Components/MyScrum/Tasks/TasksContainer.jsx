@@ -71,7 +71,7 @@ function TasksContainer() {
 
         const task = tasksToRender.find(task => task.id === taskId);
        
-        const updateStatus = `http://localhost:8080/proj5_backend_war_exploded/rest/users/tasks/${taskId}/${newStateId}`;
+        const updateStatus = `http://localhost:8080/proj5_backend_war_exploded/rest/tasks/${taskId}/${newStateId}`;
 
         try {
             const response = await fetch(updateStatus, {
@@ -84,7 +84,7 @@ function TasksContainer() {
             });
 
             if (response.ok) {
-                showSuccessMessage('Estado da tarefa atualizado: ' + task.title);
+                showSuccessMessage('Task state updated: ' + task.title);
             } else {
                 const error = await response.text();
                 showErrorMessage('Error: ' + error);
@@ -96,12 +96,14 @@ function TasksContainer() {
 
         const updateMyTasks = await getTasksFromUser(userLoggedIn, token);
         const updateAllTasks = await getAllTasks(token);
-        const category = task.category.name;
-        const updateCategoryTasks = await getTasksByCategory(category, token);
-        
         MyTasksStore.setState({ tasks: updateMyTasks });
         AllTasksStore.setState({ tasks: updateAllTasks });
-        TasksByCategoryStore.setState({ tasks: updateCategoryTasks });
+
+        if (typeOfUser === PRODUCT_OWNER) {
+            const category = task.category.name;
+            const updateCategoryTasks = await getTasksByCategory(category, token);
+            TasksByCategoryStore.setState({ tasks: updateCategoryTasks });
+        }
 
     }
 
