@@ -33,33 +33,25 @@ export function UserDetails () {
     const [photoUrl, setPhotoUrl] = useState('');
     const [role, setRole] = useState(undefined);
     
-    // const userToEdit = AllUsersStore.getState().userToEdit;
-   
-/*     const userToEditData = {
-        username: userToEdit.username,
-        email: userToEdit.email,
-        firstName: userToEdit.firstName,
-        lastName: userToEdit.lastName,
-        phone: userToEdit.phone,
-        photoURL: userToEdit.photoURL,
-        typeOfUser: userToEdit.typeOfUser
-    } */
 
     useEffect(() => {
-        getUserToEdit();
+    getUserToEdit(usernameToEdit);
+}, [usernameToEdit]); 
 
+    useEffect(() => {
         const unsubscribe = AllUsersStore.subscribe((state) => {
-            setDisplayContainer(state.displayContainer);
-            setNewUser(state.newUser);
-          });
-        
+            const usernameToEdit = state.userToEdit;
+            getUserToEdit(usernameToEdit);
+        });
         return () => unsubscribe();
-    }, [userToEdit]);
+    }, []);
 
-    const getUserToEdit = async () => {
+    const getUserToEdit = async (usernameToEdit) => {
         const user = await getUserByUsername(token, usernameToEdit);
         setUserToEdit(user);
     }
+
+
 
     const handleInputs = (e) => {
         const { name, value } = e.target;
@@ -328,8 +320,8 @@ export function UserDetails () {
                 <input type="text" className="editUser-fields" id="phone-editUser" name="phone" placeholder={newUser ? "Phone" : userToEdit.phone} onChange={handleInputs} value={phone} readOnly={!newUser && userLoggedType !== PRODUCT_OWNER}/>
                 <label className="labels-edit-profile" id="photo url-editProfile-label">Photo URL</label>
                 <input type="url" className="editUser-fields" id="photo url-editUser" name="photo url" placeholder={newUser ? "photoUrl" : userToEdit.photoURL} onChange={handlePhotoUrlAndInputChange} value={newUser ? "" : userToEdit.photoURL} readOnly={!newUser && userLoggedType !== PRODUCT_OWNER} />
-                <select id="select_role" name="role" onChange={handleInputs} value={role} readOnly={!newUser && userLoggedType !== PRODUCT_OWNER}>
-                    <option disabled="" value="undefined" id="user_role_loaded" ></option>
+                <select id="select_role" name="role" onChange={handleInputs} preventDefault="" readOnly={!newUser && userLoggedType !== PRODUCT_OWNER}>
+                    {/* <option disabled="" value="undefined" id="user_role_loaded" ></option> */}
                     <option value="100" id="Developer" selected={userToEdit.typeOfUser === DEVELOPER} readOnly={!newUser && userLoggedType !== PRODUCT_OWNER}>Developer</option>
                     <option value="200" id="Scrum Master" selected={userToEdit.typeOfUser === SCRUM_MASTER} readOnly={!newUser && userLoggedType !== PRODUCT_OWNER}>Scrum Master</option>
                     <option value="300" id="Product Owner" selected={userToEdit.typeOfUser === PRODUCT_OWNER} readOnly={!newUser && userLoggedType !== PRODUCT_OWNER}>Product Owner</option>
