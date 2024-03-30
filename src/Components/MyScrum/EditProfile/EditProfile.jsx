@@ -112,7 +112,7 @@ function EditProfile() {
             inputsThatChanged();
             
             const token = UserStore.getState().user.token;
-            const updateRequest = `http://localhost:8080/proj5_backend_war_exploded/rest/users/update-profile/${user.username}`;
+            const updateRequest = `http://localhost:8080/proj5_backend_war_exploded/rest/users/${user.username}`;
             try {
                 const response = await fetch(updateRequest, {
                     method: 'PUT',
@@ -148,7 +148,7 @@ function EditProfile() {
         const newPassword = passwordData.profile_newPassword;
         const confirmPassword = passwordData.profile_confirmPassword;
 
-        const updateRequest = `http://localhost:8080/proj5_backend_war_exploded/rest/users/update/${user.username}/password`;
+        const updateRequest = `http://localhost:8080/proj5_backend_war_exploded/rest/users/${user.username}/password`;
 
         if (newPassword !== confirmPassword) {
             showErrorMessage('Passwords do not match');
