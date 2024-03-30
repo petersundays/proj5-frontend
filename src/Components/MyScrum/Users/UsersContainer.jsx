@@ -120,7 +120,7 @@ function UsersContainer() {
        
         const username = user.username;
 
-        const changeVisibility = `http://localhost:8080/proj5_backend_war_exploded/rest/users/update/${username}/visibility`;
+        const changeVisibility = `http://localhost:8080/proj5_backend_war_exploded/rest/users/${username}/visibility`;
 
         try {
             const response = await fetch(changeVisibility, {

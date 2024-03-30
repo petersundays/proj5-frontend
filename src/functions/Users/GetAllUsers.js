@@ -1,7 +1,7 @@
 import { AllUsersStore } from "../../Stores/AllUsersStore";
 export const getAllUsers = async ( token ) => {
 
-    const getUsers = "http://localhost:8080/proj5_backend_war_exploded/rest/users/all";
+    const getUsers = "http://localhost:8080/proj5_backend_war_exploded/rest/users";
     try {
         const response = await fetch(getUsers, {
             method: 'GET',
