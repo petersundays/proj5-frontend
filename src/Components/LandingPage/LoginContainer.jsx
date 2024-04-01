@@ -45,9 +45,14 @@ function LoginContainer() {
 
             if (response.ok) {
                 const user = await response.json();
-                UserStore.setState({ user: user });       
-                showSuccessMessage('Welcome to Agile Scrum!');
-                navigate('/my-scrum');
+                UserStore.setState({ user: user });
+                if (user.confirmed === false) {
+                    navigate('/account-not-confirmed');
+                    return;
+                } else {
+                    showSuccessMessage('Welcome to Agile Scrum!');
+                    navigate('/my-scrum');
+                }
             } else if (response.status === 401) {
                 showErrorMessage("Invalid credentials, please try again.");
             } else {

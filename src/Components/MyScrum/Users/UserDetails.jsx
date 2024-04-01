@@ -35,8 +35,11 @@ export function UserDetails () {
     
 
     useEffect(() => {
-    getUserToEdit(usernameToEdit);
-}, [usernameToEdit]); 
+        console.log('displayContainer DETAILS', AllUsersStore.getState().displayContainer);
+        const classes = document.getElementsByClassName('users-details-container')
+        console.log('classes', classes[0].classList);
+        getUserToEdit(usernameToEdit);
+}, [usernameToEdit, displayContainer]); 
 
     useEffect(() => {
         const unsubscribe = AllUsersStore.subscribe((state) => {
@@ -194,6 +197,8 @@ export function UserDetails () {
             setDisplayContainer(false);
             AllUsersStore.getState().setDisplayContainer(false);
         }
+        const classes = document.getElementsByClassName('users-details-container')
+        console.log('classes', classes[0].classList);
     }
 
 
