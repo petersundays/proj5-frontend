@@ -32,26 +32,30 @@ function registerContainer() {
     }
 
     const handleRegisterSubmit = async (event) => {
-        
+        event.preventDefault();
+
         let backToLoginLink = false;
-            event.preventDefault();
-            const newUser = {
-                username: input.username,
-                password: input.password,
-                email: input.email,
-                firstName: input.firstName,
-                lastName: input.lastName,
-                phone: input.phone,
-                photoURL: input.photoURL
-            };
+        
+        const newUser = {
+            username: input.username,
+            password: input.password,
+            email: input.email,
+            firstName: input.firstName,
+            lastName: input.lastName,
+            phone: input.phone,
+            photoURL: input.photoURL
+        };
 
         try {
-            await RegisterUser(event, newUser);
-            backToLoginLink = true;
+            const registred = await RegisterUser(event, newUser);
+            if (registred){
+                backToLoginLink = true;
+            }
         } catch (error) {
             console.error('Error:', error);
             showErrorMessage("Something went wrong. Please try again later.");
         }
+
         if (backToLoginLink) {
             navigate('/');
         }

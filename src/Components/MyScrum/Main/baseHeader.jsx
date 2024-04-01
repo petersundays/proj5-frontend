@@ -35,7 +35,7 @@ function BaseHeader() {
     const PRODUCT_OWNER = 300;
 
     const typeOfUser = UserStore.getState().user.typeOfUser;
-
+    const userConfirmed = UserStore.getState().user.confirmed;  
 
     const navigate = useNavigate();
 
@@ -83,16 +83,25 @@ function BaseHeader() {
                 <img src='/multimedia/logo-scrum-05.png' id="logo-header" height="50" draggable="false"/>
                 <nav className="nav-menu-left">
                     <ul id="menu">
-                        <li id="nav-home"><Link to="/my-scrum" draggable="false">My Tasks</Link></li>
-                        <li id="nav-all-tasks"><Link to="/my-scrum/all-tasks" draggable="false">All Tasks</Link></li>
-                        <li id="nav-categories"><Link to="/my-scrum/users" draggable="false" hidden={typeOfUser === DEVELOPER}>Users</Link></li>
-                        <li id="nav-categories"><Link to="/my-scrum/categories" draggable="false" hidden={typeOfUser !== PRODUCT_OWNER}>Categories</Link></li>
-
+                        {userConfirmed === true ?
+                            <>
+                            <li id="nav-home"><Link to="/my-scrum" draggable="false">My Tasks</Link></li>
+                            <li id="nav-all-tasks"><Link to="/my-scrum/all-tasks" draggable="false">All Tasks</Link></li>
+                            <li id="nav-categories"><Link to="/my-scrum/users" draggable="false" hidden={typeOfUser === DEVELOPER}>Users</Link></li>
+                            <li id="nav-categories"><Link to="/my-scrum/categories" draggable="false" hidden={typeOfUser !== PRODUCT_OWNER}>Categories</Link></li>
+                            </>
+                        :
+                            <li></li>
+                        }
                     </ul>
                 </nav>
                 <div className="nav-menu-right">
                     <img src={photoURL} id="profile-pic" draggable="false"/>
-                    <Link to="/my-scrum/edit-profile" id="first-name-label" draggable="false" >{firstName}</Link>
+                    {userConfirmed === true ? 
+                        <Link to="/my-scrum/edit-profile" id="first-name-label" draggable="false" >{firstName}</Link>
+                    :
+                        <p id="first-name-label" draggable="false" >{firstName}</p>
+                    }
                     <button className="logout-button" id="logout-button-header" onClick={handleLogout}>
                         <img src="/multimedia/logout.png" alt="Logout Icon" draggable="false"/>
                         Logout
