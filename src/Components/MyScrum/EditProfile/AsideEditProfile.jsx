@@ -3,10 +3,13 @@ import React, { useEffect, useState } from 'react';
 import { UserStore } from '../../../Stores/UserStore';
 import { GetAtributedTasks } from '../../../functions/Tasks/GetAtributedTasks';
 import { getAtributedTasksByState } from '../../../functions/Tasks/GetAtrributedTasksByState';
+import { useParams } from 'react-router-dom';
 
 
 function AsideEditProfile({ photoURL }) {
-    const username = UserStore.getState().user.username;
+
+    const {username: profileUsername} = useParams();
+    const usernameLogged = UserStore.getState().user.username;
     const token = UserStore.getState().user.token;
 
     const TODO = 100;
@@ -19,22 +22,22 @@ function AsideEditProfile({ photoURL }) {
     const [doneTasks, setDoneTasks] = useState(0);
 
     const handleAtributedTasks = async () => {
-        const tasks = await GetAtributedTasks(username, token);
+        const tasks = await GetAtributedTasks(profileUsername, token);
         setAtributedTasks(tasks);
     }
     
     const handleToDoTasks = async () => {
-        const tasks = await getAtributedTasksByState(token, username, TODO);
+        const tasks = await getAtributedTasksByState(token, profileUsername, TODO);
         setToDoTasks(tasks);
     }
 
     const handleDoingTasks = async () => {
-        const tasks = await getAtributedTasksByState(token, username, DOING);
+        const tasks = await getAtributedTasksByState(token, profileUsername, DOING);
         setDoingTasks(tasks);
     }
 
     const handleDoneTasks = async () => {
-        const tasks = await getAtributedTasksByState(token, username, DONE);
+        const tasks = await getAtributedTasksByState(token, profileUsername, DONE);
         setDoneTasks(tasks);
     }
 
@@ -46,16 +49,22 @@ function AsideEditProfile({ photoURL }) {
     }
     , [atributedTasks, toDoTasks, doingTasks, doneTasks]);
 
+    const isProfileOwner = () => {
+        return usernameLogged === profileUsername;
+    };
 
     return ( 
 
         <>
             <aside>
+                {isProfileOwner() ?
                 <div className='language-div'>
                     <img src='../../../../multimedia/flag-portugal.png' alt="Portuguese" />
                     <img src='../../../../multimedia/flag-uk.png' alt="English" />
                 </div>
-                <h3 id="username-title-aside">{username}</h3>
+                : 
+                null}
+                <h3 id="username-title-aside">{profileUsername}</h3>
                 <img src={photoURL} id="edit-profile-pic-aside" draggable="false" alt="Profile Pic" />
                 <div id="edit-profile-tasks-aside">
                     <h3 id="profile-h3-aside">Tasks</h3>

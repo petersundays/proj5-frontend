@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import './EditProfile.css';
 import { UserStore } from '../../../Stores/UserStore';
 import AsideEditProfile from './AsideEditProfile';
@@ -7,14 +7,27 @@ import Button from '../../General/Button';
 import { showErrorMessage } from '../../../functions/Messages/ErrorMessage';
 import { showSuccessMessage } from '../../../functions/Messages/SuccessMessage';
 import { showInfoMessage } from '../../../functions/Messages/InfoMessage';
+import { getUserByUsername } from '../../../functions/Users/GetUserByUsername';
 
 function EditProfile() {
-    
-    const user = UserStore.getState().user;
     const navigate = useNavigate();
+    const {username} = useParams();
+    const token = UserStore.getState().user.token;
+    const userLogged = UserStore.getState().user;
 
-    const [formData, setFormData] = useState({ ...user }); 
-    const [photoURL, setPhotoURL] = useState(user.photoURL);
+    const [formData, setFormData] = useState({}); 
+    const [photoURL, setPhotoURL] = useState("");
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            const fetchedUser = await getUserByUsername(token, username);
+            setFormData({ ...fetchedUser });
+            setPhotoURL(fetchedUser.photoURL);
+        };
+        fetchUser();
+    }, []);
+
+   
 
     const [displayPasswordModal, setDisplayPasswordModal] = useState(false);
     const [passwordData, setPasswordData] = useState({
@@ -73,32 +86,35 @@ function EditProfile() {
 
     const areInputsUnchanged = () => {
         return (
-            formData.firstName === user.firstName &&
-            formData.lastName === user.lastName &&
-            formData.email === user.email &&
-            formData.phone === user.phone &&
-            formData.photoURL === user.photoURL
+            formData.firstName === userLogged.firstName &&
+            formData.lastName === userLogged.lastName &&
+            formData.email === userLogged.email &&
+            formData.phone === userLogged.phone &&
+            formData.photoURL === userLogged.photoURL
         );
     };
 
     const inputsThatChanged = () => {
-        if (formData.firstName === user.firstName) {
+        if (formData.firstName === userLogged.firstName) {
             formData.firstName = null;
         }
-        if (formData.lastName === user.lastName) {
+        if (formData.lastName === userLogged.lastName) {
             formData.lastName = null;
         }
-        if (formData.email === user.email) {
+        if (formData.email === userLogged.email) {
             formData.email = null;
         }
-        if (formData.phone === user.phone) {
+        if (formData.phone === userLogged.phone) {
             formData.phone = null;
         }
-        if (formData.photoURL === user.photoURL) {
+        if (formData.photoURL === userLogged.photoURL) {
             formData.photoURL = null;
         }
     };
 
+    const isProfileOwner = () => {
+        return username === userLogged.username;
+    };
           
 
     const handleSubmitProfileChanges = async (e) => {
@@ -195,19 +211,19 @@ function EditProfile() {
             <AsideEditProfile photoURL={photoURL} />
          
             <main className="main-editProfile">
-                <form className="editProfile-register" id="edit-profile-form" onSubmit={handleSubmitProfileChanges}>
-                    <div className="editProfile-fieldsContainer">
-                        <div className="left-fields-editProfile">
+                <form className="editProfile-register" id="edit-profile-form" onSubmit={handleSubmitProfileChanges} >
+                    <div className="editProfile-fieldsContainer" >
+                        <div className="left-fields-editProfile" >
                             <label className="labels-edit-profile" id="email-editProfile-label">Email</label>
-                            <input type="email" className="editProfile-fields" id="email-editProfile" name="email" placeholder={user.email} onChange={handleInputChange} />
+                            <input type="email" className="editProfile-fields" id="email-editProfile" name="email" placeholder={formData.email} onChange={handleInputChange} readOnly={ isProfileOwner === true ? false : true }/>
                             <label className="labels-edit-profile" id="firstName-editProfile-label">First Name</label>
-                            <input type="text" className="editProfile-fields" id="firstName-editProfile" name="firstName" placeholder={user.firstName} onChange={handleInputChange} />
+                            <input type="text" className="editProfile-fields" id="firstName-editProfile" name="firstName" placeholder={formData.firstName} onChange={handleInputChange} readOnly={ isProfileOwner === true ? false : true }/>
                             <label className="labels-edit-profile" id="lastName-editProfile-label">Last Name</label>
-                            <input type="text" className="editProfile-fields" id="lastName-editProfile" name="lastName" placeholder={user.lastName} onChange={handleInputChange} />
+                            <input type="text" className="editProfile-fields" id="lastName-editProfile" name="lastName" placeholder={formData.lastName} onChange={handleInputChange} readOnly={ isProfileOwner === true ? false : true } />
                             <label className="labels-edit-profile" id="phone-editProfile-label">Phone</label>
-                            <input type="text" className="editProfile-fields" id="phone-editProfile" name="phone" placeholder={user.phone} onChange={handleInputChange} />
+                            <input type="text" className="editProfile-fields" id="phone-editProfile" name="phone" placeholder={formData.phone} onChange={handleInputChange} readOnly={ isProfileOwner === true ? false : true } />
                             <label className="labels-edit-profile" id="photoURL-editProfile-label">Profile Picture</label>
-                            <input type="url" className="editProfile-fields" id="photoURL-editProfile" name="photoURL" placeholder={user.photoURL} onChange={handleInputChangeAndPhotoURLChange} />
+                            <input type="url" className="editProfile-fields" id="photoURL-editProfile" name="photoURL" placeholder={formData.photoURL} onChange={handleInputChangeAndPhotoURLChange} readOnly={ isProfileOwner === true ? false : true } />
                         </div>
                     </div>
                     <div className="editProfile-Buttons">

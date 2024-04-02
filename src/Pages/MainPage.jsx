@@ -25,7 +25,7 @@ function MainPage() {
             <div className="container" id="container">
                 <Routes>
                     <Route path="/" element={< MyTasksPage />} />
-                    <Route path="edit-profile" element={<EditProfilePage />} />
+                    <Route path="profile/:username" element={<EditProfilePage />} />
                     <Route path="categories" element={<CategoriesPage />} />
                     <Route path="all-tasks" element={<AllTasksPage />} />
                     <Route path="users" element={<UsersPage />} />
