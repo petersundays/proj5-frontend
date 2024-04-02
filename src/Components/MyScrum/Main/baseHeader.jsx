@@ -15,6 +15,7 @@ import { TasksByUserStore } from '../../../Stores/TasksByUserStore';
 
 function BaseHeader() {
     const token = UserStore.getState().user.token;
+    const username = UserStore.getState().user.username;
 
     let firstName = "";
     if (UserStore.getState().user.firstName !== undefined) {
@@ -143,7 +144,7 @@ function BaseHeader() {
                 <div className="nav-menu-right">
                     <img src={photoURL} id="profile-pic" draggable="false"/>
                     {userConfirmed === true ? 
-                        <Link to="/my-scrum/edit-profile" id="first-name-label" draggable="false" >{firstName}</Link>
+                        <Link to={`/my-scrum/profile/${username}`} id="first-name-label" draggable="false" >{firstName}</Link>
                     :
                         <p id="first-name-label" draggable="false" >{firstName}</p>
                     }
