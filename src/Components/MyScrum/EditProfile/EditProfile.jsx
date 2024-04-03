@@ -14,18 +14,26 @@ function EditProfile() {
     const {username} = useParams();
     const token = UserStore.getState().user.token;
     const userLogged = UserStore.getState().user;
+    const typeOfUser = UserStore.getState().user.typeOfUser;
+    
+    const DEVELOPER = 100;
+    const SCRUM_MASTER = 200;
+    const PRODUCT_OWNER = 300;
+
 
     const [formData, setFormData] = useState({}); 
     const [photoURL, setPhotoURL] = useState("");
+    const [fetchedUser, setFetchedUser] = useState({});
 
     useEffect(() => {
         const fetchUser = async () => {
             const fetchedUser = await getUserByUsername(token, username);
             setFormData({ ...fetchedUser });
             setPhotoURL(fetchedUser.photoURL);
+            setFetchedUser(fetchedUser);
         };
         fetchUser();
-    }, []);
+    }, [username]);
 
    
 
@@ -86,11 +94,11 @@ function EditProfile() {
 
     const areInputsUnchanged = () => {
         return (
-            formData.firstName === userLogged.firstName &&
-            formData.lastName === userLogged.lastName &&
-            formData.email === userLogged.email &&
-            formData.phone === userLogged.phone &&
-            formData.photoURL === userLogged.photoURL
+            formData.firstName === fetchedUser.firstName &&
+            formData.lastName === fetchedUser.lastName &&
+            formData.email === fetchedUser.email &&
+            formData.phone === fetchedUser.phone &&
+            formData.photoURL === fetchedUser.photoURL
         );
     };
 
@@ -113,7 +121,11 @@ function EditProfile() {
     };
 
     const isProfileOwner = () => {
-        return username === userLogged.username;
+        return username === userLogged.username || typeOfUser === PRODUCT_OWNER;
+    };
+
+    const isOwnerOrUnchanged = () => {
+        return isProfileOwner() || areInputsUnchanged();
     };
           
 
@@ -214,22 +226,22 @@ function EditProfile() {
                 <form className="editProfile-register" id="edit-profile-form" onSubmit={handleSubmitProfileChanges} >
                     <div className="editProfile-fieldsContainer" >
                         <div className="left-fields-editProfile" >
-                            <label className="labels-edit-profile" id="email-editProfile-label">Email</label>
-                            <input type="email" className="editProfile-fields" id="email-editProfile" name="email" placeholder={formData.email} onChange={handleInputChange} readOnly={ isProfileOwner === true ? false : true }/>
+                            <label className="labels-edit-profile" id="email-editProfile-label" hidden={ isProfileOwner() === true ? false : true } >Email</label>
+                            <input type="email" className="editProfile-fields" id="email-editProfile" name="email" placeholder={fetchedUser.email} onChange={handleInputChange} readOnly={ isProfileOwner() === true ? false : true } hidden={ isProfileOwner() === true ? false : true }/>
                             <label className="labels-edit-profile" id="firstName-editProfile-label">First Name</label>
-                            <input type="text" className="editProfile-fields" id="firstName-editProfile" name="firstName" placeholder={formData.firstName} onChange={handleInputChange} readOnly={ isProfileOwner === true ? false : true }/>
+                            <input type="text" className="editProfile-fields" id="firstName-editProfile" name="firstName" placeholder={fetchedUser.firstName} onChange={handleInputChange} readOnly={ isProfileOwner() === true ? false : true }/>
                             <label className="labels-edit-profile" id="lastName-editProfile-label">Last Name</label>
-                            <input type="text" className="editProfile-fields" id="lastName-editProfile" name="lastName" placeholder={formData.lastName} onChange={handleInputChange} readOnly={ isProfileOwner === true ? false : true } />
-                            <label className="labels-edit-profile" id="phone-editProfile-label">Phone</label>
-                            <input type="text" className="editProfile-fields" id="phone-editProfile" name="phone" placeholder={formData.phone} onChange={handleInputChange} readOnly={ isProfileOwner === true ? false : true } />
-                            <label className="labels-edit-profile" id="photoURL-editProfile-label">Profile Picture</label>
-                            <input type="url" className="editProfile-fields" id="photoURL-editProfile" name="photoURL" placeholder={formData.photoURL} onChange={handleInputChangeAndPhotoURLChange} readOnly={ isProfileOwner === true ? false : true } />
+                            <input type="text" className="editProfile-fields" id="lastName-editProfile" name="lastName" placeholder={fetchedUser.lastName} onChange={handleInputChange} readOnly={ isProfileOwner() === true ? false : true } />
+                            <label className="labels-edit-profile" id="phone-editProfile-label" hidden={ isProfileOwner() === true ? false : true }>Phone</label>
+                            <input type="text" className="editProfile-fields" id="phone-editProfile" name="phone" placeholder={fetchedUser.phone} onChange={handleInputChange} readOnly={ isProfileOwner() === true ? false : true } hidden={ isProfileOwner() === true ? false : true }/>
+                            <label className="labels-edit-profile" id="photoURL-editProfile-label" hidden={ isProfileOwner() === true ? false : true }>Profile Picture</label>
+                            <input type="url" className="editProfile-fields" id="photoURL-editProfile" name="photoURL" placeholder={fetchedUser.photoURL} onChange={handleInputChangeAndPhotoURLChange} readOnly={ isProfileOwner() === true ? false : true } hidden={ isProfileOwner() === true ? false : true }/>
                         </div>
                     </div>
                     <div className="editProfile-Buttons">
-                        <Button text="Change Password" onClick={handlePasswordModal}/>
-                        <Button text="Cancel" onClick={handleCancelEdition} />
-                        <Button type="submit" text="Save" disabled={areInputsUnchanged()} />
+                        <Button text="Change Password" onClick={handlePasswordModal} hidden={ username === userLogged.username ? false : true }/>
+                        <Button text="Cancel" onClick={handleCancelEdition} hidden={ isProfileOwner() === true ? false : true } />
+                        <Button type="submit" text="Save" hidden={isProfileOwner() === true ? false : true} />
                     </div>
                 </form>
             </main>

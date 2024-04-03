@@ -47,7 +47,7 @@ function AsideEditProfile({ photoURL }) {
         handleDoingTasks();
         handleDoneTasks();
     }
-    , [atributedTasks, toDoTasks, doingTasks, doneTasks]);
+    , [profileUsername, atributedTasks, toDoTasks, doingTasks, doneTasks]);
 
     const isProfileOwner = () => {
         return usernameLogged === profileUsername;
