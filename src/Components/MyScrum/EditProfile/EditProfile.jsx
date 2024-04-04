@@ -140,7 +140,7 @@ function EditProfile() {
             inputsThatChanged();
             
             const token = UserStore.getState().user.token;
-            const updateRequest = `http://localhost:8080/proj5_backend_war_exploded/rest/users/${user.username}`;
+            const updateRequest = `http://localhost:8080/proj5_backend_war_exploded/rest/users/${fetchedUser.username}`;
             try {
                 const response = await fetch(updateRequest, {
                     method: 'PUT',
@@ -154,7 +154,9 @@ function EditProfile() {
 
                 if (response.ok) {
                     const user = await response.json();
-                    UserStore.getState().updateUser(formData);
+                    if (fetchedUser.username === userLogged.username) {
+                        UserStore.getState().updateUser(formData);
+                    }
                     showSuccessMessage('Profile updated successfully');
                     navigate('/my-scrum');
                 } else {
@@ -244,6 +246,7 @@ function EditProfile() {
                         <Button type="submit" text="Save" hidden={isProfileOwner() === true ? false : true} />
                     </div>
                 </form>
+                {userLogged.username !== username && (
                 <div className='profile-conversation'>
                     <div className='profile-chat'></div>
                     <div className='profile-message'>
@@ -251,6 +254,7 @@ function EditProfile() {
                         <img src='../../../../multimedia/send.png'/>
                     </div>
                 </div>
+                )}
             </main>
 
             <div id="passwordModal" className={`modal ${displayPasswordModal ? 'modalShown' : ''}`}>                
