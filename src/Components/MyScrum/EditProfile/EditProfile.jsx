@@ -244,6 +244,13 @@ function EditProfile() {
                         <Button type="submit" text="Save" hidden={isProfileOwner() === true ? false : true} />
                     </div>
                 </form>
+                <div className='profile-conversation'>
+                    <div className='profile-chat'></div>
+                    <div className='profile-message'>
+                        <textarea className="profile-type-message"/>
+                        <img src='../../../../multimedia/send.png'/>
+                    </div>
+                </div>
             </main>
 
             <div id="passwordModal" className={`modal ${displayPasswordModal ? 'modalShown' : ''}`}>                
