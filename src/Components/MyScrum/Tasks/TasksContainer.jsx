@@ -71,7 +71,7 @@ function TasksContainer() {
 
         const task = tasksToRender.find(task => task.id === taskId);
        
-        const updateStatus = `http://localhost:8080/proj5_backend_war_exploded/rest/tasks/${taskId}/${newStateId}`;
+        const updateStatus = `http://localhost:8080/backend_proj5_war_exploded/rest/tasks/${taskId}/${newStateId}`;
 
         try {
             const response = await fetch(updateStatus, {

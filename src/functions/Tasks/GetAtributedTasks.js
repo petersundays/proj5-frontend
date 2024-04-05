@@ -1,6 +1,6 @@
 export async function GetAtributedTasks(username, token) {
    
-        const atributedTasks = `http://localhost:8080/proj5_backend_war_exploded/rest/tasks/${username}/atributed`;
+        const atributedTasks = `http://localhost:8080/backend_proj5_war_exploded/rest/tasks/${username}/atributed`;
         try {
             const response = await fetch(atributedTasks, {
                 method: "GET",

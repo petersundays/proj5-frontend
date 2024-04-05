@@ -6,7 +6,7 @@ export const RegisterUser = async (event, newUser) => {
 
     event.preventDefault();
 
-    const registerRequest = "http://localhost:8080/proj5_backend_war_exploded/rest/users";
+    const registerRequest = "http://localhost:8080/backend_proj5_war_exploded/rest/users";
 
         try {
             const response = await fetch(registerRequest, {

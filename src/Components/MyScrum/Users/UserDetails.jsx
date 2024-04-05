@@ -270,7 +270,7 @@ export function UserDetails () {
             const updatedUser = inputsThatChanged();
             
             const token = UserStore.getState().user.token;
-            const updateRequest = `http://localhost:8080/proj5_backend_war_exploded/rest/users/${userToEdit.username}`;
+            const updateRequest = `http://localhost:8080/backend_proj5_war_exploded/rest/users/${userToEdit.username}`;
             try {
                 const response = await fetch(updateRequest, {
                     method: 'PUT',

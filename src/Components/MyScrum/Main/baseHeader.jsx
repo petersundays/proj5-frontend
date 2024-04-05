@@ -49,7 +49,7 @@ function BaseHeader() {
 
     const confirmUser = async () => {
 /* O PATH ESTÁ DESTA FORMA EM VEZ DE 'confirm-registration', PQ NO FRONTEND DAVA SEMPRE ERRO APESAR DE FUNCIONAR NO POSTMAN */
-        const confirmUser = "http://localhost:8080/proj5_backend_war_exploded/rest/users/email/confirm";
+        const confirmUser = "http://localhost:8080/backend_proj5_war_exploded/rest/users/email/confirm";
         try {
             const response = await fetch(confirmUser, {
                 method: "PUT",
@@ -95,7 +95,7 @@ function BaseHeader() {
             navigate('/');
             return;
         } else {
-            const logout = "http://localhost:8080/proj5_backend_war_exploded/rest/users/logout";
+            const logout = "http://localhost:8080/backend_proj5_war_exploded/rest/users/logout";
             try {
                 const response = await fetch(logout, {
                     method: "POST",

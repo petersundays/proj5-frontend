@@ -31,7 +31,7 @@ function LoginContainer() {
     const handleLoginSubmit = async (event) => {
         event.preventDefault();
 
-        const loginRequest = "http://localhost:8080/proj5_backend_war_exploded/rest/users/login";
+        const loginRequest = "http://localhost:8080/backend_proj5_war_exploded/rest/users/login";
 
         try {
             const response = await fetch(loginRequest, {

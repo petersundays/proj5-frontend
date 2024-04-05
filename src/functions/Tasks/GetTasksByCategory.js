@@ -3,7 +3,7 @@ import { TasksByCategoryStore } from "../../Stores/TasksByCategoryStore";
 
 export const getTasksByCategory = async ( selectedCategory , token ) => {
  
-    const tasksByCategory = `http://localhost:8080/proj5_backend_war_exploded/rest/categories/${selectedCategory}`;
+    const tasksByCategory = `http://localhost:8080/backend_proj5_war_exploded/rest/categories/${selectedCategory}`;
     try {
         const response = await fetch(tasksByCategory, {
             method: 'GET',

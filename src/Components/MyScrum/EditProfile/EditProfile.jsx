@@ -14,6 +14,7 @@ function EditProfile() {
     const {username} = useParams();
     const token = UserStore.getState().user.token;
     const userLogged = UserStore.getState().user;
+    const usernameLogged = userLogged.username;
     const typeOfUser = UserStore.getState().user.typeOfUser;
     
     const DEVELOPER = 100;
@@ -28,9 +29,13 @@ function EditProfile() {
     useEffect(() => {
         const fetchUser = async () => {
             const fetchedUser = await getUserByUsername(token, username);
+            if (fetchedUser.username !== username) {
+                navigate(`/my-scrum/profile/${usernameLogged}`);
+            } else {
             setFormData({ ...fetchedUser });
             setPhotoURL(fetchedUser.photoURL);
             setFetchedUser(fetchedUser);
+            }
         };
         fetchUser();
     }, [username]);
@@ -140,7 +145,7 @@ function EditProfile() {
             inputsThatChanged();
             
             const token = UserStore.getState().user.token;
-            const updateRequest = `http://localhost:8080/proj5_backend_war_exploded/rest/users/${fetchedUser.username}`;
+            const updateRequest = `http://localhost:8080/backend_proj5_war_exploded/rest/users/${fetchedUser.username}`;
             try {
                 const response = await fetch(updateRequest, {
                     method: 'PUT',
@@ -178,7 +183,7 @@ function EditProfile() {
         const newPassword = passwordData.profile_newPassword;
         const confirmPassword = passwordData.profile_confirmPassword;
 
-        const updateRequest = `http://localhost:8080/proj5_backend_war_exploded/rest/users/${user.username}/password`;
+        const updateRequest = `http://localhost:8080/backend_proj5_war_exploded/rest/users/${fetchedUser.username}/password`;
 
         if (newPassword !== confirmPassword) {
             showErrorMessage('Passwords do not match');

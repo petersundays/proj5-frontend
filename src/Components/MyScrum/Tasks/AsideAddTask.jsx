@@ -102,7 +102,7 @@ function AsideAddTask() {
 
   const getAllCategories = async () => {
     const categoriesRequest =
-      "http://localhost:8080/proj5_backend_war_exploded/rest/categories";
+      "http://localhost:8080/backend_proj5_war_exploded/rest/categories";
     try {
       const response = await fetch(categoriesRequest, {
         method: "GET",
@@ -147,7 +147,7 @@ function AsideAddTask() {
         category: category,
       };
 
-      const addTask = `http://localhost:8080/proj5_backend_war_exploded/rest/tasks`;
+      const addTask = `http://localhost:8080/backend_proj5_war_exploded/rest/tasks`;
       try {
         const response = await fetch(addTask, {
           method: "POST",

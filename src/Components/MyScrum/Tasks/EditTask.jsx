@@ -177,7 +177,7 @@ function EditTask() {
                 category: {name: taskCategory},
             };
 
-            const editRequest = `http://localhost:8080/proj5_backend_war_exploded/rest/tasks/${taskId}`;
+            const editRequest = `http://localhost:8080/backend_proj5_war_exploded/rest/tasks/${taskId}`;
 
             try {
                 const response = await fetch(editRequest, {
