@@ -136,7 +136,7 @@ const handleCategorySearch = (e) => {
 
     const handleCategoryEdition = async () => {
 
-        const editCategory = `http://localhost:8080/proj5_backend_war_exploded/rest/categories/${selectedCategory}`;
+        const editCategory = `http://localhost:8080/backend_proj5_war_exploded/rest/categories/${selectedCategory}`;
         try {
             const response = await fetch(editCategory, {
                 method: 'PUT',
@@ -171,7 +171,7 @@ const handleCategorySearch = (e) => {
             name: newCategory
         }
 
-        const newCategoryUrl = "http://localhost:8080/proj5_backend_war_exploded/rest/categories";
+        const newCategoryUrl = "http://localhost:8080/backend_proj5_war_exploded/rest/categories";
 
         try {
             const response = await fetch(newCategoryUrl, {
@@ -204,7 +204,7 @@ const handleCategorySearch = (e) => {
             name: selectedCategory
         }
 
-        const deleteCategoryUrl = `http://localhost:8080/proj5_backend_war_exploded/rest/categories/${category.name}`;
+        const deleteCategoryUrl = `http://localhost:8080/backend_proj5_war_exploded/rest/categories/${category.name}`;
 
         try {
             const response = await fetch(deleteCategoryUrl, {

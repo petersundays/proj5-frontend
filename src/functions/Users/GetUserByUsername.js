@@ -2,7 +2,7 @@ import { showErrorMessage } from "../Messages/ErrorMessage";
 
 export const getUserByUsername = async ( token , username ) => {
 
-    const getUser = `http://localhost:8080/proj5_backend_war_exploded/rest/users/${username}`;
+    const getUser = `http://localhost:8080/backend_proj5_war_exploded/rest/users/${username}`;
     try {
         const response = await fetch(getUser, {
             method: 'GET',

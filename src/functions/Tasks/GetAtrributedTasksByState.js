@@ -1,6 +1,6 @@
 export async function getAtributedTasksByState(token, username, stateId) {
     
-    const atributedTasks = `http://localhost:8080/proj5_backend_war_exploded/rest/tasks/${username}/${stateId}`;
+    const atributedTasks = `http://localhost:8080/backend_proj5_war_exploded/rest/tasks/${username}/${stateId}`;
     try {
         const response = await fetch(atributedTasks, {
             method: "GET",

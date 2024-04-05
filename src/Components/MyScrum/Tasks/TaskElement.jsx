@@ -113,7 +113,7 @@ const TaskElement = ({ task }) => {
     const eraseTask = async (restore) => {
 
         
-        const eraseRequest = `http://localhost:8080/proj5_backend_war_exploded/rest/tasks/erase-restore/${task.id}`;
+        const eraseRequest = `http://localhost:8080/backend_proj5_war_exploded/rest/tasks/erase-restore/${task.id}`;
         try {
             const response = await fetch(eraseRequest, {
                 method: 'PUT',
@@ -153,7 +153,7 @@ const TaskElement = ({ task }) => {
 
     const deleteTask = async () => {
 
-        const deleteRequest = `http://localhost:8080/proj5_backend_war_exploded/rest/tasks/${task.id}`;
+        const deleteRequest = `http://localhost:8080/backend_proj5_war_exploded/rest/tasks/${task.id}`;
         try {
             const response = await fetch(deleteRequest, {
                 method: 'DELETE',
