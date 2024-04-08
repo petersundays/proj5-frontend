@@ -1,0 +1,5 @@
+{
+    "greeting":"Bonjour {username}!",
+    "time":"Il est {t, time, short}",
+    "date":"La date est {d, date}"
+    }
