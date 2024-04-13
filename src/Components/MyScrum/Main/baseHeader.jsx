@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import './baseHeader.css';
 import { UserStore } from '../../../Stores/UserStore';
 import { MyTasksStore } from '../../../Stores/MyTasksStore';
@@ -16,6 +16,10 @@ function BaseHeader() {
 
     const { email } = useParams();
     const isConfirmAccountPage = email !== undefined;
+
+    const location = useLocation();   
+    const isRecoverPasswordPage = location.pathname === "/recover-password"; 
+    const isResetPasswordPage = location.pathname === "/reset-password";
 
     const token = UserStore.getState().user.token;
     const username = UserStore.getState().user.username;
@@ -92,7 +96,7 @@ function BaseHeader() {
         <>
             <header>
                 <img src='/multimedia/logo-scrum-05.png' id="logo-header" height="50" draggable="false"/>
-                {!isConfirmAccountPage && (
+                {(!isConfirmAccountPage && !isRecoverPasswordPage) && (
                     <>
                         <nav className="nav-menu-left">
                             <ul id="menu">

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import { UserStore } from '../../Stores/UserStore';
 import Button from '../General/Button';
@@ -101,6 +101,9 @@ function LoginContainer() {
                 <form id="login-form" className="input-login">
                     <input type="text" id="username" name="username" placeholder="username" value={input.username} onChange={handleInputChange} required />
                     <input type="password" id="password" name="password" placeholder="password" value={input.password} onChange={handleInputChange} required />
+                    <div className="forgot-password">
+                        <Link to="/recover-password" className='recover-password'>Forgot your password?</Link>
+                    </div>
                     <Button onClick={handleLoginSubmit} width="150px" text="Confirm"></Button>
                     <Button id="registerButton" onClick={handleRegisterClick} width="150px" text="Register"></Button>
                 </form>
