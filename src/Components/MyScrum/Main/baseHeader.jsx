@@ -102,7 +102,7 @@ function BaseHeader() {
                                     <>
                                     <li id="nav-home"><Link to="/my-scrum" draggable="false">My Tasks</Link></li>
                                     <li id="nav-all-tasks"><Link to="/my-scrum/all-tasks" draggable="false">All Tasks</Link></li>
-                                    <li id="nav-categories"><Link to="/my-scrum/users" draggable="false" hidden={typeOfUser === DEVELOPER}>Users</Link></li>
+                                    <li id="nav-users"><Link to="/my-scrum/users" draggable="false">Users</Link></li>
                                     <li id="nav-categories"><Link to="/my-scrum/categories" draggable="false" hidden={typeOfUser !== PRODUCT_OWNER}>Categories</Link></li>
                                     </>
                                 :

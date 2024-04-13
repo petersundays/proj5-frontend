@@ -1,11 +1,10 @@
-import Button from '../../General/Button';
 import './UsersContainer.css';
 import { useEffect, useState } from 'react';
 import { UserStore } from '../../../Stores/UserStore';
+import { useNavigate } from "react-router-dom";
 import { AllUsersStore } from '../../../Stores/AllUsersStore';
 import { ConfirmationModal } from '../../General/ConfirmationModal';
 import { UserDetails } from './UserDetails';
-import { getTasksFromUser } from '../../../functions/Tasks/GetTasksFromUser.js';
 import { showSuccessMessage } from '../../../functions/Messages/SuccessMessage.js';
 import { showErrorMessage } from '../../../functions/Messages/ErrorMessage.js';
 import { getUserByUsername } from '../../../functions/Users/GetUserByUsername.js';
@@ -13,7 +12,10 @@ import { getUserByUsername } from '../../../functions/Users/GetUserByUsername.js
 
 function UsersContainer() {
 
+    const navigate = useNavigate();
+
     const token = UserStore.getState().user.token;
+    const userLoggedType = UserStore.getState().user.typeOfUser;
 
     const DEVELOPER = 100;
     const SCRUM_MASTER = 200;
@@ -47,11 +49,7 @@ function UsersContainer() {
 
 
     const handleRowClick = (username) => {
-        setNewUser(false);
-        AllUsersStore.getState().setNewUser(false);
-        AllUsersStore.getState().setUserToEdit(username);
-        setDisplayContainer(true);
-        AllUsersStore.getState().setDisplayContainer(true);
+        navigate(`/my-scrum/profile/${username}`);
     }
     
 
@@ -102,15 +100,19 @@ function UsersContainer() {
                 <td>{user.username}</td>
                 <td>{user.firstName}</td>
                 <td>{user.lastName}</td>
-                <td>{user.email}</td>
-                <td>{convertTypeOfUserToString(user.typeOfUser)}</td>
-                <td>{user.numberOfTasks}</td>
-                <td>
-                    <div className='buttons-container'>
-                        <img src={user.visible ? '../../../multimedia/hide.png' : '../../../multimedia/show.png' } id="hide-show" onClick={(e) => handleVisibilityButton(e, user)} />
-                        <img src='../../../multimedia/deleteUser.png' id="hide-show" hidden={user.visible ? true : false} onClick={(e) => handleDisplayConfirmationModal(e, user)} />
-                    </div>
-                </td>
+                { userLoggedType === PRODUCT_OWNER && 
+                <>
+                    <td>{user.email}</td>
+                    <td>{convertTypeOfUserToString(user.typeOfUser)}</td>
+                    <td>{user.numberOfTasks}</td>
+                    <td>
+                        <div className='buttons-container'>
+                            <img src={user.visible ? '../../../multimedia/hide.png' : '../../../multimedia/show.png' } id="hide-show" onClick={(e) => handleVisibilityButton(e, user)} />
+                            <img src='../../../multimedia/deleteUser.png' id="hide-show" hidden={user.visible ? true : false} onClick={(e) => handleDisplayConfirmationModal(e, user)} />
+                        </div>
+                    </td>
+                </>
+                }
             </tr>
         ));
     }
@@ -140,7 +142,7 @@ function UsersContainer() {
                 AllUsersStore.getState().setDisplayContainer(false);
 
             } else {
-                console.log('Error', response.status);
+                console.log('Error', response.text());
                 showErrorMessage("Failed to change user's visibility. Please try again later.");
             }
         }
@@ -194,10 +196,14 @@ function UsersContainer() {
                                     <th>Username</th>
                                     <th>First Name</th>
                                     <th>Last Name</th>
-                                    <th>Email</th>
-                                    <th>Role</th>
-                                    <th>#Tasks</th>
-                                    <th>Actions</th>
+                                    { userLoggedType === PRODUCT_OWNER &&
+                                        <>
+                                            <th>Email</th>
+                                            <th>Role</th>
+                                            <th>#Tasks</th>
+                                            <th>Actions</th>
+                                        </>
+                                    }
                                 </tr>
                             </thead>
                             <tbody className="table-body">
