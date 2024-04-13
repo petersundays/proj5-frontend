@@ -4,26 +4,27 @@ import { useParams } from "react-router-dom";
 import { showErrorMessage } from "../../functions/Messages/ErrorMessage";
 import { useNavigate } from "react-router-dom";
 import { showSuccessMessage } from "../../functions/Messages/SuccessMessage";
+import { showInfoMessage } from "../../functions/Messages/InfoMessage";
 import Button from '../General/Button';
+import { SetPassword } from '../../functions/Users/SetPassword';
 
 export function ConfirmAccount() {
 
     const navigate = useNavigate();
 
-    const {email} = useParams();
+    const {validationToken} = useParams();
 
     const [passwordDefined, setPasswordDefined] = useState(false);
 
     useEffect(() => {
         const checkPasswordDefined = async () => {
-            await isPasswordDefined();
-            if (passwordDefined) {
-                console.log('############******* Password defined', passwordDefined);
-/*                 handleConfirmAccount();
- */            }
+            const defined = await isPasswordDefined();
+            if (defined) {
+                handleConfirmAccount();
+            } 
         };
         checkPasswordDefined();
-    }, [passwordDefined]);
+    }, []);
 
     const isPasswordDefined = async () => {
 
@@ -35,21 +36,22 @@ export function ConfirmAccount() {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': '*/*',
-                    email: email
+                    validationToken: validationToken
                 }
             });
-
             if (response.ok) {
-                const defined = await response.json();
-                console.log('Password Boolean:', defined);
-                setPasswordDefined(defined);
+                const data = await response.json();
+                setPasswordDefined(data);
+                return data;
             } else {
-                console.log('Error checking if password is defined');
+                console.log(response);
                 setPasswordDefined(false);
+                return false;
             }
         } catch (error) {
             console.log(error);
             setPasswordDefined(false);
+            return false;
         }
     };
 
@@ -65,7 +67,7 @@ export function ConfirmAccount() {
 
     const handlePasswordSetAndConfirmAccount = async (e) => {
         e.preventDefault();
-        if (await setNewPassword(e)) {
+        if (await SetPassword(e, validationToken, passwordData.password, passwordData.confirmPassword)) {
             if (await confirmUser()) {
                 showSuccessMessage('Account confirmed');
                 navigate('/');
@@ -77,49 +79,14 @@ export function ConfirmAccount() {
         if (await confirmUser()) {
             showSuccessMessage('Account confirmed');
             navigate('/');
-        } else {
-            showErrorMessage('Error confirming account, please contact support');
         }
     };
 
     const handleCancelButton = () => {
-        console.log('Cancel');
         navigate('/');
     };
 
-    const setNewPassword = async (e) => {
-        e.preventDefault();
-
-        if (passwordData.password !== passwordData.confirmPassword) {
-            showErrorMessage('Passwords do not match');
-            return;
-        }
-       
-        const changePassword = "http://localhost:8080/backend_proj5_war_exploded/rest/users/set/password";
-
-        try {
-            const response = await fetch(changePassword, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': '*/*',
-                    email: email,
-                    password: passwordData.password
-                }
-            });
-
-            if (response.ok) {
-                return true;
-            } else {
-                showErrorMessage('Error setting password');
-            }
-        }
-        catch (error) {
-            console.log(error);
-            showErrorMessage('Error setting password');
-        }
-    }
-
+    
     const confirmUser = async () => {
         /* O PATH ESTÁ DESTA FORMA EM VEZ DE 'confirm-registration', PQ NO FRONTEND DAVA SEMPRE ERRO APESAR DE FUNCIONAR NO POSTMAN */
 
@@ -130,20 +97,23 @@ export function ConfirmAccount() {
                     headers: {
                         "Content-Type": "application/json",
                         Accept: "*/*",
-                        email: email,
+                        validationToken: validationToken,
                     },
                     
                 });
     
                 if (response.ok) {
                     return true;
+                } else if (response.status === 400) {
+                    showInfoMessage("Account already confirmed");
+                    return false
                 } else {
-                    const error = await response.text();
-                    showErrorMessage("Error confirming user: " + error);
-                    console.log("Error: " + error);
+                    showErrorMessage("Error confirming account");
+                    return false;
                 }
             } catch (error) {
                 console.error("Error:", error);
+                return false;
             }
         };
         
@@ -155,7 +125,7 @@ export function ConfirmAccount() {
                     <div id="set-password">
                         <h3>Please confirm your account</h3>
                         <form id="setPasswordForm">
-                            <input type="password" id="password" name="password" placeholder="Password" value={passwordData.password} onChange={handlePasswordChange} required />
+                            <input type="password" id="newPassword" name="password" placeholder="Password" value={passwordData.password} onChange={handlePasswordChange} required />
                             <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" value={passwordData.confirmPassword} onChange={handlePasswordChange} required />
                             <div className="password-buttons">
                                 <Button text="Cancel" onClick={handleCancelButton}/>

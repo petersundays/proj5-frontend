@@ -7,6 +7,8 @@ import RegisterPage from "./Pages/RegisterPage";
 import MainPage from "./Pages/MainPage";
 import NotConfirmedPage from "./Pages/NotConfirmedPage";
 import ConfirmAccountPage from "./Pages/ConfirmAccountPage";
+import RecoverPasswordPage from "./Pages/RecoverPasswordPage";
+import ResetPasswordPage from "./Pages/ResetPasswordPage";
 
 function App() {
     return (
@@ -16,7 +18,9 @@ function App() {
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/my-scrum/*" element={<MainPage />} />
                 <Route path="/account-not-confirmed" element={<NotConfirmedPage />} />
-                <Route path="/confirm/:email" element={<ConfirmAccountPage />} />
+                <Route path="/confirm/:validationToken" element={<ConfirmAccountPage />} />
+                <Route path="/recover-password" element={<RecoverPasswordPage />} />
+                <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
             </Routes>
             <ToastContainer />
         </>
