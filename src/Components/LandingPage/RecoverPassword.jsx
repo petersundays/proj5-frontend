@@ -36,7 +36,8 @@ function RecoverPassword() {
                 showSuccessMessage('Password recovery email sent, please check your email.');
                 navigate('/');
             } else {
-                showErrorMessage('An error occurred. Please try again later.');
+                const message = await response.text();
+                showErrorMessage(message);
             }
         } catch (error) {
             showErrorMessage('An error occurred. Please try again later.');
