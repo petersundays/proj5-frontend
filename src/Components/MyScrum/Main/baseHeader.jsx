@@ -10,14 +10,12 @@ import { showInfoMessage } from '../../../functions/Messages/InfoMessage';
 import { AllUsersStore } from '../../../Stores/AllUsersStore';
 import { TasksByCategoryStore } from '../../../Stores/TasksByCategoryStore';
 import { TasksByUserStore } from '../../../Stores/TasksByUserStore';
-import { useParams } from 'react-router-dom';
 
 function BaseHeader() {
 
-    const { email } = useParams();
-    const isConfirmAccountPage = email !== undefined;
-
     const location = useLocation();   
+
+    const isConfirmAccountPage = location.pathname === "/confirm";
     const isRecoverPasswordPage = location.pathname === "/recover-password"; 
     const isResetPasswordPage = location.pathname === "/reset-password";
 

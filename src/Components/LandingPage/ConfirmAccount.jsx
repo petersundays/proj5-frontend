@@ -90,6 +90,7 @@ export function ConfirmAccount() {
     const confirmUser = async () => {
         /* O PATH ESTÁ DESTA FORMA EM VEZ DE 'confirm-registration', PQ NO FRONTEND DAVA SEMPRE ERRO APESAR DE FUNCIONAR NO POSTMAN */
 
+        console.log("ConfirmUser token" , validationToken);
         const confirmUser = "http://localhost:8080/backend_proj5_war_exploded/rest/users/email/confirm";
             try {
                 const response = await fetch(confirmUser, {
@@ -103,6 +104,7 @@ export function ConfirmAccount() {
                 });
     
                 if (response.ok) {
+                    console.log("Account confirmed");
                     return true;
                 } else if (response.status === 400) {
                     showInfoMessage("Account already confirmed");
