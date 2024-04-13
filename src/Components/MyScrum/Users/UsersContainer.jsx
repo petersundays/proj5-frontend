@@ -52,7 +52,6 @@ function UsersContainer() {
         AllUsersStore.getState().setUserToEdit(username);
         setDisplayContainer(true);
         AllUsersStore.getState().setDisplayContainer(true);
-        console.log('displayContainer', AllUsersStore.getState().displayContainer);
     }
     
 

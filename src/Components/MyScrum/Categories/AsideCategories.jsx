@@ -27,7 +27,6 @@ function AsideCategories() {
    
     useEffect(() => {
         {
-            console.log('useEffect');
             getCategoriesNames(); 
         }
 
@@ -187,6 +186,7 @@ const handleCategorySearch = (e) => {
             if (response.ok) {
                 showSuccessMessage("New category created successfully: " + category.name);
                 setCategories(prevCategories => [...prevCategories, newCategory]);
+                CategoriesStore.setState({ categories: [...categories, newCategory] });
                 setNewCategory('');
             } else {
                 const error = await response.text();
@@ -219,6 +219,7 @@ const handleCategorySearch = (e) => {
             if (response.ok) {
                 showSuccessMessage("Category deleted successfully: " + category.name);
                 setCategories(prevCategories => prevCategories.filter(cat => cat !== category.name));
+                CategoriesStore.setState({ categories: categories.filter(cat => cat !== category.name) });
                 setSelectedCategory('');
             } else {
                 const error = await response.text();
