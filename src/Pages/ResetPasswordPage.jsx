@@ -1,12 +1,34 @@
+import { useState } from "react";
 import ResetPassword from "../Components/LandingPage/ResetPassword";
 import BaseHeader from "../Components/MyScrum/Main/baseHeader";
+import { IsValidationTokenValid } from "../functions/Users/IsValidationTokenValid";
+import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 function ResetPasswordPage() {
+  /* const { token } = useParams();
+  const navigate = useNavigate();
+
+    const [tokenValid, setTokenValid] = useState(false);
+
+    IsValidationTokenValid(token).then((result) => {
+      console.log(result);
+        setTokenValid(result);
+        if (!result) {
+            navigate('/');
+        }
+    });
+ */
   return (
-    <div>
-      <BaseHeader />
-      <ResetPassword />
-    </div>
+    <>
+      {/* {tokenValid && */}
+        <div>
+          <BaseHeader />
+          <ResetPassword />
+        </div>
+      {/* } */}
+    </>
   );
+  
 }
 export default ResetPasswordPage;
