@@ -6,6 +6,7 @@ import BaseHeader from "./baseHeader";
 import Footer from "./Footer";
 import EditProfile from "../EditProfile/EditProfile";
 import AsideCategories from "../Categories/AsideCategories";
+import DashboardPage from "../../../Pages/DashboardPage";
 
 function MainPage() {
     return (

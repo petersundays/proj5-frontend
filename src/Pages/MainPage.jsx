@@ -10,6 +10,7 @@ import EditProfilePage from './EditProfilePage';
 import EditTaskPage from './EditTaskPage';
 import UsersPage from './UsersPage';
 import { UserStore } from '../Stores/UserStore';
+import DashboardPage from './DashboardPage';
 
 function MainPage() {
     const user = UserStore.getState().user; 
@@ -30,7 +31,7 @@ function MainPage() {
                     <Route path="all-tasks" element={<AllTasksPage />} />
                     <Route path="users" element={<UsersPage />} />
                     <Route path="edit-task" element={<EditTaskPage />} />
-
+                    <Route path="dashboard" element={<DashboardPage />} />
                 </Routes>
             </div>
             <Footer />
