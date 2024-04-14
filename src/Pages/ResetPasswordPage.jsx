@@ -6,27 +6,15 @@ import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
 function ResetPasswordPage() {
-  /* const { token } = useParams();
-  const navigate = useNavigate();
 
-    const [tokenValid, setTokenValid] = useState(false);
-
-    IsValidationTokenValid(token).then((result) => {
-      console.log(result);
-        setTokenValid(result);
-        if (!result) {
-            navigate('/');
-        }
-    });
- */
   return (
     <>
-      {/* {tokenValid && */}
+
         <div>
           <BaseHeader />
           <ResetPassword />
         </div>
-      {/* } */}
+   
     </>
   );
   
