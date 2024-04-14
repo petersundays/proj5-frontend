@@ -4,6 +4,8 @@ import { UserStatistics } from '../../../functions/Statistics/Statistics';
 import { UserStore } from '../../../Stores/UserStore';
 import { CategoriesList } from '../../../functions/Statistics/Categories';
 import { AverageTimeToFinishTask } from '../../../functions/Statistics/TaskAverageTime';
+import { GetConcludedTasksByDate } from '../../../functions/Statistics/ConcludedTasks';
+import { GetUsersRegisteredByDate } from '../../../functions/Statistics/RegistredUsers';
 
 
 function Dashboard() {
@@ -13,6 +15,9 @@ function Dashboard() {
     const [userStats, setUserStats] = useState([]);
     const [categories, setCategories] = useState([]);
     const [taskTime, setTaskTime] = useState(0.0);
+    const [concludedTasks, setConcludedTasks] = useState([]);
+    const [usersRegistered, setUsersRegistered] = useState([]);
+
 
     useEffect(() => {
         UserStatistics(token).then((stats) => {
@@ -26,6 +31,15 @@ function Dashboard() {
         AverageTimeToFinishTask(token).then((time) => {
           setTaskTime(time);
         });
+
+        GetConcludedTasksByDate(token).then((tasks) => {
+            setConcludedTasks(tasks);
+        });
+
+        GetUsersRegisteredByDate(token).then((users) => {
+            setUsersRegistered(users);
+        });
+
       }, []);
 
 
@@ -38,6 +52,28 @@ function Dashboard() {
             );
         });
     };
+
+    const displayConcludedTasks = () => {
+        return concludedTasks.map((task) => {
+            return (
+                <tr key={task}>
+                    <td>{task[0]}</td>
+                    <td>{task[1]}</td>
+                </tr>
+            );
+        });
+    }
+
+    const displayUsersRegistered = () => {
+        return usersRegistered.map((user) => {
+            return (
+                <tr key={user}>
+                    <td>{user[0]}</td>
+                    <td>{user[1]}</td>
+                </tr>
+            );
+        });
+    }
 
 
   return (
@@ -78,6 +114,33 @@ function Dashboard() {
                     </tbody>
                 </table>
             </div>
+            <div className='dashboard-charts'>
+                <table className="table">
+                        <thead>
+                            <tr className="table-header">
+                                <th>Date</th> 
+                                <th>Total</th>                                  
+                            </tr>
+                        </thead>
+                        <tbody className="table-body">
+                            {displayConcludedTasks()}
+                        </tbody>
+                    </table>
+            </div>
+            <div className='dashboard-registered-users'>
+                <table className="table">
+                        <thead>
+                            <tr className="table-header">
+                                <th>Date</th> 
+                                <th>Total</th>                                  
+                            </tr>
+                        </thead>
+                        <tbody className="table-body">
+                            {displayUsersRegistered()}
+                        </tbody>
+                    </table>
+            </div>
+
         </div>
     </>
   );
