@@ -10,10 +10,15 @@ import { showInfoMessage } from '../../../functions/Messages/InfoMessage';
 import { AllUsersStore } from '../../../Stores/AllUsersStore';
 import { TasksByCategoryStore } from '../../../Stores/TasksByCategoryStore';
 import { TasksByUserStore } from '../../../Stores/TasksByUserStore';
+import WebSocketClient from '../../../Websockets/WebSocketClient';
+import { NotificationStore } from '../../../Stores/NotificationStore';
 
 function BaseHeader() {
 
     const location = useLocation();   
+
+    const notifications = NotificationStore((state) => state.notifications);
+    WebSocketClient();
 
     const isConfirmAccountPage = location.pathname === "/confirm";
     const isRecoverPasswordPage = location.pathname === "/recover-password"; 
@@ -112,6 +117,7 @@ function BaseHeader() {
                             </ul>
                         </nav>
                         <div className="nav-menu-right">
+                        <p>You have {notifications.length} notifications</p>
                             <img src={photoURL} id="profile-pic" draggable="false"/>
                             {userConfirmed === true ? 
                                 <Link to={`/my-scrum/profile/${username}`} id="first-name-label" draggable="false" >{firstName}</Link>
