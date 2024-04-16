@@ -10,22 +10,21 @@ import { showInfoMessage } from '../../../functions/Messages/InfoMessage';
 import { AllUsersStore } from '../../../Stores/AllUsersStore';
 import { TasksByCategoryStore } from '../../../Stores/TasksByCategoryStore';
 import { TasksByUserStore } from '../../../Stores/TasksByUserStore';
-import WebSocketClient from '../../../Websockets/WebSocketClient';
 import { NotificationStore } from '../../../Stores/NotificationStore';
 
 function BaseHeader() {
 
     const location = useLocation();   
 
-    const notifications = NotificationStore((state) => state.notifications);
-    WebSocketClient();
-
     const isConfirmAccountPage = location.pathname === "/confirm";
     const isRecoverPasswordPage = location.pathname === "/recover-password"; 
-    const isResetPasswordPage = location.pathname === "/reset-password";
+    const isResetPasswordPage = location.pathname.startsWith("/reset-password/");
 
     const token = UserStore.getState().user.token;
     const username = UserStore.getState().user.username;
+
+    const notifications = NotificationStore((state) => state.notifications);
+    const wsClient = NotificationStore((state) => state.WebSocketClient);
 
     let firstName = "";
     if (UserStore.getState().user.firstName !== undefined) {
@@ -64,6 +63,12 @@ function BaseHeader() {
         AllUsersStore.setState({ displayContainer: false });
         TasksByCategoryStore.setState({ tasks: [] });
         TasksByUserStore.setState({ tasks: [] });
+        NotificationStore.setState({ notifications: [] });
+
+    // Close the WebSocket connection
+    if (wsClient && wsClient.readyState === WebSocket.OPEN) {
+        wsClient.close();
+    }
 
         if (token === undefined || token === "" || token === null) {
             navigate('/');
@@ -99,7 +104,7 @@ function BaseHeader() {
         <>
             <header>
                 <img src='/multimedia/logo-scrum-05.png' id="logo-header" height="50" draggable="false"/>
-                {(!isConfirmAccountPage && !isRecoverPasswordPage) && (
+                {(!isConfirmAccountPage && !isRecoverPasswordPage && !isResetPasswordPage) && (
                     <>
                         <nav className="nav-menu-left">
                             <ul id="menu">
@@ -117,8 +122,8 @@ function BaseHeader() {
                             </ul>
                         </nav>
                         <div className="nav-menu-right">
-                        <p>You have {notifications.length} notifications</p>
-                            <img src={photoURL} id="profile-pic" draggable="false"/>
+                         <p>You have {notifications.length} notifications</p>
+                             <img src={photoURL} id="profile-pic" draggable="false"/>
                             {userConfirmed === true ? 
                                 <Link to={`/my-scrum/profile/${username}`} id="first-name-label" draggable="false" >{firstName}</Link>
                             :
