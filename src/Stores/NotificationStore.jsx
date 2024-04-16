@@ -5,6 +5,7 @@ export const NotificationStore = create(
     persist(
         (set) => ({
             notifications: [],
+            WebSocketClient: false,
             addNotification: (notification) => {
                 set((state) => ({
                     notifications: [...state.notifications, notification],
@@ -14,6 +15,9 @@ export const NotificationStore = create(
                 set((state) => ({
                     notifications: state.notifications.filter((notification) => notification.id !== notificationId),
                 }));
+            },
+            setWebSocketClient: (value) => {
+                set({ WebSocketClient: value });
             },
         }),
         {
