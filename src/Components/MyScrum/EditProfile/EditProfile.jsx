@@ -22,8 +22,11 @@ function EditProfile() {
     const usernameLogged = userLogged.username;
     const typeOfUser = UserStore.getState().user.typeOfUser;
     const wsMessage = useWebSocketMessage(username);
-    const messages = MessageStore((state) => state.messages);
-    
+    const messages = MessageStore((state) => state.messages)
+    const sendMessage = wsMessage.sendMessage;
+
+    const [message, setMessage] = useState('');
+
     const DEVELOPER = 100;
     const SCRUM_MASTER = 200;
     const PRODUCT_OWNER = 300;
@@ -142,6 +145,18 @@ function EditProfile() {
         return username === userLogged.username || typeOfUser === PRODUCT_OWNER;
     };
 
+
+    const handleMessageChange = (e) => {
+        setMessage(e.target.value);
+    };
+
+    const handleSendMessage = () => {
+        console.log('Sending message: ', message);
+        sendMessage({
+            content: message
+        });
+        setMessage('');
+    };
          
 
     const handleSubmitProfileChanges = async (e) => {
@@ -269,15 +284,16 @@ function EditProfile() {
                         lockable={true}
                         toBottomHeight={'100%'}
                         dataSource={messages.map((message) => ({
-                            position: message.sender === receiver ? "left" : "right",
+                            position: message.sender === username ? "left" : "right",
                             type: "text",
                             title: message.sender,
-                            text: message.content
+                            text: message.content,
+                           
                         }))}/>
                     </div>
                     <div className='profile-message'>
-                        <textarea className="profile-type-message"/>
-                        <img src='../../../../multimedia/send.png'/>
+                        <textarea className="profile-type-message" value={message} onChange={handleMessageChange}/>
+                        <img src='../../../../multimedia/send.png' onClick={handleSendMessage}/>
                     </div>
                 </div>
                 )}
