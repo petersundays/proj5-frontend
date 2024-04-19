@@ -1,5 +1,4 @@
 import { useEffect, useRef } from "react";
-import { useLocation } from "react-router-dom";
 import { UserStore } from "../Stores/UserStore";
 import { MessageStore } from "../Stores/MessageStore";
 
@@ -7,49 +6,44 @@ const useWebSocketMessage = (receiver) => {
     const user = UserStore((state) => state.user);
     const addMessage = MessageStore((state) => state.addMessage);
     const wsClientRef = useRef(null);
-    const location = useLocation();
     const WS_URL = `ws://localhost:8080/backend_proj5_war_exploded/websocket/messages/${user.token}/${receiver}`;
 
-    useEffect(() => {
-        if (receiver === user.username) {
-            const ws = new WebSocket(WS_URL);
+    const sendMessage = (message) => {
+        if (wsClientRef.current && wsClientRef.current.readyState === WebSocket.OPEN) {
+            wsClientRef.current.send(JSON.stringify(message));
+            console.log("Sent message: ", message);
+        } else {
+            console.error("WebSocket is not open. Message not sent.");
+        }
+    };
 
+    useEffect(() => {
+        if (receiver !== user.username) {
+            const ws = new WebSocket(WS_URL);    
             ws.onopen = () => {
                 console.log("Connected to websocket");
                 wsClientRef.current = ws;
             };
-
+    
             ws.onmessage = (event) => {
                 const message = JSON.parse(event.data);
                 console.log("Received message: ", message);
                 addMessage(message);
             };
-
+    
             ws.onerror = (error) => {
                 console.error("WebSocket error: ", error);
             };
-
-            ws.onclose = (event) => {
-                console.log("Disconnected from websocket");
-                wsClientRef.current = null;
-            };
-
+    
+            // Return a cleanup function that closes the WebSocket connection
             return () => {
-                if (wsClientRef.current) {
-                    wsClientRef.current.close(1000, "WebSocket cleanup");
-                    wsClientRef.current = null;
-                }
+                console.log("Closing websocket");
+                ws.close();
             };
-        } else {
-            // Receiver does not match logged-in user, close WebSocket if it's open
-            if (wsClientRef.current) {
-                wsClientRef.current.close(1000, "WebSocket cleanup");
-                wsClientRef.current = null;
-            }
         }
-    }, [receiver, user.username, location.pathname]);
+    }, [receiver]); // Re-run the effect when the `receiver` prop changes
 
-    return wsClientRef.current;
+    return { ws: wsClientRef.current, sendMessage };
 };
 
 export default useWebSocketMessage;
