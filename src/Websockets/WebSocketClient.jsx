@@ -4,10 +4,10 @@ import { UserStore } from "../Stores/UserStore";
 
 export const useWebSocketClient = () => {
     const addNotification = NotificationStore((state) => state.addNotification);
-    const wsClientRef = useRef(null);
-    const WS_URL = "ws://localhost:8080/backend_proj5_war_exploded/websocket/notifier/mytoken";
-
+    const wsClientRef = useRef(null); // Store the WebSocket client object in a ref and prevents re-renders 
     const user = UserStore((state) => state.user);
+    const WS_URL = `ws://localhost:8080/backend_proj5_war_exploded/websocket/notifier/${user.token}`;
+
 
     useEffect(() => {
         const connect = () => {

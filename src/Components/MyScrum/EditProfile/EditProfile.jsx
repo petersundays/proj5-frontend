@@ -8,6 +8,11 @@ import { showErrorMessage } from '../../../functions/Messages/ErrorMessage';
 import { showSuccessMessage } from '../../../functions/Messages/SuccessMessage';
 import { showInfoMessage } from '../../../functions/Messages/InfoMessage';
 import { getUserByUsername } from '../../../functions/Users/GetUserByUsername';
+import "react-chat-elements/dist/main.css"
+import { MessageList } from "react-chat-elements"
+import useWebSocketMessage from '../../../Websockets/MessageWS';
+import { MessageStore } from '../../../Stores/MessageStore';
+
 
 function EditProfile() {
     const navigate = useNavigate();
@@ -16,6 +21,8 @@ function EditProfile() {
     const userLogged = UserStore.getState().user;
     const usernameLogged = userLogged.username;
     const typeOfUser = UserStore.getState().user.typeOfUser;
+    const wsMessage = useWebSocketMessage(username);
+    const messages = MessageStore((state) => state.messages);
     
     const DEVELOPER = 100;
     const SCRUM_MASTER = 200;
@@ -40,6 +47,12 @@ function EditProfile() {
         fetchUser();
     }, [username]);
 
+    useEffect(() => {
+        return () => {
+            // Clean up messages on component unmount
+            MessageStore.setState({ messages: [] });
+        };
+    }, []);
    
 
     const [displayPasswordModal, setDisplayPasswordModal] = useState(false);
@@ -129,10 +142,7 @@ function EditProfile() {
         return username === userLogged.username || typeOfUser === PRODUCT_OWNER;
     };
 
-    const isOwnerOrUnchanged = () => {
-        return isProfileOwner() || areInputsUnchanged();
-    };
-          
+         
 
     const handleSubmitProfileChanges = async (e) => {
         e.preventDefault();
@@ -253,7 +263,18 @@ function EditProfile() {
                 </form>
                 {userLogged.username !== username && (
                 <div className='profile-conversation'>
-                    <div className='profile-chat'></div>
+                    <div className='profile-chat'>
+                    <MessageList
+                        className='message-list'
+                        lockable={true}
+                        toBottomHeight={'100%'}
+                        dataSource={messages.map((message) => ({
+                            position: message.sender === receiver ? "left" : "right",
+                            type: "text",
+                            title: message.sender,
+                            text: message.content
+                        }))}/>
+                    </div>
                     <div className='profile-message'>
                         <textarea className="profile-type-message"/>
                         <img src='../../../../multimedia/send.png'/>
