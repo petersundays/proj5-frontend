@@ -21,7 +21,6 @@ export const useWebSocketClient = () => {
 
             ws.onmessage = (event) => {
                 const notification = event.data;
-                console.log("Received notification: ", notification);
                 addNotification(notification);
             };
 

@@ -11,7 +11,7 @@ const useWebSocketMessage = (receiver) => {
     const sendMessage = (message) => {
         if (wsClientRef.current && wsClientRef.current.readyState === WebSocket.OPEN) {
             wsClientRef.current.send(JSON.stringify(message));
-            console.log("Sent message: ", message);
+            
         } else {
             console.error("WebSocket is not open. Message not sent.");
         }
@@ -27,7 +27,6 @@ const useWebSocketMessage = (receiver) => {
     
             ws.onmessage = (event) => {
                 const message = JSON.parse(event.data);
-                console.log("Received message: ", message);
                 addMessage(message);
             };
     
