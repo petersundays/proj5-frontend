@@ -8,40 +8,45 @@ export const useWebSocketClient = () => {
     const user = UserStore((state) => state.user);
     const WS_URL = `ws://localhost:8080/backend_proj5_war_exploded/websocket/notifier/${user.token}`;
 
-
     useEffect(() => {
         const connect = () => {
+            if (wsClientRef.current && wsClientRef.current.readyState === WebSocket.OPEN) {
+                console.log("WebSocket is already connected");
+                return;
+            }
+            
+            NotificationStore.setState({ notifications: [] }); // Clear any existing notifications
             const ws = new WebSocket(WS_URL);
 
             ws.onopen = () => {
                 console.log("Connected to websocket");
-                wsClientRef.current = ws;
+                wsClientRef.current = ws; 
                 NotificationStore.setState({ WebSocketClient: true });
             };
 
             ws.onmessage = (event) => {
-                const notification = event.data;
+                const notification = JSON.parse(event.data);
                 addNotification(notification);
             };
 
             ws.onerror = (error) => {
                 console.error("WebSocket error: ", error);
-                // Handle the error as needed
             };
 
             ws.onclose = (event) => {
                 console.log("Disconnected from websocket");
                 wsClientRef.current = null;
                 NotificationStore.setState({ WebSocketClient: false });
+                NotificationStore.setState({ notifications: [] });  
                 // If the WebSocket was closed for a reason other than the user logging out, try to reconnect
-                if (!event.wasClean) {
+                if (!event.wasClean && user && user.token) {
                     console.log("Reconnecting to websocket...");
                     setTimeout(connect, 5000);  // Try to reconnect after a delay
                 }
             };
         };
 
-        if (user && user.token) {
+        if (user.token) {
             connect();
         }
 
@@ -51,7 +56,7 @@ export const useWebSocketClient = () => {
                 wsClientRef.current = null;
             }
         };
-    }, [user]);  // Depend on the user's login status
+    }, [user.token]);  // Depend on the user's login status
 
     return wsClientRef.current;
 };

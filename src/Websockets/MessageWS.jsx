@@ -40,7 +40,7 @@ const useWebSocketMessage = (receiver) => {
                 ws.close();
             };
         }
-    }, [receiver]); // Re-run the effect when the `receiver` prop changes
+    }, [receiver]); 
 
     return { ws: wsClientRef.current, sendMessage };
 };

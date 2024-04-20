@@ -52,6 +52,15 @@ header {
     align-items: center;
   }
   
+  #dropdown-basic {
+    color: var(--light-grey);
+    font-size: 17px;
+    cursor: pointer;
+  }
+  #notification:hover{
+    color:#c8e4e751;
+  }
+
   #profile-pic {
     width: 40px;
     height: 40px;

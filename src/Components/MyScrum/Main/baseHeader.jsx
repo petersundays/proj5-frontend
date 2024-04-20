@@ -11,6 +11,10 @@ import { AllUsersStore } from '../../../Stores/AllUsersStore';
 import { TasksByCategoryStore } from '../../../Stores/TasksByCategoryStore';
 import { TasksByUserStore } from '../../../Stores/TasksByUserStore';
 import { NotificationStore } from '../../../Stores/NotificationStore';
+import { FaBell } from 'react-icons/fa'
+import Dropdown from "react-bootstrap/Dropdown";
+import { FaEnvelope } from 'react-icons/fa';
+
 
 function BaseHeader() {
 
@@ -50,6 +54,24 @@ function BaseHeader() {
 
 
     const navigate = useNavigate();
+
+    const messageIcon = () => <FaEnvelope id='notification' />;
+
+    const handleConstructDropdownOptionsForEachNotification = () => {
+        const dropdownOptions = [];
+        notifications.forEach((notification, index) => {
+            console.log(notification);
+            dropdownOptions.push(
+                <Dropdown.Item key={index} href="#/action-1">
+                    {messageIcon()}
+                    {' '}
+                    {notification.sender}
+                    <span style={{ float: 'right' }}>{notification.timestamp}</span>
+                </Dropdown.Item>
+            );
+        });
+        return dropdownOptions;
+    };
 
     const handleLogout = async () => {
         UserStore.setState({ user: {} });
@@ -122,7 +144,16 @@ function BaseHeader() {
                             </ul>
                         </nav>
                         <div className="nav-menu-right">
-                         <p>You have {notifications.length} notifications</p>
+                        <Dropdown>
+                        <Dropdown.Toggle variant="outline-info" id="dropdown-basic" style={{ backgroundColor: 'transparent', borderColor: 'transparent' }}>
+                                <FaBell id='notification' />
+                                <span style={{ fontSize: '0.8em', color:"red" }}>{notifications.length}</span>
+                        </Dropdown.Toggle>
+
+                            <Dropdown.Menu>
+                                {handleConstructDropdownOptionsForEachNotification()}
+                            </Dropdown.Menu>
+                        </Dropdown>
                              <img src={photoURL} id="profile-pic" draggable="false"/>
                             {userConfirmed === true ? 
                                 <Link to={`/my-scrum/profile/${username}`} id="first-name-label" draggable="false" >{firstName}</Link>

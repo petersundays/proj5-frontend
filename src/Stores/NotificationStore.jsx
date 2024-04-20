@@ -16,9 +16,8 @@ export const NotificationStore = create(
                     notifications: state.notifications.filter((notification) => notification.id !== notificationId),
                 }));
             },
-            clearNotifications: () => {
-                set({ notifications: [] });
-            },
+            clearNotifications: () => 
+                set({ notifications: [] }),
             setWebSocketClient: (value) => {
                 set({ WebSocketClient: value });
             },
