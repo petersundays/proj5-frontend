@@ -57,6 +57,19 @@ header {
     font-size: 17px;
     cursor: pointer;
   }
+
+  .dropdown-item {
+    color: var(--green2) !important;
+  }
+
+  .dropdown-item:hover {
+    background-color: var(--light-grey) !important;
+  }
+
+  .dropdown-item-date {
+    font-size:small;
+  }
+
   #notification:hover{
     color:#c8e4e751;
   }

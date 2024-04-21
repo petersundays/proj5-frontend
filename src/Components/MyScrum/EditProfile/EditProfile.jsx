@@ -151,7 +151,6 @@ function EditProfile() {
     };
 
     const handleSendMessage = () => {
-        console.log('Sending message: ', message);
         sendMessage({
             content: message
         });

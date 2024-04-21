@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from "react-router-dom";
 import './baseHeader.css';
 import { UserStore } from '../../../Stores/UserStore';
@@ -14,6 +14,7 @@ import { NotificationStore } from '../../../Stores/NotificationStore';
 import { FaBell } from 'react-icons/fa'
 import Dropdown from "react-bootstrap/Dropdown";
 import { FaEnvelope } from 'react-icons/fa';
+import { useWebSocketClient } from '../../../Websockets/WebSocketClient';
 
 
 function BaseHeader() {
@@ -27,8 +28,18 @@ function BaseHeader() {
     const token = UserStore.getState().user.token;
     const username = UserStore.getState().user.username;
 
-    const notifications = NotificationStore((state) => state.notifications);
+    const [notifications, setNotifications] = useState(NotificationStore.getState().notifications);
     const wsClient = NotificationStore((state) => state.WebSocketClient);
+    const { markAsRead } = useWebSocketClient();
+
+    useEffect(() => {
+        const unsubscribe = NotificationStore.subscribe(() => {
+            setNotifications(NotificationStore.getState().notifications);
+        });
+
+        // Clean up subscription on unmount
+        return () => unsubscribe();
+    }, []);
 
     let firstName = "";
     if (UserStore.getState().user.firstName !== undefined) {
@@ -57,20 +68,48 @@ function BaseHeader() {
 
     const messageIcon = () => <FaEnvelope id='notification' />;
 
-    const handleConstructDropdownOptionsForEachNotification = () => {
+    const handleDropdownNotifications = () => {
         const dropdownOptions = [];
-        notifications.forEach((notification, index) => {
-            console.log(notification);
+        const hashMap = new Map();
+    
+        notifications.forEach((notification) => {
+            if (hashMap.has(notification.sender)) {
+                const existingValue = hashMap.get(notification.sender);
+                hashMap.set(notification.sender, {
+                    count: existingValue.count + 1,
+                    timestamp: notification.timestamp > existingValue.timestamp ? notification.timestamp : existingValue.timestamp
+                });
+            } else {
+                hashMap.set(notification.sender, {
+                    count: 1,
+                    timestamp: notification.timestamp
+                });
+            }
+        });
+    
+        hashMap.forEach((value, key) => {
             dropdownOptions.push(
-                <Dropdown.Item key={index} href="#/action-1">
+                <Dropdown.Item className='dropdown-item' key={key} onClick= { () => {handleNotificationClick(key) } }>
                     {messageIcon()}
                     {' '}
-                    {notification.sender}
-                    <span style={{ float: 'right' }}>{notification.timestamp}</span>
+                    <span style={{ fontSize: '0.8em', color:"#223C4A" }}>{value.count}</span>
+                    {' from '}
+                    {key}
+                    {' '}
+                    <span className="dropdown-item-date" style={{ float: 'right' }}>{value.timestamp}</span>
                 </Dropdown.Item>
             );
         });
+    
         return dropdownOptions;
+    };
+
+
+    const handleNotificationClick = (value) => {
+        navigate(`/my-scrum/profile/${value}`);
+        markAsRead (
+            value
+        );
     };
 
     const handleLogout = async () => {
@@ -147,11 +186,11 @@ function BaseHeader() {
                         <Dropdown>
                         <Dropdown.Toggle variant="outline-info" id="dropdown-basic" style={{ backgroundColor: 'transparent', borderColor: 'transparent' }}>
                                 <FaBell id='notification' />
-                                <span style={{ fontSize: '0.8em', color:"red" }}>{notifications.length}</span>
+                                {" "}
+                                <span style={{ fontSize: '0.8em', color:"#2CCCD3" }}>{notifications.length}</span>
                         </Dropdown.Toggle>
-
                             <Dropdown.Menu>
-                                {handleConstructDropdownOptionsForEachNotification()}
+                                {handleDropdownNotifications()}
                             </Dropdown.Menu>
                         </Dropdown>
                              <img src={photoURL} id="profile-pic" draggable="false"/>
