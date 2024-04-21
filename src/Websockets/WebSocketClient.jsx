@@ -7,6 +7,13 @@ export const useWebSocketClient = () => {
     const wsClientRef = useRef(null); // Store the WebSocket client object in a ref and prevents re-renders 
     const user = UserStore((state) => state.user);
     const WS_URL = `ws://localhost:8080/backend_proj5_war_exploded/websocket/notifier/${user.token}`;
+    
+    const markAsRead = (sender) => {
+        if (wsClientRef.current && wsClientRef.current.readyState === WebSocket.OPEN) {
+            wsClientRef.current.send(JSON.stringify({ sender: sender }));
+        }
+    };
+    
 
     useEffect(() => {
         const connect = () => {
@@ -25,8 +32,15 @@ export const useWebSocketClient = () => {
             };
 
             ws.onmessage = (event) => {
-                const notification = JSON.parse(event.data);
-                addNotification(notification);
+                const data = JSON.parse(event.data);
+            
+                if (Array.isArray(data)) {
+                    // If the data is an array, replace the entire notifications array
+                    NotificationStore.setState({ notifications: data });
+                } else {
+                    // If the data is an object, add it to the store
+                    addNotification(data);
+                }
             };
 
             ws.onerror = (error) => {
@@ -58,5 +72,5 @@ export const useWebSocketClient = () => {
         };
     }, [user.token]);  // Depend on the user's login status
 
-    return wsClientRef.current;
+    return { ws: wsClientRef.current, markAsRead };
 };
