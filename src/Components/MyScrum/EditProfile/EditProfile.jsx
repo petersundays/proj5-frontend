@@ -27,10 +27,7 @@ function EditProfile() {
 
     const [message, setMessage] = useState('');
 
-    const DEVELOPER = 100;
-    const SCRUM_MASTER = 200;
     const PRODUCT_OWNER = 300;
-
 
     const [formData, setFormData] = useState({}); 
     const [photoURL, setPhotoURL] = useState("");

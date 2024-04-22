@@ -6,11 +6,18 @@ import { CategoriesList } from '../../../functions/Statistics/Categories';
 import { AverageTimeToFinishTask } from '../../../functions/Statistics/TaskAverageTime';
 import { GetConcludedTasksByDate } from '../../../functions/Statistics/ConcludedTasks';
 import { GetUsersRegisteredByDate } from '../../../functions/Statistics/RegistredUsers';
+import { StatisticsStore } from '../../../Stores/StatisticsStore';
+import { useWebSocketStatistics } from '../../../Websockets/StatisticsWS';
 
 
 function Dashboard() {
 
     const token = UserStore(state => state.user.token);
+
+    const wsStatistics = useWebSocketStatistics();
+    const sendMessage = wsStatistics.sendMessage;
+    const [estatisticas, setEstatisticas] = useState(StatisticsStore.getState());
+    console.log(estatisticas);
 
     const [userStats, setUserStats] = useState([]);
     const [categories, setCategories] = useState([]);
