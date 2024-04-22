@@ -7,7 +7,8 @@ import { AverageTimeToFinishTask } from '../../../functions/Statistics/TaskAvera
 import { GetConcludedTasksByDate } from '../../../functions/Statistics/ConcludedTasks';
 import { GetUsersRegisteredByDate } from '../../../functions/Statistics/RegistredUsers';
 import { StatisticsStore } from '../../../Stores/StatisticsStore';
-import { useWebSocketStatistics } from '../../../Websockets/StatisticsWS';
+import useWebSocketStatistics from '../../../Websockets/StatisticsWS';
+
 
 
 function Dashboard() {

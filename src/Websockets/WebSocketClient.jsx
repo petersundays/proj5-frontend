@@ -16,6 +16,7 @@ export const useWebSocketClient = () => {
     
 
     useEffect(() => {
+        console.log("WebSocketClient: ", user.token);
         const connect = () => {
             if (wsClientRef.current && wsClientRef.current.readyState === WebSocket.OPEN) {
                 console.log("WebSocket is already connected");
@@ -61,6 +62,7 @@ export const useWebSocketClient = () => {
         };
 
         if (user.token) {
+            console.log("**** user.token: ", user.token);
             connect();
         }
 
@@ -70,7 +72,7 @@ export const useWebSocketClient = () => {
                 wsClientRef.current = null;
             }
         };
-    }, [user.token]);  // Depend on the user's login status
+    }, []);  // Depend on the user's login status
 
     return { ws: wsClientRef.current, markAsRead };
 };
