@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './RegisterContainer.css';
 import { useNavigate } from 'react-router-dom';
 import { showErrorMessage } from '../../functions/Messages/ErrorMessage';
 import { RegisterUser } from '../../functions/Users/RegisterUser';
+import useWebSocketStatistics from '../../Websockets/StatisticsWS';
 
 function registerContainer() {
 
     const navigate = useNavigate();
+
+    const sendMessage = useWebSocketStatistics().sendMessage;
 
     const handleCancelClick = () => {
         navigate('/');
@@ -49,6 +52,7 @@ function registerContainer() {
         try {
             const registred = await RegisterUser(event, newUser);
             if (registred){
+                sendMessage();
                 backToLoginLink = true;
             }
         } catch (error) {
