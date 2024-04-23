@@ -9,6 +9,8 @@ import { showInfoMessage } from '../../../functions/Messages/InfoMessage';
 import { UserStore } from '../../../Stores/UserStore';
 import { showSuccessMessage } from '../../../functions/Messages/SuccessMessage';
 import { getUserByUsername } from '../../../functions/Users/GetUserByUsername';
+import useWebSocketStatistics from '../../../Websockets/StatisticsWS';
+import { send } from 'vite';
 
 export function UserDetails () {
 
@@ -17,6 +19,7 @@ export function UserDetails () {
     const token = UserStore.getState().user.token;
     const usernameToEdit = AllUsersStore.getState().userToEdit;
     const userLoggedType = UserStore.getState().user.typeOfUser;
+    const sendMessage = useWebSocketStatistics().sendMessage;
 
     const DEVELOPER = 100;
     const SCRUM_MASTER = 200;
@@ -35,10 +38,9 @@ export function UserDetails () {
     
 
     useEffect(() => {
-        console.log('displayContainer DETAILS', AllUsersStore.getState().displayContainer);
-        const classes = document.getElementsByClassName('users-details-container')
-        console.log('classes', classes[0].classList);
+        const classes = document.getElementsByClassName('users-details-container') 
         getUserToEdit(usernameToEdit);
+
 }, [usernameToEdit, displayContainer]); 
 
     useEffect(() => {
@@ -249,6 +251,7 @@ export function UserDetails () {
                 AllUsersStore.getState().addUser(userRegistred);
                 AllUsersStore.getState().setNewUser(false);
                 AllUsersStore.getState().setDisplayContainer(false);
+                sendMessage();
                 setNewUser(false);
                 setDisplayContainer(false);
                 clearInputs();
@@ -284,12 +287,12 @@ export function UserDetails () {
 
                 if (response.ok) {                
                     showSuccessMessage('Profile updated successfully');
+                    sendMessage();
                     clearInputs();
                     setDisplayContainer(false);
                     updateUserToEdit(updatedUser);
                     AllUsersStore.getState().updateUser(userToEdit);
                     AllUsersStore.getState().setDisplayContainer(false);
-             
 
                 } else {
                     const error = await response.text();

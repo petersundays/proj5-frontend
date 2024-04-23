@@ -9,12 +9,15 @@ import { showSuccessMessage } from '../../../functions/Messages/SuccessMessage';
 import { getTasksFromUser } from '../../../functions/Tasks/GetTasksFromUser';
 import { getAllTasks } from '../../../functions/Tasks/GetAllTasks';
 import { getTasksByCategory } from '../../../functions/Tasks/GetTasksByCategory';
+import useWebSocketStatistics from '../../../Websockets/StatisticsWS';
+import { send } from 'vite';
 
 function TasksContainer() {
     const [tasksToRender, setTasksToRender] = useState([]);
     const typeOfUser = UserStore.getState().user.typeOfUser;
     const token = UserStore.getState().user.token;
     const userLoggedIn = UserStore.getState().user.username;
+    const sendMessage = useWebSocketStatistics().sendMessage;
 
     const TODO = 100;
     const DOING = 200;
@@ -85,6 +88,7 @@ function TasksContainer() {
 
             if (response.ok) {
                 showSuccessMessage('Task state updated: ' + task.title);
+                sendMessage();
             } else {
                 const error = await response.text();
                 showErrorMessage('Error: ' + error);

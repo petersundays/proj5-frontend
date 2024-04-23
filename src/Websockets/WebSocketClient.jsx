@@ -16,7 +16,6 @@ export const useWebSocketClient = () => {
     
 
     useEffect(() => {
-        console.log("WebSocketClient: ", user.token);
         const connect = () => {
             if (wsClientRef.current && wsClientRef.current.readyState === WebSocket.OPEN) {
                 console.log("WebSocket is already connected");
@@ -62,7 +61,6 @@ export const useWebSocketClient = () => {
         };
 
         if (user.token) {
-            console.log("**** user.token: ", user.token);
             connect();
         }
 

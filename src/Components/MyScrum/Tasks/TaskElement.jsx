@@ -13,6 +13,8 @@ import { getAllTasks } from '../../../functions/Tasks/GetAllTasks.js';
 import { getTasksByCategory } from '../../../functions/Tasks/GetTasksByCategory.js';
 import { AllTasksStore } from '../../../Stores/AllTasksStore.jsx';
 import { ConfirmationModal } from '../../General/ConfirmationModal.jsx';
+import useWebSocketStatistics from '../../../Websockets/StatisticsWS.jsx';
+import { send } from 'vite';
 
 
 
@@ -34,6 +36,7 @@ const TaskElement = ({ task }) => {
     const PRODUCT_OWNER = 300;
 
     const typeOfUser = UserStore.getState().user.typeOfUser;
+    const sendMessage = useWebSocketStatistics().sendMessage;
 
     const taskElementId = task.taskId;
     const taskElementTitle = task.title;
@@ -127,8 +130,10 @@ const TaskElement = ({ task }) => {
             if (response.ok) {
                 if (restore) {
                     showSuccessMessage('Tarefa restaurada: ' + task.title);
+                    sendMessage();
                 } else {
                     showSuccessMessage('Tarefa apagada: ' + task.title);
+                    sendMessage();
                 }
             } else {
                 const error = await response.text();
@@ -166,6 +171,7 @@ const TaskElement = ({ task }) => {
 
             if (response.ok) {
                 showSuccessMessage('Tarefa eliminada: ' + task.title);
+                sendMessage();
             } else {
                 const error = await response.text();
                 showErrorMessage('Error: ' + error);

@@ -10,6 +10,7 @@ import PriorityButtons from '../../General/PriorityButtons';
 import { showErrorMessage } from '../../../functions/Messages/ErrorMessage';
 import { showSuccessMessage } from '../../../functions/Messages/SuccessMessage';
 import { showWarningMessage } from '../../../functions/Messages/WarningMessage';
+import useWebSocketStatistics from '../../../Websockets/StatisticsWS';
 
 function EditTask() {
 
@@ -32,7 +33,8 @@ function EditTask() {
     const location = useLocation();
     const navigate = useNavigate();
     let  taskToEdit = location.state.task;
-    
+
+    const sendMessage = useWebSocketStatistics().sendMessage;
 
     useEffect(() => {
         
@@ -193,6 +195,7 @@ function EditTask() {
                 if (response.ok) {
                     const updatedTask = MyTasksStore.getState().tasks.find(t => t.id === task.id);
                     showSuccessMessage('Task saved successfully');
+                    sendMessage();
                     navigate('/my-scrum');
                 } else {
                     const error = await response.text();

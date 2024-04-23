@@ -9,9 +9,11 @@ import PriorityButtons from "../../General/PriorityButtons.jsx";
 import Button from "../../General/Button.jsx";
 import { MyTasksStore } from "../../../Stores/MyTasksStore.jsx";
 import { getTasksFromUser } from "../../../functions/Tasks/GetTasksFromUser.js";
+import useWebSocketStatistics from "../../../Websockets/StatisticsWS.jsx";
 
 function AsideAddTask() {
   const token = UserStore.getState().user.token;
+  const sendMessage = useWebSocketStatistics().sendMessage;
 
   const [categories, setCategories] = useState([]);
   const [categoriesLoaded, setCategoriesLoaded] = useState(false);
@@ -173,6 +175,7 @@ function AsideAddTask() {
       }
       const updateMyTasks = await getTasksFromUser(username, token);
       MyTasksStore.setState({ tasks: updateMyTasks });
+      sendMessage();
       
     }
   };

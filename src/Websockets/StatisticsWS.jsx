@@ -20,12 +20,14 @@ const useWebSocketStatistics = () => {
     useEffect(() => {
         console.log("Connecting to statistics websocket");
         const ws = new WebSocket(WS_URL);    
+
         ws.onopen = () => {
             console.log("Connected to statistics websocket");
             wsClientRef.current = ws;
         };
 
         ws.onmessage = (event) => {
+            console.log("Received message from statistics websocket");
             const statistics = JSON.parse(event.data);
             StatisticsStore.setState(statistics);
         }
