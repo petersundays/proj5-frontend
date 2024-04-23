@@ -6,8 +6,6 @@ import { showWarningMessage } from "../Messages/WarningMessage";
 export const RegisterUser = async (event, newUser) => {
 
     event.preventDefault();
-    const sendMessage = useWebSocketStatistics().sendMessage;
-
 
     const registerRequest = "http://localhost:8080/backend_proj5_war_exploded/rest/users";
 
@@ -23,7 +21,6 @@ export const RegisterUser = async (event, newUser) => {
 
             if (response.ok) {
                 showSuccessMessage('Registration successful');
-                sendMessage();
                 return true;
             } else if (response.status === 409) {
                 showWarningMessage("Username already in use");

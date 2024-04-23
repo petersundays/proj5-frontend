@@ -7,10 +7,13 @@ import { showSuccessMessage } from "../../functions/Messages/SuccessMessage";
 import { showInfoMessage } from "../../functions/Messages/InfoMessage";
 import Button from '../General/Button';
 import { SetPassword } from '../../functions/Users/SetPassword';
+import useWebSocketStatistics from '../../Websockets/StatisticsWS';
 
 export function ConfirmAccount() {
 
     const navigate = useNavigate();
+
+    const sendMessage = useWebSocketStatistics().sendMessage;
 
     const {validationToken} = useParams();
 
@@ -105,6 +108,7 @@ export function ConfirmAccount() {
     
                 if (response.ok) {
                     console.log("Account confirmed");
+                    sendMessage();
                     return true;
                 } else if (response.status === 400) {
                     showInfoMessage("Account already confirmed");
