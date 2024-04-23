@@ -9,8 +9,6 @@ import { showSuccessMessage } from '../../../functions/Messages/SuccessMessage.j
 import { showErrorMessage } from '../../../functions/Messages/ErrorMessage.js';
 import { getUserByUsername } from '../../../functions/Users/GetUserByUsername.js';
 import useWebSocketStatistics from '../../../Websockets/StatisticsWS.jsx';
-import { send } from 'vite';
-
 
 function UsersContainer() {
 
@@ -18,6 +16,7 @@ function UsersContainer() {
 
     const token = UserStore.getState().user.token;
     const userLoggedType = UserStore.getState().user.typeOfUser;
+    const username = UserStore.getState().user.username;
     const sendMessage = useWebSocketStatistics().sendMessage;
 
     const DEVELOPER = 100;
@@ -98,6 +97,7 @@ function UsersContainer() {
         }
     
         return filteredUsers.map(user => (
+            user.username !== username &&
             <tr key={user.username} onClick={() => handleRowClick(user.username)}>
                 <td><img src={user.photoURL} alt="" /></td>
                 <td>{user.username}</td>

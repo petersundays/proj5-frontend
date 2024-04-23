@@ -10,7 +10,6 @@ import { UserStore } from '../../../Stores/UserStore';
 import { showSuccessMessage } from '../../../functions/Messages/SuccessMessage';
 import { getUserByUsername } from '../../../functions/Users/GetUserByUsername';
 import useWebSocketStatistics from '../../../Websockets/StatisticsWS';
-import { send } from 'vite';
 
 export function UserDetails () {
 

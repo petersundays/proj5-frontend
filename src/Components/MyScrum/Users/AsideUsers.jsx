@@ -12,6 +12,7 @@ function AsideUsers() {
     const PRODUCT_OWNER = 300;
 
     const token = UserStore.getState().user.token;
+    const username = UserStore.getState().user.username;
     const [users, setUsers] = useState(AllUsersStore.getState().users);
     const [userSearch, setUserSearch] = useState('');
     const [selectedUser, setSelectedUser] = useState('');
@@ -72,12 +73,14 @@ function AsideUsers() {
     const createSelectOptions = () => {
         if (userSearch === '') {
             return users.map(user => (
+                user.username !== username &&
                 <option key={user.username} value={user.username}>{user.username}</option>
             ));
         } else {
             return users
             .filter(user => user.username.toLowerCase().includes(userSearch.toLowerCase()))
             .map(user => (
+                user.username !== username &&
                 <option key={user.username} value={user.username}>{user.username}</option>
             ));
         }
