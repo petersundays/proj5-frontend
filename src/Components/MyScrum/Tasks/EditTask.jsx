@@ -4,13 +4,13 @@ import { useNavigate } from 'react-router-dom';
 import "./EditTask.css";
 import { CategoriesStore } from '../../../Stores/CategoriesStore';
 import { UserStore } from '../../../Stores/UserStore';
-import {MyTasksStore} from '../../../Stores/MyTasksStore';
 import Button from '../../General/Button';
 import PriorityButtons from '../../General/PriorityButtons';
 import { showErrorMessage } from '../../../functions/Messages/ErrorMessage';
 import { showSuccessMessage } from '../../../functions/Messages/SuccessMessage';
 import { showWarningMessage } from '../../../functions/Messages/WarningMessage';
 import useWebSocketStatistics from '../../../Websockets/StatisticsWS';
+import { AllTasksStore } from '../../../Stores/AllTasksStore.jsx';
 
 function EditTask() {
 
@@ -26,7 +26,6 @@ function EditTask() {
     const DOING = 200;
     const DONE = 300;
 
-    const DEVELOPER = 100;
     const SCRUM_MASTER = 200;
     const PRODUCT_OWNER = 300;
 
@@ -193,7 +192,7 @@ function EditTask() {
                 });
 
                 if (response.ok) {
-                    const updatedTask = MyTasksStore.getState().tasks.find(t => t.id === task.id);
+                    const updatedTask = AllTasksStore.getState().tasks.find(t => t.id === task.id);
                     showSuccessMessage('Task saved successfully');
                     sendMessage();
                     navigate('/my-scrum');

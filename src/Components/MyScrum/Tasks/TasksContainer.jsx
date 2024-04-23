@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import "./TasksContainer.css";
 import TaskElement from './TaskElement';
-import { MyTasksStore } from '../../../Stores/MyTasksStore';
 import { AllTasksStore } from '../../../Stores/AllTasksStore';
-import { TasksByCategoryStore } from '../../../Stores/TasksByCategoryStore';
 import { UserStore } from '../../../Stores/UserStore';
 import { showSuccessMessage } from '../../../functions/Messages/SuccessMessage';
 import { getTasksFromUser } from '../../../functions/Tasks/GetTasksFromUser';
 import { getAllTasks } from '../../../functions/Tasks/GetAllTasks';
-import { getTasksByCategory } from '../../../functions/Tasks/GetTasksByCategory';
 import useWebSocketStatistics from '../../../Websockets/StatisticsWS';
 
 function TasksContainer() {
@@ -33,27 +30,18 @@ function TasksContainer() {
 
     useEffect(() => {
         const updateTasks = () => {
-            let tasks = [];
-            if (window.location.pathname === '/my-scrum') {
-                tasks = MyTasksStore.getState().tasks;
-            } else if (window.location.pathname === '/my-scrum/all-tasks') {
-                tasks = AllTasksStore.getState().tasks;
-            } else if (window.location.pathname === '/my-scrum/categories') {
-                tasks = TasksByCategoryStore.getState().tasks;
-            }
+
+            let tasks = AllTasksStore.getState().tasks;
+            
             setTasksToRender(tasks);
         };
 
         updateTasks();
 
-        const unsubscribeMyTasks = MyTasksStore.subscribe(updateTasks);
         const unsubscribeAllTasks = AllTasksStore.subscribe(updateTasks);
-        const unsubscribeTasksByCategory = TasksByCategoryStore.subscribe(updateTasks);
 
         return () => {
-            unsubscribeMyTasks();
             unsubscribeAllTasks();
-            unsubscribeTasksByCategory();
         };
     }, []);
 
@@ -97,16 +85,17 @@ function TasksContainer() {
             showErrorMessage('Something went wrong. Please try again later.');
         }
 
-        const updateMyTasks = await getTasksFromUser(userLoggedIn, token);
-        const updateAllTasks = await getAllTasks(token);
-        MyTasksStore.setState({ tasks: updateMyTasks });
-        AllTasksStore.setState({ tasks: updateAllTasks });
 
-        if (typeOfUser === PRODUCT_OWNER) {
-            const category = task.category.name;
-            const updateCategoryTasks = await getTasksByCategory(category, token);
-            TasksByCategoryStore.setState({ tasks: updateCategoryTasks });
+        let updateTasks = [];
+
+        if (location.pathname === '/my-scrum/all-tasks') {
+            updateTasks = await getAllTasks(token);
+        } else if (location.pathname === '/my-scrum') {
+
+            updateTasks = await getTasksFromUser(userLoggedIn, token);
         }
+        
+        AllTasksStore.setState({ tasks: updateTasks });
 
     }
 
