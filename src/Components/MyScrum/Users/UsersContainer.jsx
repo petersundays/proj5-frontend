@@ -8,6 +8,8 @@ import { UserDetails } from './UserDetails';
 import { showSuccessMessage } from '../../../functions/Messages/SuccessMessage.js';
 import { showErrorMessage } from '../../../functions/Messages/ErrorMessage.js';
 import { getUserByUsername } from '../../../functions/Users/GetUserByUsername.js';
+import useWebSocketStatistics from '../../../Websockets/StatisticsWS.jsx';
+import { send } from 'vite';
 
 
 function UsersContainer() {
@@ -16,6 +18,7 @@ function UsersContainer() {
 
     const token = UserStore.getState().user.token;
     const userLoggedType = UserStore.getState().user.typeOfUser;
+    const sendMessage = useWebSocketStatistics().sendMessage;
 
     const DEVELOPER = 100;
     const SCRUM_MASTER = 200;
@@ -138,6 +141,7 @@ function UsersContainer() {
                 const feedback = await response.text();
                 const updatedUser = await getUserByUsername(token, username);
                 showSuccessMessage(feedback);
+                sendMessage();
                 AllUsersStore.getState().updateUser(updatedUser);
                 AllUsersStore.getState().setDisplayContainer(false);
 
@@ -170,6 +174,7 @@ function UsersContainer() {
             if (response.ok) {
                 const feedback = await response.text();
                 showSuccessMessage(feedback);
+                sendMessage();
                 AllUsersStore.getState().removeUser(username);
                 AllUsersStore.getState().setDisplayContainer(false);
                 AllUsersStore.getState().setDisplayConfirmationModal(false);

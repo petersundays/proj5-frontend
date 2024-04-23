@@ -70,7 +70,7 @@ export const useWebSocketClient = () => {
                 wsClientRef.current = null;
             }
         };
-    }, [user.token]);  // Depend on the user's login status
+    }, []);  // Depend on the user's login status
 
     return { ws: wsClientRef.current, markAsRead };
 };

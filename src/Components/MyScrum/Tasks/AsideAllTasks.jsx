@@ -8,6 +8,7 @@ import { getTasksFromUser } from '../../../functions/Tasks/GetTasksFromUser.js';
 import { AllTasksStore } from '../../../Stores/AllTasksStore.jsx';
 import { getAllTasks } from '../../../functions/Tasks/GetAllTasks.js';
 import { ConfirmationModal } from '../../General/ConfirmationModal.jsx';
+import useWebSocketStatistics from '../../../Websockets/StatisticsWS.jsx';
 
 function AsideAllTasks() {
 
@@ -20,6 +21,8 @@ function AsideAllTasks() {
     const [displayConfirmationModal, setDisplayConfirmationModal] = useState(false);
     const message = "Are you sure you want to delete this tasks?";
     
+    const sendMessage = useWebSocketStatistics().sendMessage;
+
    
     useEffect(() => {
         getAllUsersFromServer(); 
@@ -101,6 +104,7 @@ function AsideAllTasks() {
         if (selectedUser === 'erased') {
            deleteAllErasedTasks();
            setDisplayConfirmationModal(false);
+           sendMessage();
         } else if (selectedUser !== '') {
             deleteAllTasksFromUser();
             setDisplayConfirmationModal(false);
@@ -113,6 +117,7 @@ function AsideAllTasks() {
     const handleRestoreAllTasks = async () => {
         if (selectedUser === 'erased') {
             await restoreAllTasks();
+            sendMessage();
         } else if (selectedUser !== '') {
             await restoreAllTasksFromUser();
         } else {
@@ -170,6 +175,7 @@ function AsideAllTasks() {
                 showSuccessMessage('Tasks erased successfully.');
                 const updatedTasks = await getAllTasks(token);
                 AllTasksStore.setState({ tasks: updatedTasks });
+                sendMessage();
             } else {
                 showErrorMessage('Failed to erase tasks. Please try again later.');
             }
@@ -197,7 +203,7 @@ function AsideAllTasks() {
                 showSuccessMessage('Tasks from ' + selectedUser.toUpperCase() + ' erased successfully.');
                 const updatedTasks = await getTasksFromUser(selectedUser, token);
                 AllTasksStore.setState({ tasks: updatedTasks });
-                                    
+                sendMessage();
             } else {
                 showErrorMessage('Failed to erase tasks. Please try again later.');
             }
@@ -226,6 +232,7 @@ function AsideAllTasks() {
                     showSuccessMessage('Tasks restored successfully.');
                     const updatedTasks = await getErasedTasks();
                     AllTasksStore.setState({ tasks: updatedTasks });
+                    sendMessage();
                 } else {
                     showErrorMessage('Failed to restore tasks. Please try again later.');
                 }
@@ -257,7 +264,7 @@ function AsideAllTasks() {
                     showSuccessMessage('Tasks from ' + selectedUser.toUpperCase() + ' restored successfully.');
                     const updatedTasks = await getTasksFromUser(selectedUser, token);
                     AllTasksStore.setState({ tasks: updatedTasks });
-                    
+                    sendMessage();
                 } else {
                     showErrorMessage('Failed to restore all tasks. Please try again later.');
                 }
@@ -285,6 +292,7 @@ function AsideAllTasks() {
                 showSuccessMessage('Tasks deleted successfully.');
                 const updatedTasks = await getTasksFromUser(selectedUser, token);
                 AllTasksStore.setState({ tasks: updatedTasks });
+                sendMessage();
             } else {
                 showErrorMessage('Failed to delete tasks. Please try again later.');
             }
@@ -310,6 +318,7 @@ function AsideAllTasks() {
             if (response.ok) {
                 showSuccessMessage('Tasks deleted successfully.');
                 AllTasksStore.setState({ tasks: [] });
+                sendMessage();
             } else {
                 showErrorMessage('Failed to delete tasks. Please try again later.');
             }

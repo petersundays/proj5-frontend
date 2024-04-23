@@ -1,46 +1,35 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './Dashboard.css';
-import { UserStatistics } from '../../../functions/Statistics/Statistics';
 import { UserStore } from '../../../Stores/UserStore';
-import { CategoriesList } from '../../../functions/Statistics/Categories';
-import { AverageTimeToFinishTask } from '../../../functions/Statistics/TaskAverageTime';
-import { GetConcludedTasksByDate } from '../../../functions/Statistics/ConcludedTasks';
-import { GetUsersRegisteredByDate } from '../../../functions/Statistics/RegistredUsers';
+import { StatisticsStore } from '../../../Stores/StatisticsStore';
+import useWebSocketStatistics from '../../../Websockets/StatisticsWS';
+
 
 
 function Dashboard() {
 
     const token = UserStore(state => state.user.token);
 
-    const [userStats, setUserStats] = useState([]);
-    const [categories, setCategories] = useState([]);
-    const [taskTime, setTaskTime] = useState(0.0);
-    const [concludedTasks, setConcludedTasks] = useState([]);
-    const [usersRegistered, setUsersRegistered] = useState([]);
+    const wsStatistics = useWebSocketStatistics();
+    const sendMessage = wsStatistics.sendMessage;
 
+    const [userStats, setUserStats] = useState(StatisticsStore.getState().userStats);
+const [categories, setCategories] = useState(StatisticsStore.getState().categories);
+const [taskTime, setTaskTime] = useState(StatisticsStore.getState().averageTaskTime);
+const [concludedTasks, setConcludedTasks] = useState(StatisticsStore.getState().totalTasksDoneByEachDay);
+const [usersRegistered, setUsersRegistered] = useState(StatisticsStore.getState().usersRegistered);
 
-    useEffect(() => {
-        UserStatistics(token).then((stats) => {
-          setUserStats(stats);
-        });
-    
-        CategoriesList(token).then((categories) => {
-          setCategories(categories);
-        });
+useEffect(() => {
+    const unsubscribe = StatisticsStore.subscribe((state) => {
+        setUserStats(state.userStats);
+        setCategories(state.categories);
+        setTaskTime(state.averageTaskTime);
+        setConcludedTasks(state.totalTasksDoneByEachDay);
+        setUsersRegistered(state.usersRegistered);
+    });
 
-        AverageTimeToFinishTask(token).then((time) => {
-          setTaskTime(time);
-        });
-
-        GetConcludedTasksByDate(token).then((tasks) => {
-            setConcludedTasks(tasks);
-        });
-
-        GetUsersRegisteredByDate(token).then((users) => {
-            setUsersRegistered(users);
-        });
-
-      }, []);
+    return () => unsubscribe();
+}, []);
 
 
       const displayCategories = () => {
