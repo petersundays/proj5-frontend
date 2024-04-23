@@ -10,7 +10,6 @@ import { getTasksFromUser } from '../../../functions/Tasks/GetTasksFromUser';
 import { getAllTasks } from '../../../functions/Tasks/GetAllTasks';
 import { getTasksByCategory } from '../../../functions/Tasks/GetTasksByCategory';
 import useWebSocketStatistics from '../../../Websockets/StatisticsWS';
-import { send } from 'vite';
 
 function TasksContainer() {
     const [tasksToRender, setTasksToRender] = useState([]);

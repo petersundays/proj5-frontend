@@ -14,8 +14,6 @@ import { getTasksByCategory } from '../../../functions/Tasks/GetTasksByCategory.
 import { AllTasksStore } from '../../../Stores/AllTasksStore.jsx';
 import { ConfirmationModal } from '../../General/ConfirmationModal.jsx';
 import useWebSocketStatistics from '../../../Websockets/StatisticsWS.jsx';
-import { send } from 'vite';
-
 
 
 const TaskElement = ({ task }) => {
