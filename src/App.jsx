@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./App.css";
 import { ToastContainer } from "react-toastify";
 import { Route, Routes } from "react-router-dom";
@@ -9,7 +9,6 @@ import NotConfirmedPage from "./Pages/NotConfirmedPage";
 import ConfirmAccountPage from "./Pages/ConfirmAccountPage";
 import RecoverPasswordPage from "./Pages/RecoverPasswordPage";
 import ResetPasswordPage from "./Pages/ResetPasswordPage";
-import { NotificationStore } from "./Stores/NotificationStore";
 
 function App() {
 

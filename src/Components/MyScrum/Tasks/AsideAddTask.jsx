@@ -7,9 +7,9 @@ import { showWarningMessage } from "../../../functions/Messages/WarningMessage.j
 import { CategoriesStore } from "../../../Stores/CategoriesStore.jsx";
 import PriorityButtons from "../../General/PriorityButtons.jsx";
 import Button from "../../General/Button.jsx";
-import { MyTasksStore } from "../../../Stores/MyTasksStore.jsx";
 import { getTasksFromUser } from "../../../functions/Tasks/GetTasksFromUser.js";
 import useWebSocketStatistics from "../../../Websockets/StatisticsWS.jsx";
+import { AllTasksStore } from "../../../Stores/AllTasksStore.jsx";
 
 function AsideAddTask() {
   const token = UserStore.getState().user.token;
@@ -24,8 +24,6 @@ function AsideAddTask() {
   const [taskLimitDate, setTaskLimitDate] = useState("");
   const [taskCategory, setTaskCategory] = useState("");
   const [resetPriority, setResetPriority] = useState(false);
-
-  const addTaskToStore = MyTasksStore((state) => state.addTask);
 
   useEffect(() => {
     if (!categoriesLoaded) {
@@ -174,7 +172,7 @@ function AsideAddTask() {
         showErrorMessage("Something went wrong. Please try again later.");
       }
       const updateMyTasks = await getTasksFromUser(username, token);
-      MyTasksStore.setState({ tasks: updateMyTasks });
+      AllTasksStore.setState({ tasks: updateMyTasks });
       sendMessage();
       
     }

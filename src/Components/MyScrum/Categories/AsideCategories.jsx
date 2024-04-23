@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import Button from '../../General/Button.jsx';
 import { UserStore } from '../../../Stores/UserStore.jsx';
-import { TasksByCategoryStore } from '../../../Stores/TasksByCategoryStore.jsx';
 import { showErrorMessage } from '../../../functions/Messages/ErrorMessage';
 import { showSuccessMessage } from '../../../functions/Messages/SuccessMessage'; 
 import { CategoriesStore } from '../../../Stores/CategoriesStore.jsx';
 import { ConfirmationModal } from '../../General/ConfirmationModal.jsx';
 import { getTasksByCategory } from '../../../functions/Tasks/GetTasksByCategory.js';
 import { getAllTasks } from '../../../functions/Tasks/GetAllTasks.js';
+import { AllTasksStore } from '../../../Stores/AllTasksStore.jsx';
 
 function AsideCategories() {
 
@@ -29,9 +29,7 @@ function AsideCategories() {
         {
             getCategoriesNames(); 
         }
-
-        // Atualiza o estado do componente com o estado do store sempre que a store for atualizado
-        const unsubscribe = TasksByCategoryStore.subscribe(
+            const unsubscribe = AllTasksStore.subscribe(
             (newTasks) => {
                 setTasks(newTasks);
             },
@@ -48,10 +46,10 @@ function AsideCategories() {
         async function fetchTasks() {
             if (selectedCategory !== '') {
                 const selectedCategoryTasks = await getTasksByCategory(selectedCategory, token);
-                TasksByCategoryStore.setState({ tasks: selectedCategoryTasks });
+                AllTasksStore.setState({ tasks: selectedCategoryTasks });
             } else {
                 const allTasks = await getAllTasks(token);
-                TasksByCategoryStore.setState({ tasks: allTasks });
+                AllTasksStore.setState({ tasks: allTasks });
             }
         }
         fetchTasks();
@@ -61,7 +59,7 @@ function AsideCategories() {
 
     const handleDisplayConfirmationModal = () => {
         
-        if (TasksByCategoryStore.getState().tasks.length > 0) {
+        if (AllTasksStore.getState().tasks.length > 0) {
             showErrorMessage('Category cannot be deleted. There are tasks associated with this category.');
             return;
         } else {

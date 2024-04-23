@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { MyTasksStore } from '../../../Stores/MyTasksStore';
 import { UserStore } from '../../../Stores/UserStore';
 import { getTasksFromUser } from '../../../functions/Tasks/GetTasksFromUser';
 import TasksContainer from './TasksContainer';
+import { AllTasksStore } from '../../../Stores/AllTasksStore'
 
 function MyTasks() {
     const token = UserStore.getState().user.token;
@@ -16,7 +16,7 @@ function MyTasks() {
         }
 
         // Atualiza o estado do componente com o estado do store sempre que a store for atualizado
-        const unsubscribe = MyTasksStore.subscribe(
+        const unsubscribe = AllTasksStore.subscribe(
             (newTasks) => {
                 setTasks(newTasks);
             },
@@ -32,7 +32,8 @@ function MyTasks() {
 
     const getTasks = async () => {
         const tasks = await getTasksFromUser(username, token);
-        MyTasksStore.setState({ tasks: tasks });
+        AllTasksStore.setState({ tasks: tasks });
+
      };
 
 

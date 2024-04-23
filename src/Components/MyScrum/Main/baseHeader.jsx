@@ -2,14 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from "react-router-dom";
 import './baseHeader.css';
 import { UserStore } from '../../../Stores/UserStore';
-import { MyTasksStore } from '../../../Stores/MyTasksStore';
 import { CategoriesStore } from '../../../Stores/CategoriesStore';
 import { useNavigate } from 'react-router-dom';
 import { AllTasksStore } from '../../../Stores/AllTasksStore';
 import { showInfoMessage } from '../../../functions/Messages/InfoMessage';
 import { AllUsersStore } from '../../../Stores/AllUsersStore';
-import { TasksByCategoryStore } from '../../../Stores/TasksByCategoryStore';
-import { TasksByUserStore } from '../../../Stores/TasksByUserStore';
 import { NotificationStore } from '../../../Stores/NotificationStore';
 import { FaBell } from 'react-icons/fa'
 import Dropdown from "react-bootstrap/Dropdown";
@@ -114,7 +111,6 @@ function BaseHeader() {
 
     const handleLogout = async () => {
         UserStore.setState({ user: {} });
-        MyTasksStore.setState({ tasks: [] });
         CategoriesStore.setState({ categories: [] });
         AllTasksStore.setState({ tasks: [] });
         AllUsersStore.setState({ users: [] });
@@ -122,8 +118,6 @@ function BaseHeader() {
         AllUsersStore.setState({ userType: "" });
         AllUsersStore.setState({ newUser: false });
         AllUsersStore.setState({ displayContainer: false });
-        TasksByCategoryStore.setState({ tasks: [] });
-        TasksByUserStore.setState({ tasks: [] });
         NotificationStore.setState({ notifications: [] });
 
     // Close the WebSocket connection

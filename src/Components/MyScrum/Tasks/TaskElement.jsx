@@ -1,16 +1,12 @@
 import React, { useState } from 'react';
 import { UserStore } from '../../../Stores/UserStore.jsx';
-import { MyTasksStore } from '../../../Stores/MyTasksStore.jsx';
-import { TasksByCategoryStore } from '../../../Stores/TasksByCategoryStore.jsx';
 import './TaskElement.css';
 import darkCross from '../../../multimedia/dark-cross-01.png';
 import restoreIcon from '../../../multimedia/restoreIcon.png';
 import { useNavigate } from 'react-router-dom';
 import { showErrorMessage } from '../../../functions/Messages/ErrorMessage.js';
 import { showSuccessMessage } from '../../../functions/Messages/SuccessMessage.js';
-import { getTasksFromUser } from '../../../functions/Tasks/GetTasksFromUser.js';
 import { getAllTasks } from '../../../functions/Tasks/GetAllTasks.js';
-import { getTasksByCategory } from '../../../functions/Tasks/GetTasksByCategory.js';
 import { AllTasksStore } from '../../../Stores/AllTasksStore.jsx';
 import { ConfirmationModal } from '../../General/ConfirmationModal.jsx';
 import useWebSocketStatistics from '../../../Websockets/StatisticsWS.jsx';
@@ -142,21 +138,15 @@ const TaskElement = ({ task }) => {
             showErrorMessage('Something went wrong. Please try again later.');
         }
     
-        const updateMyTasks = await getTasksFromUser(userLoggedIn, token);
         const updateAllTasks = await getAllTasks(token);
-        const category = task.category.name;
-        const updateCategoryTasks = await getTasksByCategory(category, token);
-
-        MyTasksStore.setState({ tasks: updateMyTasks });
         AllTasksStore.setState({ tasks: updateAllTasks });
-        TasksByCategoryStore.setState({ tasks: updateCategoryTasks });
         
     }
 
 
     const deleteTask = async () => {
 
-        const deleteRequest = `http://localhost:8080/backend_proj5_war_exploded/rest/tasks/${task.id}`;
+        const deleteRequest = `http://localhost:8080/backend_proj5_war_exploded/rest/tasks/delete/${task.id}`;
         try {
             const response = await fetch(deleteRequest, {
                 method: 'DELETE',
@@ -179,14 +169,8 @@ const TaskElement = ({ task }) => {
             showErrorMessage('Something went wrong. Please try again later.');
         }
         
-        const updateMyTasks = await getTasksFromUser(userLoggedIn, token);
         const updateAllTasks = await getAllTasks(token);
-        const category = task.category.name;
-        const updateCategoryTasks = await getTasksByCategory(category, token);
-        
-        MyTasksStore.setState({ tasks: updateMyTasks });
         AllTasksStore.setState({ tasks: updateAllTasks });
-        TasksByCategoryStore.setState({ tasks: updateCategoryTasks });
     }
 
     return (
