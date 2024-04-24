@@ -7,13 +7,13 @@ import { showSuccessMessage } from "../../functions/Messages/SuccessMessage";
 import { showInfoMessage } from "../../functions/Messages/InfoMessage";
 import Button from '../General/Button';
 import { SetPassword } from '../../functions/Users/SetPassword';
-import useWebSocketStatistics from '../../Websockets/StatisticsWS';
+import { StatisticsStore } from '../../Stores/StatisticsStore';
 
 export function ConfirmAccount() {
 
     const navigate = useNavigate();
 
-    const sendMessage = useWebSocketStatistics().sendMessage;
+    const { sendMessage } = StatisticsStore((state) => ({ sendMessage: state.sendMessage }));
 
     const {validationToken} = useParams();
 

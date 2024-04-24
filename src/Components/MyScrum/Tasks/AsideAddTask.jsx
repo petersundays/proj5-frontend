@@ -8,12 +8,12 @@ import { CategoriesStore } from "../../../Stores/CategoriesStore.jsx";
 import PriorityButtons from "../../General/PriorityButtons.jsx";
 import Button from "../../General/Button.jsx";
 import { getTasksFromUser } from "../../../functions/Tasks/GetTasksFromUser.js";
-import useWebSocketStatistics from "../../../Websockets/StatisticsWS.jsx";
 import { AllTasksStore } from "../../../Stores/AllTasksStore.jsx";
+import { StatisticsStore } from "../../../Stores/StatisticsStore.jsx";
 
 function AsideAddTask() {
   const token = UserStore.getState().user.token;
-  const sendMessage = useWebSocketStatistics().sendMessage;
+  const { sendMessage } = StatisticsStore((state) => ({ sendMessage: state.sendMessage }));
 
   const [categories, setCategories] = useState([]);
   const [categoriesLoaded, setCategoriesLoaded] = useState(false);

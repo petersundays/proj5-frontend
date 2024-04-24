@@ -6,15 +6,15 @@ import { UserStore } from '../../../Stores/UserStore';
 import { showSuccessMessage } from '../../../functions/Messages/SuccessMessage';
 import { getTasksFromUser } from '../../../functions/Tasks/GetTasksFromUser';
 import { getAllTasks } from '../../../functions/Tasks/GetAllTasks';
-import useWebSocketStatistics from '../../../Websockets/StatisticsWS';
 import { showErrorMessage } from '../../../functions/Messages/ErrorMessage';
+import { StatisticsStore } from '../../../Stores/StatisticsStore';
 
 function TasksContainer() {
     const [tasksToRender, setTasksToRender] = useState([]);
     const typeOfUser = UserStore.getState().user.typeOfUser;
     const token = UserStore.getState().user.token;
     const userLoggedIn = UserStore.getState().user.username;
-    const sendMessage = useWebSocketStatistics().sendMessage;
+    const { sendMessage } = StatisticsStore((state) => ({ sendMessage: state.sendMessage }));
 
     const TODO = 100;
     const DOING = 200;
@@ -28,23 +28,27 @@ function TasksContainer() {
     const SCRUM_MASTER = 200;
     const PRODUCT_OWNER = 300;
 
-
     useEffect(() => {
         const updateTasks = () => {
-
             let tasks = AllTasksStore.getState().tasks;
-            
             setTasksToRender(tasks);
         };
-
+    
         updateTasks();
-
+    
         const unsubscribeAllTasks = AllTasksStore.subscribe(updateTasks);
-
+    
+        getTasks();
+    
         return () => {
             unsubscribeAllTasks();
         };
     }, []);
+
+    const getTasks = async () => {
+        const tasks = await getAllTasks(token);
+        AllTasksStore.setState({ tasks: tasks });
+    };
 
     const filteredTasks = (stateId) => {
         if (typeOfUser === DEVELOPER) {

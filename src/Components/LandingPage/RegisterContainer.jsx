@@ -3,13 +3,13 @@ import './RegisterContainer.css';
 import { useNavigate } from 'react-router-dom';
 import { showErrorMessage } from '../../functions/Messages/ErrorMessage';
 import { RegisterUser } from '../../functions/Users/RegisterUser';
-import useWebSocketStatistics from '../../Websockets/StatisticsWS';
+import { StatisticsStore } from '../../Stores/StatisticsStore';
 
 function registerContainer() {
 
     const navigate = useNavigate();
 
-    const sendMessage = useWebSocketStatistics().sendMessage;
+    const { sendMessage } = StatisticsStore((state) => ({ sendMessage: state.sendMessage }));
 
     const handleCancelClick = () => {
         navigate('/');

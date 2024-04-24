@@ -11,6 +11,7 @@ import EditTaskPage from './EditTaskPage';
 import UsersPage from './UsersPage';
 import { UserStore } from '../Stores/UserStore';
 import DashboardPage from './DashboardPage';
+import useWebSocketStatistics from '../Websockets/StatisticsWS';
 
 function MainPage() {
     const user = UserStore.getState().user; 
@@ -19,6 +20,8 @@ function MainPage() {
     if (!user) {
         navigate('/');
     } 
+
+    const wsStatistics = useWebSocketStatistics();
 
     return (
         <>

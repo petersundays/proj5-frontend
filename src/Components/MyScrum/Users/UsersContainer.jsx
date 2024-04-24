@@ -8,7 +8,7 @@ import { UserDetails } from './UserDetails';
 import { showSuccessMessage } from '../../../functions/Messages/SuccessMessage.js';
 import { showErrorMessage } from '../../../functions/Messages/ErrorMessage.js';
 import { getUserByUsername } from '../../../functions/Users/GetUserByUsername.js';
-import useWebSocketStatistics from '../../../Websockets/StatisticsWS.jsx';
+import { StatisticsStore } from '../../../Stores/StatisticsStore.jsx';
 
 function UsersContainer() {
 
@@ -17,7 +17,7 @@ function UsersContainer() {
     const token = UserStore.getState().user.token;
     const userLoggedType = UserStore.getState().user.typeOfUser;
     const username = UserStore.getState().user.username;
-    const sendMessage = useWebSocketStatistics().sendMessage;
+    const { sendMessage } = StatisticsStore((state) => ({ sendMessage: state.sendMessage }));
 
     const DEVELOPER = 100;
     const SCRUM_MASTER = 200;

@@ -20,10 +20,10 @@ const useWebSocketStatistics = () => {
     useEffect(() => {
         console.log("Connecting to statistics websocket");
         const ws = new WebSocket(WS_URL);    
-
+    
         ws.onopen = () => {
             console.log("Connected to statistics websocket");
-            wsClientRef.current = ws;
+            StatisticsStore.getState().setWebSocket(ws);
         };
 
         ws.onmessage = (event) => {

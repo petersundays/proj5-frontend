@@ -9,8 +9,8 @@ import PriorityButtons from '../../General/PriorityButtons';
 import { showErrorMessage } from '../../../functions/Messages/ErrorMessage';
 import { showSuccessMessage } from '../../../functions/Messages/SuccessMessage';
 import { showWarningMessage } from '../../../functions/Messages/WarningMessage';
-import useWebSocketStatistics from '../../../Websockets/StatisticsWS';
 import { AllTasksStore } from '../../../Stores/AllTasksStore.jsx';
+import { StatisticsStore } from '../../../Stores/StatisticsStore.jsx';
 
 function EditTask() {
 
@@ -33,7 +33,7 @@ function EditTask() {
     const navigate = useNavigate();
     let  taskToEdit = location.state.task;
 
-    const sendMessage = useWebSocketStatistics().sendMessage;
+    const { sendMessage } = StatisticsStore((state) => ({ sendMessage: state.sendMessage }));
 
     useEffect(() => {
         

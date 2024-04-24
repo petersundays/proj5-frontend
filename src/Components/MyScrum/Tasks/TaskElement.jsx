@@ -9,7 +9,7 @@ import { showSuccessMessage } from '../../../functions/Messages/SuccessMessage.j
 import { getAllTasks } from '../../../functions/Tasks/GetAllTasks.js';
 import { AllTasksStore } from '../../../Stores/AllTasksStore.jsx';
 import { ConfirmationModal } from '../../General/ConfirmationModal.jsx';
-import useWebSocketStatistics from '../../../Websockets/StatisticsWS.jsx';
+import { StatisticsStore } from '../../../Stores/StatisticsStore.jsx';
 
 
 const TaskElement = ({ task }) => {
@@ -30,7 +30,7 @@ const TaskElement = ({ task }) => {
     const PRODUCT_OWNER = 300;
 
     const typeOfUser = UserStore.getState().user.typeOfUser;
-    const sendMessage = useWebSocketStatistics().sendMessage;
+    const { sendMessage } = StatisticsStore((state) => ({ sendMessage: state.sendMessage }));
 
     const taskElementId = task.taskId;
     const taskElementTitle = task.title;

@@ -8,7 +8,7 @@ import { getTasksFromUser } from '../../../functions/Tasks/GetTasksFromUser.js';
 import { AllTasksStore } from '../../../Stores/AllTasksStore.jsx';
 import { getAllTasks } from '../../../functions/Tasks/GetAllTasks.js';
 import { ConfirmationModal } from '../../General/ConfirmationModal.jsx';
-import useWebSocketStatistics from '../../../Websockets/StatisticsWS.jsx';
+import { StatisticsStore } from '../../../Stores/StatisticsStore.jsx';
 
 function AsideAllTasks() {
 
@@ -21,7 +21,7 @@ function AsideAllTasks() {
     const [displayConfirmationModal, setDisplayConfirmationModal] = useState(false);
     const message = "Are you sure you want to delete this tasks?";
     
-    const sendMessage = useWebSocketStatistics().sendMessage;
+    const { sendMessage } = StatisticsStore((state) => ({ sendMessage: state.sendMessage }));
 
    
     useEffect(() => {
