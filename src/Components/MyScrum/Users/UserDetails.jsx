@@ -9,7 +9,7 @@ import { showInfoMessage } from '../../../functions/Messages/InfoMessage';
 import { UserStore } from '../../../Stores/UserStore';
 import { showSuccessMessage } from '../../../functions/Messages/SuccessMessage';
 import { getUserByUsername } from '../../../functions/Users/GetUserByUsername';
-import useWebSocketStatistics from '../../../Websockets/StatisticsWS';
+import { StatisticsStore } from '../../../Stores/StatisticsStore';
 
 export function UserDetails () {
 
@@ -18,7 +18,7 @@ export function UserDetails () {
     const token = UserStore.getState().user.token;
     const usernameToEdit = AllUsersStore.getState().userToEdit;
     const userLoggedType = UserStore.getState().user.typeOfUser;
-    const sendMessage = useWebSocketStatistics().sendMessage;
+    const { sendMessage } = StatisticsStore((state) => ({ sendMessage: state.sendMessage }));
 
     const DEVELOPER = 100;
     const SCRUM_MASTER = 200;

@@ -20,14 +20,15 @@ const useWebSocketTask = () => {
                 const message = JSON.parse(event.data);
 
                 if (typeof message.task === 'object' && message.task !== null) {
-console.log("Received a MESSAGE: ", message);
                     if (message.actionToDo === 'update') {
                         AllTasksStore.getState().updateTask(message.task); 
+                    } else if (message.actionToDo === 'add') {
+                        const newTasks = [...AllTasksStore.getState().tasks, message.task];
+                        AllTasksStore.setState({ tasks: newTasks });
                     }
 
-                } else if (typeof message.id === 'string') {
-                    // The message contains an id string
-                    console.log("*******Received an id: ", message.id);
+                } else if (typeof message.actionToDo === 'string' && typeof message.id === 'string') {
+                    AllTasksStore.getState().removeTask(message.id);
                 }
             };
         

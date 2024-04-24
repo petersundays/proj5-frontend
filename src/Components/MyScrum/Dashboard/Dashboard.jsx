@@ -1,23 +1,16 @@
 import { useEffect, useState } from 'react';
 import './Dashboard.css';
-import { UserStore } from '../../../Stores/UserStore';
 import { StatisticsStore } from '../../../Stores/StatisticsStore';
-import useWebSocketStatistics from '../../../Websockets/StatisticsWS';
 
 
 
 function Dashboard() {
 
-    const token = UserStore(state => state.user.token);
-
-    const wsStatistics = useWebSocketStatistics();
-    const sendMessage = wsStatistics.sendMessage;
-
     const [userStats, setUserStats] = useState(StatisticsStore.getState().userStats);
-const [categories, setCategories] = useState(StatisticsStore.getState().categories);
-const [taskTime, setTaskTime] = useState(StatisticsStore.getState().averageTaskTime);
-const [concludedTasks, setConcludedTasks] = useState(StatisticsStore.getState().totalTasksDoneByEachDay);
-const [usersRegistered, setUsersRegistered] = useState(StatisticsStore.getState().usersRegistered);
+    const [categories, setCategories] = useState(StatisticsStore.getState().categories);
+    const [taskTime, setTaskTime] = useState(StatisticsStore.getState().averageTaskTime);
+    const [concludedTasks, setConcludedTasks] = useState(StatisticsStore.getState().totalTasksDoneByEachDay);
+    const [usersRegistered, setUsersRegistered] = useState(StatisticsStore.getState().usersRegistered);
 
 useEffect(() => {
     const unsubscribe = StatisticsStore.subscribe((state) => {
