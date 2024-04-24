@@ -12,6 +12,7 @@ import { FaBell } from 'react-icons/fa'
 import Dropdown from "react-bootstrap/Dropdown";
 import { FaEnvelope } from 'react-icons/fa';
 import { useWebSocketClient } from '../../../Websockets/WebSocketClient';
+import useWebSocketTask from '../../../Websockets/TaskWS';
 
 
 function BaseHeader() {
@@ -28,6 +29,8 @@ function BaseHeader() {
     const [notifications, setNotifications] = useState(NotificationStore.getState().notifications);
     const wsClient = NotificationStore((state) => state.WebSocketClient);
     const { markAsRead } = useWebSocketClient();
+
+    const { wsTask } = useWebSocketTask();
 
     useEffect(() => {
         const unsubscribe = NotificationStore.subscribe(() => {
