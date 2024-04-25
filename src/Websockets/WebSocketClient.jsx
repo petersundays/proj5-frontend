@@ -35,21 +35,21 @@ export const useWebSocketClient = () => {
             };
 
             ws.onmessage = (event) => {
-                
-                if (typeof event.data === "string") {
-                    showWarningMessage(event.data);
-                    navigate("/");  
+                const data = JSON.parse(event.data);
+                                        
+                if (Array.isArray(data)) {
+                // If the data is an array, replace the entire notifications array
+                NotificationStore.setState({ notifications: data });
                 } else {
-                    const data = JSON.parse(event.data);
-                    
-                    if (Array.isArray(data)) {
-                    // If the data is an array, replace the entire notifications array
-                    NotificationStore.setState({ notifications: data });
+                    if (data.sessionExpired === "expired") {
+                        showWarningMessage("Session expired. Please log in again.");
+                        navigate("/"); 
                     } else {
-                        // If the data is an object, add it to the store
-                        addNotification(data);
+                    // If the data is an object, add it to the store
+                    addNotification(data);
                     }
                 }
+                
             };
 
             ws.onerror = (error) => {
