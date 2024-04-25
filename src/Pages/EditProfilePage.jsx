@@ -13,7 +13,9 @@ function EditProfilePage() {
     
     return (
         <>
+
             <EditProfile />
+        
         </>
     );
 }

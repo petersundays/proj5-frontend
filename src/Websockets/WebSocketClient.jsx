@@ -3,6 +3,10 @@ import { NotificationStore } from "../Stores/NotificationStore";
 import { UserStore } from "../Stores/UserStore";
 import { showWarningMessage } from "../functions/Messages/WarningMessage";
 import { useNavigate } from "react-router-dom";
+import { CategoriesStore } from "../Stores/CategoriesStore";
+import { AllTasksStore } from "../Stores/AllTasksStore";
+import { AllUsersStore } from "../Stores/AllUsersStore";
+import { StatisticsStore } from "../Stores/StatisticsStore";
 
 export const useWebSocketClient = () => {
     const navigate = useNavigate();
@@ -43,6 +47,12 @@ export const useWebSocketClient = () => {
                 } else {
                     if (data.sessionExpired === "expired") {
                         showWarningMessage("Session expired. Please log in again.");
+                        UserStore.setState({ user: {} });
+                        CategoriesStore.setState({ categories: [] });
+                        AllTasksStore.setState({ tasks: [] });
+                        AllUsersStore.getState().clearStore();
+                        NotificationStore.setState({ notifications: [] });
+                        StatisticsStore.getState().clearStore();
                         navigate("/"); 
                     } else {
                     // If the data is an object, add it to the store

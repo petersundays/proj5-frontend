@@ -36,7 +36,7 @@ function EditProfile() {
     useEffect(() => {
         const fetchUser = async () => {
             const fetchedUser = await getUserByUsername(token, username);
-            if (fetchedUser.username !== username) {
+            if (fetchedUser.username !== username || fetchedUser.confirmed === false) {
                 navigate(`/my-scrum/profile/${usernameLogged}`);
             } else {
             setFormData({ ...fetchedUser });

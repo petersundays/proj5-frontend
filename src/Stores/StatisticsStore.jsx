@@ -27,6 +27,15 @@ export const StatisticsStore = create(
           console.error("WebSocket is not open. Message not sent.");
         }
       },
+      clearStore: () => {
+        set({
+          userStats: new Array(9).fill(0),
+          averageTaskTime: 0,
+          categories: [],
+          totalTasksDoneByEachDay: [[]],
+          usersRegistered: [[]],
+        });
+      },
     }),
 
     {
