@@ -1,8 +1,11 @@
 import { useEffect, useRef } from "react";
 import { NotificationStore } from "../Stores/NotificationStore";
 import { UserStore } from "../Stores/UserStore";
+import { showWarningMessage } from "../functions/Messages/WarningMessage";
+import { useNavigate } from "react-router-dom";
 
 export const useWebSocketClient = () => {
+    const navigate = useNavigate();
     const addNotification = NotificationStore((state) => state.addNotification);
     const wsClientRef = useRef(null); // Store the WebSocket client object in a ref and prevents re-renders 
     const user = UserStore((state) => state.user);
@@ -32,14 +35,20 @@ export const useWebSocketClient = () => {
             };
 
             ws.onmessage = (event) => {
-                const data = JSON.parse(event.data);
-            
-                if (Array.isArray(data)) {
+                
+                if (typeof event.data === "string") {
+                    showWarningMessage(event.data);
+                    navigate("/");  
+                } else {
+                    const data = JSON.parse(event.data);
+                    
+                    if (Array.isArray(data)) {
                     // If the data is an array, replace the entire notifications array
                     NotificationStore.setState({ notifications: data });
-                } else {
-                    // If the data is an object, add it to the store
-                    addNotification(data);
+                    } else {
+                        // If the data is an object, add it to the store
+                        addNotification(data);
+                    }
                 }
             };
 
