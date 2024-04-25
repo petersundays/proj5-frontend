@@ -48,6 +48,14 @@ export const AllUsersStore = create(
                     userToEdit: value
                 }));
             },
+            clearStore: () => {
+                set({ users: [] });
+                set({ displayContainer: false });
+                set({ newUser: false });
+                set({ selectedUser: '' });
+                set({ userType: '' });
+                set({ userToEdit: {} });
+            }
         }),
         {
             name: 'users-storage',

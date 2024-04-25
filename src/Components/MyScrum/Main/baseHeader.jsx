@@ -8,6 +8,7 @@ import { AllTasksStore } from '../../../Stores/AllTasksStore';
 import { showInfoMessage } from '../../../functions/Messages/InfoMessage';
 import { AllUsersStore } from '../../../Stores/AllUsersStore';
 import { NotificationStore } from '../../../Stores/NotificationStore';
+import { StatisticsStore } from '../../../Stores/StatisticsStore';
 import { FaBell } from 'react-icons/fa'
 import Dropdown from "react-bootstrap/Dropdown";
 import { FaEnvelope } from 'react-icons/fa';
@@ -116,17 +117,14 @@ function BaseHeader() {
         UserStore.setState({ user: {} });
         CategoriesStore.setState({ categories: [] });
         AllTasksStore.setState({ tasks: [] });
-        AllUsersStore.setState({ users: [] });
-        AllUsersStore.setState({ selectedUser: "" });
-        AllUsersStore.setState({ userType: "" });
-        AllUsersStore.setState({ newUser: false });
-        AllUsersStore.setState({ displayContainer: false });
+        AllUsersStore.getState().clearStore();
         NotificationStore.setState({ notifications: [] });
+        StatisticsStore.getState().clearStore();
 
-    // Close the WebSocket connection
-    if (wsClient && wsClient.readyState === WebSocket.OPEN) {
-        wsClient.close();
-    }
+        // Close the WebSocket connection
+        if (wsClient && wsClient.readyState === WebSocket.OPEN) {
+            wsClient.close();
+        }
 
         if (token === undefined || token === "" || token === null) {
             navigate('/');
@@ -180,16 +178,20 @@ function BaseHeader() {
                             </ul>
                         </nav>
                         <div className="nav-menu-right">
-                        <Dropdown>
-                        <Dropdown.Toggle variant="outline-info" id="dropdown-basic" style={{ backgroundColor: 'transparent', borderColor: 'transparent' }}>
-                                <FaBell id='notification' />
-                                {" "}
-                                <span style={{ fontSize: '0.8em', color:"#2CCCD3" }}>{notifications.length}</span>
-                        </Dropdown.Toggle>
-                            <Dropdown.Menu>
-                                {handleDropdownNotifications()}
-                            </Dropdown.Menu>
-                        </Dropdown>
+                        {userConfirmed === true ?
+                            <Dropdown>
+                            <Dropdown.Toggle variant="outline-info" id="dropdown-basic" style={{ backgroundColor: 'transparent', borderColor: 'transparent' }}>
+                                    <FaBell id='notification' />
+                                    {" "}
+                                    <span style={{ fontSize: '0.8em', color:"#2CCCD3" }}>{notifications.length}</span>
+                            </Dropdown.Toggle>
+                                <Dropdown.Menu>
+                                    {handleDropdownNotifications()}
+                                </Dropdown.Menu>
+                            </Dropdown>
+                            :
+                           null
+                        }
                              <img src={photoURL} id="profile-pic" draggable="false"/>
                             {userConfirmed === true ? 
                                 <Link to={`/my-scrum/profile/${username}`} id="first-name-label" draggable="false" >{firstName}</Link>
