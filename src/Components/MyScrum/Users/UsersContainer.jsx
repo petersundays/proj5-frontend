@@ -44,6 +44,7 @@ function UsersContainer() {
             setSelectedUser(state.selectedUser);
             setUserType(state.userType);
             setNewUser(state.newUser);
+            setDisplayContainer(state.displayContainer);
         });
     
         return () => unsubscribe();
