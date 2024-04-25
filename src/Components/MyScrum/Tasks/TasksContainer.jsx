@@ -20,13 +20,8 @@ function TasksContainer() {
     const DOING = 200;
     const DONE = 300;
     
-    const LOW = 100;
-    const MEDIUM = 200;
-    const HIGH = 300;
-    
     const DEVELOPER = 100;
-    const SCRUM_MASTER = 200;
-    const PRODUCT_OWNER = 300;
+   
 
     useEffect(() => {
         const updateTasks = () => {
@@ -37,19 +32,13 @@ function TasksContainer() {
         updateTasks();
     
         const unsubscribeAllTasks = AllTasksStore.subscribe(updateTasks);
-    
-        getTasks();
-    
+        
         return () => {
             unsubscribeAllTasks();
         };
     }, []);
 
-    const getTasks = async () => {
-        const tasks = await getAllTasks(token);
-        AllTasksStore.setState({ tasks: tasks });
-    };
-
+    
     const filteredTasks = (stateId) => {
         if (typeOfUser === DEVELOPER) {
             return tasksToRender
