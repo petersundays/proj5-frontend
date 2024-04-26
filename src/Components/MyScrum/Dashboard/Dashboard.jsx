@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react';
+import { Card } from 'react-bootstrap';
+import React, { PureComponent } from 'react';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import './Dashboard.css';
 import { StatisticsStore } from '../../../Stores/StatisticsStore';
+
 
 
 
@@ -58,73 +62,108 @@ useEffect(() => {
     }
 
 
-  return (
-    <>
-        <div id="dashboard">
-            <h3 className="dashboard-title">Dashboard</h3>
-            <div className='dashboard-users'>
-                <label className="dashboard-label">Total Users</label>
-                <p id="total-users" className="dashboard-data">{userStats[0]}</p>
-                <label className="dashboard-label">ActiveUsers</label>
-                <p id="confirmed-users" className="dashboard-data">{userStats[1]}</p>
-                <label className="dashboard-label">Inactive Users</label>
-                <p id="unconfirmed-users" className="dashboard-data">{userStats[2]}</p>
-                <label className="dashboard-label">Confirmed Users</label>
-                <p id="confirmed-users" className="dashboard-data">{userStats[3]}</p>
-                <label className="dashboard-label">Not Confirmed Users</label>
-                <p id="unconfirmed-users" className="dashboard-data">{userStats[4]}</p>
-                <label className="dashboard-label">Average Tasks per User</label>
-                <p id="tasks-per-user" className="dashboard-data">{userStats[5]}</p>
-                <label className="dashboard-label">To Do Tasks</label>
-                <p id="tasks-todo" className="dashboard-data">{userStats[6]}</p>
-                <label className="dashboard-label">Doing Tasks</label>
-                <p id="tasks-doing" className="dashboard-data">{userStats[7]}</p>
-                <label className="dashboard-label">Done Tasks</label>
-                <p id="tasks-done" className="dashboard-data">{userStats[8]}</p>
-                <label className="dashboard-label">Average Time to Finish Task (days)</label>
-                <p id="tasks-done" className="dashboard-data">{taskTime}</p>
-            </div>
-            <div className='dashboard-categories'>
-                <table className="table">
-                    <thead>
-                        <tr className="table-header">
-                            <th>Category</th>                                   
-                        </tr>
-                    </thead>
-                    <tbody className="table-body">
-                        {displayCategories()}
-                    </tbody>
-                </table>
+    const titles = ["Total Users", "Active Users", "Inactive Users", "Confirmed Users", "Not Confirmed Users"];
+    const taskTitles = ["Average Tasks per User", "Total Tasks To Do", "Total Tasks Doing", "Total Tasks Done"];
+
+    return (
+        <>
+        <div>
+            <div id="dashboard" style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <Card className="user-stat-card">
+                    <Card.Body>
+                        {userStats.slice(0, 5).map((stat, index) => (
+                            <div key={index}>
+                                <Card.Title>{titles[index]}</Card.Title>
+                                <Card.Text>{stat}</Card.Text>
+                            </div>
+                        ))}
+                    </Card.Body>
+                </Card>
+                <Card className="task-stat-card">
+                    <Card.Body>
+                        {userStats.slice(5, 9).map((stat, index) => (
+                            <div key={index}>
+                                <Card.Title>{taskTitles[index]}</Card.Title>
+                                <Card.Text>{stat}</Card.Text>
+                            </div>
+                        ))}
+                    </Card.Body>
+                </Card>
+                <Card className="category-stat-card">
+                    <Card.Body>
+                        <Card.Title>Categories by #tasks</Card.Title>
+                        {categories.map((category, index) => (
+                            <Card.Text key={index}>{category}</Card.Text>
+                        ))}
+                    </Card.Body>
+                </Card>
             </div>
             <div className='dashboard-charts'>
-                <table className="table">
-                        <thead>
-                            <tr className="table-header">
-                                <th>Date</th> 
-                                <th>Total</th>                                  
-                            </tr>
-                        </thead>
-                        <tbody className="table-body">
-                            {displayConcludedTasks()}
-                        </tbody>
-                    </table>
+            <Card className="concluded-tasks-card">
+                <Card.Body>
+                    <Card.Title>Concluded Tasks Over Time</Card.Title>
+                    <ResponsiveContainer width="100%" height={300}>
+                        <LineChart
+                            data={concludedTasks.map(task => ({ name: task[0], uv: task[1] }))}
+                            margin={{
+                                top: 5,
+                                right: 30,
+                                left: 20,
+                                bottom: 5,
+                            }}
+                        >
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="name" />
+                            <YAxis />
+                            <Tooltip />
+                            <Legend 
+                            formatter={(value, entry) => {
+                                const { dataKey } = entry;
+                                if (dataKey === 'uv') {
+                                return 'Total Tasks';
+                                }
+                                return value;
+                            }}
+                            />
+                            <Line type="monotone" dataKey="uv" stroke="#21979c" />
+                        </LineChart>
+                    </ResponsiveContainer>
+                </Card.Body>
+            </Card>
+            <Card className="registered-users-card">
+                <Card.Body>
+                    <Card.Title>Active Users</Card.Title>
+                    <ResponsiveContainer width="100%" height={300}>
+                        <LineChart
+                            data={usersRegistered.map(user => ({ name: user[0], uv: user[1] }))}
+                            margin={{
+                                top: 5,
+                                right: 30,
+                                left: 20,
+                                bottom: 5,
+                            }}
+                        >
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="name" />
+                            <YAxis />
+                            <Tooltip />
+                            <Legend 
+                            formatter={(value, entry) => {
+                                const { dataKey } = entry;
+                                if (dataKey === 'uv') {
+                                return 'Total Users';
+                                }
+                                return value;
+                            }}
+                            />
+                            <Line type="monotone" dataKey="uv" stroke="#21979c" />
+                        </LineChart>
+                    </ResponsiveContainer>
+                </Card.Body>
+            </Card>
             </div>
-            <div className='dashboard-registered-users'>
-                <table className="table">
-                        <thead>
-                            <tr className="table-header">
-                                <th>Date</th> 
-                                <th>Total</th>                                  
-                            </tr>
-                        </thead>
-                        <tbody className="table-body">
-                            {displayUsersRegistered()}
-                        </tbody>
-                    </table>
-            </div>
-
         </div>
-    </>
-  );
+        </>
+    );
 }
 export default Dashboard;

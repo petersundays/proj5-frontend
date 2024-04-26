@@ -194,7 +194,7 @@ function AsideEditProfile({ photoURL }) {
                     <label className="labels-profile-aside">Doing</label>
                     <p className="info-profile-aside">{doingTasks}</p>
                     <label className="labels-profile-aside">Done</label>
-                    <p className="info-profile-aside">{doingTasks}</p>
+                    <p className="info-profile-aside">{doneTasks}</p>
                     </div>
             </aside>
         </>
