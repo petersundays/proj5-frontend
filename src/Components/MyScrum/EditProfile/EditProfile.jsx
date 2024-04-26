@@ -53,7 +53,7 @@ function EditProfile() {
             MessageStore.setState({ messages: [] });
         };
     }, []);
-   
+  
 
     const [displayPasswordModal, setDisplayPasswordModal] = useState(false);
     const [passwordData, setPasswordData] = useState({
@@ -244,8 +244,6 @@ function EditProfile() {
         }
     };
 
-
-
     return (
         <>
             <AsideEditProfile photoURL={photoURL} />
@@ -283,8 +281,10 @@ function EditProfile() {
                             position: message.sender === username ? "left" : "right",
                             type: "text",
                             title: message.sender,
-                            text: message.content,
-                           
+                            text: message.content, 
+                            date: message.timestamp,
+                            avatar: userLogged.photoURL,
+                            ...(message.sender === username ? { status: message.read === true ? "read" : "sent" } : {}),                            
                         }))}/>
                     </div>
                     <div className='profile-message'>
