@@ -1,45 +1,32 @@
 #dashboard {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
-  padding: 20px;
-  box-sizing: border-box;
-}
-
-.dashboard-title {
-  font-size: 24px;
-  font-weight: bold;
   margin-bottom: 20px;
+}
+
+.user-stat-card,
+.task-stat-card,
+.category-stat-card {
+  flex: 1 0 20%;
+  margin: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+.concluded-tasks-card,
+.registered-users-card {
   width: 100%;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  border-radius: 5px;
 }
 
-.dashboard-users,
-.dashboard-categories,
-.dashboard-charts,
-.dashboard-registered-users {
-  width: 23%;
+.concluded-tasks-card:hover,
+.registered-users-card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 
-.dashboard-users,
-.dashboard-categories,
-.dashboard-charts {
-  margin-right: 20px;
-}
-
-.dashboard-label {
-  font-size: 18px;
-  font-weight: bold;
-  margin-top: 10px;
-}
-
-.dashboard-data {
-  font-size: 16px;
-  margin-bottom: 10px;
-}
-
-.table {
-  width: 100%;
-}
-
-.table-header {
-  font-weight: bold;
+.concluded-tasks-card > .card-body,
+.registered-users-card > .card-body {
+  padding: 20px;
 }

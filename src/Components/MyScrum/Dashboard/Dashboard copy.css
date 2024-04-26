@@ -1,0 +1,45 @@
+#dashboard {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.dashboard-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.dashboard-users,
+.dashboard-categories,
+.dashboard-charts,
+.dashboard-registered-users {
+  width: 23%;
+}
+
+.dashboard-users,
+.dashboard-categories,
+.dashboard-charts {
+  margin-right: 20px;
+}
+
+.dashboard-label {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.dashboard-data {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.table {
+  width: 100%;
+}
+
+.table-header {
+  font-weight: bold;
+}
