@@ -63,9 +63,15 @@ function BaseHeader() {
 
     const typeOfUser = UserStore.getState().user.typeOfUser;
     const userConfirmed = UserStore.getState().user.confirmed;  
+    const isAsideVisible = UserStore((state) => state.isAsideVisible);
 
 
     const navigate = useNavigate();
+
+    const toggleAside = () => {
+        console.log("Toggle Aside", isAsideVisible);
+        UserStore.getState().toggleAside();
+    };
 
     const messageIcon = () => <FaEnvelope id='notification' />;
 
@@ -160,6 +166,7 @@ function BaseHeader() {
         <>
             <header>
                 <img src='/multimedia/logo-scrum-05.png' id="logo-header" height="50" draggable="false"/>
+                <button className="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" onClick={toggleAside}>Toggle Aside</button>
                 {(!isConfirmAccountPage && !isRecoverPasswordPage && !isResetPasswordPage) && (
                     <>
                         <nav className="nav-menu-left">

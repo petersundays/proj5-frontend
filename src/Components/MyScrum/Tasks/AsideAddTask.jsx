@@ -1,4 +1,6 @@
 import "../../General/Asides.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min";
 import React, { useEffect, useState } from "react";
 import { UserStore } from "../../../Stores/UserStore.jsx";
 import { showErrorMessage } from "../../../functions/Messages/ErrorMessage";
@@ -13,7 +15,9 @@ import { StatisticsStore } from "../../../Stores/StatisticsStore.jsx";
 
 function AsideAddTask() {
   const token = UserStore.getState().user.token;
-  const { sendMessage } = StatisticsStore((state) => ({ sendMessage: state.sendMessage }));
+  const { sendMessage } = StatisticsStore((state) => ({
+    sendMessage: state.sendMessage,
+  }));
 
   const [categories, setCategories] = useState([]);
   const [categoriesLoaded, setCategoriesLoaded] = useState(false);
@@ -24,6 +28,8 @@ function AsideAddTask() {
   const [taskLimitDate, setTaskLimitDate] = useState("");
   const [taskCategory, setTaskCategory] = useState("");
   const [resetPriority, setResetPriority] = useState(false);
+
+  const isAsideVisible = UserStore((state) => state.isAsideVisible);
 
   useEffect(() => {
     if (!categoriesLoaded) {
@@ -36,7 +42,7 @@ function AsideAddTask() {
       setTaskPriority("");
       setResetPriority(false);
     }
-}, [resetPriority]);
+  }, [resetPriority]);
 
   const getCategoriesNames = async () => {
     const categories = await getAllCategories();
@@ -174,72 +180,91 @@ function AsideAddTask() {
       const updateMyTasks = await getTasksFromUser(username, token);
       AllTasksStore.setState({ tasks: updateMyTasks });
       sendMessage();
-      
     }
   };
   return (
     <>
-      <aside>
-        <div className="add-task-container">
-          <h3 id="addTask-h3">Add task</h3>
-          <input
-            type="text"
-            id="taskName"
-            placeholder="Title (required)"
-            maxLength="15"
-            value={taskTitle}
-            onChange={handleTaskTitle}
-            required
-          />
-          <textarea
-            id="taskDescription"
-            placeholder="Description (required)"
-            value={taskDescription}
-            onChange={handleTaskDescription}
-            required
-          ></textarea>
-          <label className="labels-task-priority" id="label-priority">
-            Priority
-          </label>
-          <PriorityButtons onSelectPriority={handleTaskPriority} reset={resetPriority} />
-          <label className="labels-task-dates" id="label-startDate">
-            Start date
-          </label>
-          <input
-            type="date"
-            id="task-startDate"
-            value={taskStartDate}
-            onChange={handleTaskStartDate}
-            required
-          />
-          <label className="labels-task-dates" id="label-limitDate">
-            End date
-          </label>
-          <input
-            type="date"
-            id="task-limitDate"
-            value={taskLimitDate}
-            onChange={handleTaskLimitDate}
-            required
-          />
-          <label className="labels-task-category" id="label-category">
-            Category
-          </label>
-          <select
-            id="task-category"
-            value={taskCategory}
-            onChange={handleTaskCategory}
-            required
-          >
-            <option value="" disabled>
-              Select category
-            </option>
-            {createSelectOptions()}
-          </select>
-          <Button text="Add Task" onClick={addNewTask}></Button>
-          <p id="warningMessage2"></p>
+      <div
+        className="offcanvas offcanvas-start"
+        visibility={isAsideVisible ? "false" : "true"}
+        tabIndex="-1"
+        id="offcanvasExample"
+        aria-labelledby="offcanvasExampleLabel"
+      >
+        <div className="offcanvas-header">
+          <h3 id="offcanvasExampleLabel">Add task</h3>
+          <button
+            type="button"
+            className="btn-close text-reset"
+            data-bs-dismiss="offcanvas"
+            aria-label="Close"
+          ></button>
         </div>
-      </aside>
+        <div className="offcanvas-body">
+          <div className="add-task-container task-inputs-container">
+  <input
+    type="text"
+    id="taskName"
+    placeholder="Title (required)"
+    maxLength="15"
+    value={taskTitle}
+    onChange={handleTaskTitle}
+    required
+  />
+  <textarea
+    id="taskDescription"
+    placeholder="Description (required)"
+    value={taskDescription}
+    onChange={handleTaskDescription}
+    required
+  ></textarea>
+
+            <label className="labels-task-priority" id="label-priority">
+              Priority
+            </label>
+            <PriorityButtons
+              onSelectPriority={handleTaskPriority}
+              reset={resetPriority}
+            />
+            <label className="labels-task-dates" id="label-startDate">
+              Start date
+            </label>
+            <input
+              type="date"
+              id="task-startDate"
+              value={taskStartDate}
+              onChange={handleTaskStartDate}
+              required
+            />
+            <label className="labels-task-dates" id="label-limitDate">
+              End date
+            </label>
+            <input
+              type="date"
+              id="task-limitDate"
+              value={taskLimitDate}
+              onChange={handleTaskLimitDate}
+              required
+            />
+            <label className="labels-task-category" id="label-category">
+              Category
+            </label>
+            <select
+              id="task-category"
+              value={taskCategory}
+              onChange={handleTaskCategory}
+              required
+            >
+              <option value="" disabled>
+                Select category
+              </option>
+              {createSelectOptions()}
+            </select>
+            <Button text="Add Task" onClick={addNewTask}></Button>
+            <p id="warningMessage2"></p>
+          </div>
+        </div>
+      </div>
     </>
   );
 }

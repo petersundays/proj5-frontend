@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { UserStore } from '../../Stores/UserStore';
 import Button from '../General/Button';
 import { showSuccessMessage } from '../../functions/Messages/SuccessMessage';
@@ -77,39 +78,52 @@ function LoginContainer() {
 
 
     return (
-        <div className='landingPage-container'>
-            <div className='landingPage-image-container'>
-                <img src="src\multimedia\logo-scrum-05.png" id="landingPage-image" />
-            </div>
-            <div className="loginpanel">
+<div className='container'>
+    <div className='row'>
+        <div className='col-lg-7 landingPage-image-container d-none d-lg-block'>
+            <img src="src\multimedia\logo-scrum-05.png" id="landingPage-image" />
+        </div>
+        <div className="col-lg-5 loginpanel">
             <select onChange={handleSelect} defaultValue={locale}>
-                {["en", "pt", "fr"].map(language => (<option
-                key={language}>{language}</option>))}
+                {["en", "pt", "fr"].map(language => (<option key={language}>{language}</option>))}
             </select>
             <IntlProvider locale={locale} messages={languages[locale]}>
                 <p>
-                <br/>
-                <FormattedMessage id="time" values={{t: Date.now()}} />
-                <br/>
-                <FormattedMessage id="date" values={{d: Date.now()}} />
-                <br/>
+                    <br/>
+                    <FormattedMessage id="time" values={{t: Date.now()}} />
+                    <br/>
+                    <FormattedMessage id="date" values={{d: Date.now()}} />
+                    <br/>
                 </p>
             </IntlProvider>
-                <h1 id="landingPage-welcome" width="250">WELCOME!</h1>
-                <div className='landingPage-spaceBetween'></div>
-                <h2 id="loginText">Sign In</h2>
-                <form id="login-form" className="input-login">
-                    <input type="text" id="username" name="username" placeholder="username" value={input.username} onChange={handleInputChange} required />
-                    <input type="password" id="password" name="password" placeholder="password" value={input.password} onChange={handleInputChange} required />
-                    <div className="forgot-password">
-                        <Link to="/recover-password" className='recover-password'>Forgot your password?</Link>
+            <h1 id="landingPage-welcome" width="250">WELCOME!</h1>
+            <div className='landingPage-spaceBetween'></div>
+            <h2 id="loginText">Sign In</h2>
+            <form id="login-form" className="input-login">
+                <div className="row">
+                    <div className="col-12">
+                        <input type="text" id="username" name="username" placeholder="username" value={input.username} onChange={handleInputChange} required />
                     </div>
-                    <Button onClick={handleLoginSubmit} width="150px" text="Confirm"></Button>
-                    <Button id="registerButton" onClick={handleRegisterClick} width="150px" text="Register"></Button>
-                </form>
-                <p id="warningMessage"></p>
-            </div>
+                    <div className="col-12">
+                        <input type="password" id="password" name="password" placeholder="password" value={input.password} onChange={handleInputChange} required />
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-sm-6">
+                        <Button onClick={handleLoginSubmit} width="150px" text="Confirm"></Button>
+                    </div>
+                    <div className="col-sm-6">
+                        <Button id="registerButton" onClick={handleRegisterClick} width="150px" text="Register"></Button>
+                    </div>
+                </div>
+                <div className="forgot-password">
+                    <Link to="/recover-password" className='recover-password'>Forgot your password?</Link>
+                </div>
+            </form>
+            <p id="warningMessage"></p>
         </div>
+    </div>
+</div>
     );
 }
 
