@@ -4,6 +4,7 @@ import { persist, createJSONStorage } from "zustand/middleware";
 export const UserStore = create(
     persist(
         (set) => ({
+            isAsideVisible: false,
             user: {
                 username: '',
                 email: '',
@@ -24,6 +25,11 @@ export const UserStore = create(
                         phone: updatedUser.phone || state.user.phone,
                         photoURL: updatedUser.photoURL || state.user.photoURL,
                     },
+                }));
+            },
+            toggleAside: () => {
+                set((state) => ({
+                    isAsideVisible: !state.isAsideVisible,
                 }));
             },
         }),

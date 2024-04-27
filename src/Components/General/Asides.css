@@ -1,5 +1,6 @@
   /* Definições da barra lateral aside */
-  aside {
+  aside,
+  .offcanvas {
     width: 300px;
     height: 720px;
     float: left;
@@ -20,6 +21,12 @@
     font-size: 20px;
   }
   /* Campos para adicionar task */
+  .task-inputs-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
   #addTask-h3,
   #categories-h3 {
     margin-top: 60px;
