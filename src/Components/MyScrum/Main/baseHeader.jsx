@@ -241,7 +241,7 @@ function BaseHeader() {
                 <>
                   {userConfirmed === true ? (
                     <>
-                      <Nav.Link href="/my-scrum">My Tasks</Nav.Link>
+                      <Nav.Link href="/my-scrum" id="first-link">My Tasks</Nav.Link>
                       <Nav.Link href="/my-scrum/all-tasks">All Tasks</Nav.Link>
                       <Nav.Link href="/my-scrum/users">Users</Nav.Link>
                       {typeOfUser === PRODUCT_OWNER && (

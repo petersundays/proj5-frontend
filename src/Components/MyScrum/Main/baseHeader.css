@@ -100,34 +100,9 @@ header {
   font-weight: bold;
 }
 
-/* Logout button */
-/* .logout-button {
-  margin-right: 50px;
-  margin-left: 100px;
-  background-color: var(--green3);
-  color: var(--light-grey);
-  border: none;
-  padding: 10px 15px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  font-size: 17px;
-  border-radius: 5px;
-} */
-
-/* .logout-button img {
-  width: 19px;
-  height: 20px;
-  max-width: 19px;
-  max-height: 20px;
-  margin-right: 9px;
-} */
-
-/* Definições do link de logout no header (default e hover) */
-/* .logout-link {
-  margin-right: 100px;
-  color: var(--green2);
-} */
+#first-link {
+  margin-left: 20px;
+}
 
 .logout-logo {
   width: 25px;
@@ -152,77 +127,60 @@ header {
 }
 
 .navbar-external {
-  margin-left: 200%;
+  margin-left: 110%;
   margin-right: 10%;
 }
 
-/* For screens smaller than 1200px */
 @media (max-width: 1430px) {
   .navbar-external {
-    margin-left: 190%;
+    margin-left: 90%;
   }
 }
 
-@media (max-width: 1370px) {
+@media (max-width: 1300px) {
   .navbar-external {
-    margin-left: 160%;
+    margin-left: 75%;
   }
 }
 
-@media (max-width: 1240px) {
+@media (max-width: 1200px) {
   .navbar-external {
-    margin-left: 140%;
+    margin-left: 60%;
   }
 }
 
-@media (max-width: 1140px) {
-  .navbar-external {
-    margin-left: 120%;
-  }
-}
-
-/* For screens smaller than 992px */
-@media (max-width: 1080px) {
-  .navbar-external {
-    margin-left: 100%;
-  }
-}
-
-/* For screens smaller than 992px */
-@media (max-width: 980px) {
-  .navbar-external {
-    margin-left: 80%;
-  }
-}
-
-@media (max-width: 910px) {
-  .navbar-external {
-    margin-left: 65%;
-  }
-}
-
-/* For screens smaller than 768px */
-@media (max-width: 860px) {
+@media (max-width: 1100px) {
   .navbar-external {
     margin-left: 40%;
   }
 }
 
-@media (max-width: 730px) {
+@media (max-width: 980px) {
   .navbar-external {
-    margin-left: 50%;
+    margin-left: 20%;
+  }
+}
+
+@media (max-width: 850px) {
+  .navbar-external {
+    margin-left: 10%;
+  }
+}
+
+@media (max-width: 780px) {
+  .navbar-external {
+    margin-left: 20%;
   }
   #profile-pic {
     display: none;
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 680px) {
   .navbar-external {
-    margin-left: 0%;
+    margin-left: 2%;
   }
 }
-/* CSS for larger screens */
 @media (min-width: 600px) {
   .nav-menu-right {
     display: flex;
@@ -230,7 +188,6 @@ header {
   }
 }
 
-/* CSS for smaller screens */
 @media (max-width: 599px) {
   .nav-menu-right {
     display: flex;
@@ -257,13 +214,11 @@ header {
  align-content: end;
 }
 
-/* Updated .space-between class */
 .space-between {
   flex-grow: 1;
 }
 
 
-/* For screens smaller than 720px */
 @media (max-width: 720px) {
 
   .navbar-content {
@@ -294,7 +249,6 @@ header {
   }
 }
 
-/* For screens smaller than 576px */
 @media (max-width: 576px) {
   .space-between {
     min-width: 0;

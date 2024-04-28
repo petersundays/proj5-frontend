@@ -37,12 +37,18 @@ const TaskElement = ({ task }) => {
     const taskElementDescription = task.description;
     const taskElementErased = task.erased;
 
+    const [isActive, setIsActive] = useState(false);
+
     const [displayConfirmationModal, setDisplayConfirmationModal] = useState(false);
     const message = "Are you sure you want to delete this task?";
     
     const handleDisplayConfirmationModal = () => {
         setDisplayConfirmationModal(!displayConfirmationModal);
     }
+
+    const handleClick = () => {
+        setIsActive(!isActive);
+      };
 
     const addPriorityClass = () => {
         if (task.priority === LOW) {
@@ -174,20 +180,24 @@ const TaskElement = ({ task }) => {
     }
 
     return (
-        
         <>
             <ConfirmationModal onConfirm={handleDeleteButton} onCancel={handleDisplayConfirmationModal} message={message} displayModal={displayConfirmationModal} />
-            <div data-testid="task-element" key={key} className={`task ${addPriorityClass()} ${addTaskErasedClass()} not-draggable`} id={key} draggable="true" 
-                onDragStart={(event) => {
-                    event.dataTransfer.setData('text/plain', task.id);}}
-                onDoubleClick={handleTaskToEdit} > 
-                <div className='post-it'>
-                    <h3>{taskElementTitle}</h3>
-                    <div className='post-it-text'>
-                        <p>{taskElementDescription}</p>
+            <div className="row">
+                <div className="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div data-testid="task-element" key={key} className={`task ${addPriorityClass()} ${addTaskErasedClass()} not-draggable ${isActive ? 'active' : ''}`} id={key} draggable="true" 
+  onDragStart={(event) => {
+    event.dataTransfer.setData('text/plain', task.id);}}
+  onDoubleClick={handleTaskToEdit}
+  onClick={handleClick} >  
+                        <div className='post-it'>
+                            <h3>{taskElementTitle}</h3>
+                            <div className='post-it-text'>
+                                <p>{taskElementDescription}</p>
+                            </div>
+                            {addEraseButton()}
+                            {addDeleteAndRestoreButton()}
+                        </div>
                     </div>
-                    {addEraseButton()}
-                    {addDeleteAndRestoreButton()}
                 </div>
             </div>
         </>
