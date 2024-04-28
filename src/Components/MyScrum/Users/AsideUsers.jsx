@@ -17,9 +17,11 @@ function AsideUsers() {
     const [userSearch, setUserSearch] = useState('');
     const [selectedUser, setSelectedUser] = useState('');
     const [userType, setUserType] = useState(''); 
-    const [newUser, setNewUser] = useState('false');
-    const [displayContainer, setDisplayContainer] = useState(AllUsersStore.getState().displayContainer); 
+    //const [newUser, setNewUser] = useState('false');
+    //const [displayContainer, setDisplayContainer] = useState(AllUsersStore.getState().displayContainer); 
     const userLoggedType = UserStore.getState().user.typeOfUser;
+
+    const toggleAside = UserStore((state) => state.toggleAside);
 
     useEffect(() => {
         getAllUsersFromServer(); 
@@ -87,36 +89,86 @@ function AsideUsers() {
     }
 
     const handleNewUser = () => {
-        setNewUser('true');
-        AllUsersStore.getState().setNewUser(true);
-        setDisplayContainer(true);
-        AllUsersStore.getState().setDisplayContainer(true);
+        //setNewUser('true');
+        UserStore.getState().toggleNewUser();
+        UserStore.getState().toggleAside();
+
+        //AllUsersStore.getState().setNewUser(true);
+        //setDisplayContainer(true);
+        //AllUsersStore.getState().setDisplayContainer(true);
+        console.log('CLICK isAsideVisible:', UserStore.getState().isAsideVisible);
+        console.log('CLICK isNewUserVisible:', UserStore.getState().isNewUserVisible);
     }
 
-    return ( 
+    return (
         <>
-            <aside>
-                <div className="aside-users-container">
-                    <h3 id="addTask-h3">Users</h3>
-                    <label className="labels-search-username" id="label-search-username"> Search by username</label>
-                    <input type="search" id="search-input" placeholder="User" onChange={handleUserSearch} />
-                    <select id="select-username" value={selectedUser} onChange={handleUserChange} required>
-                        <option value="">All users</option>
-                        {createSelectOptions()} 
-                    </select>
-                    <div className="spacebetween-users"></div>
-                    <label className="labels-user-role" id="label-user-role" hidden={true}> Search by role</label>
-                    <select id="user-type" value={userType} onChange={handleUserTypeChange} hidden={true} required>
-                        <option value="" >All</option>
-                        <option value={DEVELOPER} >Developer</option>
-                        <option value={SCRUM_MASTER} >Scrum Master</option>
-                        <option value={PRODUCT_OWNER} >Product Owner</option>
-                    </select>
-                    <Button text="Register New User" width="180px" onClick={handleNewUser} hidden={userLoggedType!==PRODUCT_OWNER}></Button>
-                </div>
-            </aside>
+          <div
+            className="offcanvas offcanvas-start"
+            tabIndex="-1"
+            id="offcanvasExample"
+            aria-labelledby="offcanvasExampleLabel"
+          >
+            <div className="offcanvas-header">
+              <h5 id="offcanvasExampleLabel">Users</h5>
+              <button
+                type="button"
+                className="btn-close text-reset"
+                data-bs-dismiss="offcanvas"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="offcanvas-body">
+              <div className="aside-users-container">
+                <h3 id="addTask-h3">Users</h3>
+                <label className="labels-search-username" id="label-search-username">
+                  Search by username
+                </label>
+                <input
+                  type="search"
+                  id="search-input"
+                  placeholder="User"
+                  onChange={handleUserSearch}
+                />
+                <select
+                  id="select-username"
+                  value={selectedUser}
+                  onChange={handleUserChange}
+                  required
+                >
+                  <option value="">All users</option>
+                  {createSelectOptions()}
+                </select>
+                <div className="spacebetween-users"></div>
+                <label
+                  className="labels-user-role"
+                  id="label-user-role"
+                  hidden={true}
+                >
+                  Search by role
+                </label>
+                <select
+                  id="user-type"
+                  value={userType}
+                  onChange={handleUserTypeChange}
+                  hidden={true}
+                  required
+                >
+                  <option value="">All</option>
+                  <option value={DEVELOPER}>Developer</option>
+                  <option value={SCRUM_MASTER}>Scrum Master</option>
+                  <option value={PRODUCT_OWNER}>Product Owner</option>
+                </select>
+                <Button
+                  text="Register New User"
+                  width="180px"
+                  onClick={handleNewUser}
+                  hidden={userLoggedType !== PRODUCT_OWNER}
+                ></Button>
+              </div>
+            </div>
+          </div>
         </>
-    );
+      );
 }
 
 export default AsideUsers;

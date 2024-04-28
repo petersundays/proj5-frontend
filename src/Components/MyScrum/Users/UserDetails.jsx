@@ -13,12 +13,14 @@ import { StatisticsStore } from '../../../Stores/StatisticsStore';
 
 export function UserDetails () {
 
-    const [displayContainer, setDisplayContainer] = useState(AllUsersStore.getState().displayContainer); 
-    const [newUser, setNewUser] = useState(AllUsersStore.getState().newUser);
+    //const [displayContainer, setDisplayContainer] = useState(AllUsersStore.getState().displayContainer); 
+    //const [newUser, setNewUser] = useState(AllUsersStore.getState().newUser);
     const token = UserStore.getState().user.token;
     //const usernameToEdit = AllUsersStore.getState().userToEdit;
     const userLoggedType = UserStore.getState().user.typeOfUser;
     const { sendMessage } = StatisticsStore((state) => ({ sendMessage: state.sendMessage }));
+
+    const toggleNewUser = UserStore((state) => state.toggleNewUser);
 
     const DEVELOPER = 100;
     const SCRUM_MASTER = 200;
@@ -111,14 +113,9 @@ export function UserDetails () {
     }
         
 
-    const handleCancelButton = () => {
-       
+    const handleCancelButton = () => {     
             clearInputs();
-            setNewUser(false);
-            AllUsersStore.getState().setNewUser(false);
-            setDisplayContainer(false);
-            AllUsersStore.getState().setDisplayContainer(false);
-        
+            toggleNewUser(false);        
     }
 
 
@@ -162,51 +159,67 @@ export function UserDetails () {
 
             if (registredSuccessfully) {
                 const userRegistred = await getUserByUsername(token, username);
-                AllUsersStore.getState().setNewUser(false);
-                AllUsersStore.getState().setDisplayContainer(false);
+               // AllUsersStore.getState().setNewUser(false);
+               // AllUsersStore.getState().setDisplayContainer(false);
                 sendMessage();
-                setNewUser(false);
-                setDisplayContainer(false);
+                /* setNewUser(false);
+                setDisplayContainer(false); */
                 clearInputs();
                 
             }
         }
     }
 
-    
 
     return (
-        <div className={ `users-details-container ${!displayContainer ? 'hidden' : ''}` }>
-            <h3 id="label-title" >Register New User</h3>
-            <img src={photoUrl} id="profile-clicked-pic" alt="Profile Pic" />
-            <form id="edit-user-form">
-                <label className="labels-edit-profile" id="username-editProfile-label" >Username</label>
-                <input type="text" className="editUser-fields" id="username-editUser" name="username" placeholder="Username" onChange={handleInputs} value={username} />
-                <label className="labels-edit-profile" id="password-editProfile-label" >Password</label>
-                <input type="password" className="editUser-fields" id="confirmPassword-editUser" name="password" placeholder="Password" onChange={handleInputs} value={password} />
-                <label className="labels-edit-profile" id="confirmPassword-editProfile-label" >Confirm Password</label>
-                <input type="password" className="editUser-fields" id="confirmPassword-editUser" name="confirmPassword" placeholder="Confirm Password" onChange={handleInputs} value={confirmPassword} />
-                <label className="labels-edit-profile" id="email-editProfile-label" >Email</label>
-                <input type="email" className="editUser-fields" id="email-editUser" name="email" placeholder="Email" onChange={handleInputs} value={email} />
-                <label className="labels-edit-profile" id="first name-editProfile-label">First Name</label>
-                <input type="text" className="editUser-fields" id="first name-editUser" name="first name" placeholder="First Name" onChange={handleInputs} value={firstName} />
-                <label className="labels-edit-profile" id="last name-editProfile-label">Last Name</label>
-                <input type="text" className="editUser-fields" id="last name-editUser" name="last name" placeholder="Last Name" onChange={handleInputs} value={lastName} />
-                <label className="labels-edit-profile" id="phone-editProfile-label">Phone</label>
-                <input type="text" className="editUser-fields" id="phone-editUser" name="phone" placeholder="Phone" onChange={handleInputs} value={phone} />
-                <label className="labels-edit-profile" id="photo url-editProfile-label">Photo URL</label>
-                <input type="url" className="editUser-fields" id="photo url-editUser" name="photo url" placeholder="photoUrl" onChange={handlePhotoUrlAndInputChange} />
-                <select id="select_role" name="role" onChange={handleInputs} preventDefault="" >
-                    <option value="100" id="Developer" >Developer</option>
-                    <option value="200" id="Scrum Master" >Scrum Master</option>
-                    <option value="300" id="Product Owner" >Product Owner</option>
-                </select>
-                <div className='buttons-container'>
-                    <Button width="94px" marginRight= '5px' text="Save" onClick={handleSaveButton}/>
-                    <Button width="94px" marginLeft= '5px' text="Cancel" onClick={handleCancelButton} />
-
-                </div>
-            </form>
-    </div>
-    )
+        <>
+          <div
+            className="offcanvas-users offcanvas-end"
+            tabIndex="-1"
+            id="offCanvasUsers"
+            aria-labelledby="offcanvasExampleLabel"
+          >
+            <div className="offcanvas-header">
+              <button
+                type="button"
+                className="btn-close text-reset"
+                data-bs-dismiss="offcanvas"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="offcanvas-body">
+              <div className= 'users-details-container'>
+                <img src={photoUrl} id="profile-clicked-pic" alt="Profile Pic" />
+                <form id="edit-user-form">
+                  <label className="labels-edit-profile" id="username-editProfile-label">Username</label>
+                  <input type="text" className="editUser-fields" id="username-editUser" name="username" placeholder="Username" onChange={handleInputs} value={username} />
+                  <label className="labels-edit-profile" id="password-editProfile-label">Password</label>
+                  <input type="password" className="editUser-fields" id="confirmPassword-editUser" name="password" placeholder="Password" onChange={handleInputs} value={password} />
+                  <label className="labels-edit-profile" id="confirmPassword-editProfile-label">Confirm Password</label>
+                  <input type="password" className="editUser-fields" id="confirmPassword-editUser" name="confirmPassword" placeholder="Confirm Password" onChange={handleInputs} value={confirmPassword} />
+                  <label className="labels-edit-profile" id="email-editProfile-label">Email</label>
+                  <input type="email" className="editUser-fields" id="email-editUser" name="email" placeholder="Email" onChange={handleInputs} value={email} />
+                  <label className="labels-edit-profile" id="first name-editProfile-label">First Name</label>
+                  <input type="text" className="editUser-fields" id="first name-editUser" name="first name" placeholder="First Name" onChange={handleInputs} value={firstName} />
+                  <label className="labels-edit-profile" id="last name-editProfile-label">Last Name</label>
+                  <input type="text" className="editUser-fields" id="last name-editUser" name="last name" placeholder="Last Name" onChange={handleInputs} value={lastName} />
+                  <label className="labels-edit-profile" id="phone-editProfile-label">Phone</label>
+                  <input type="text" className="editUser-fields" id="phone-editUser" name="phone" placeholder="Phone" onChange={handleInputs} value={phone} />
+                  <label className="labels-edit-profile" id="photo url-editProfile-label">Photo URL</label>
+                  <input type="url" className="editUser-fields" id="photo url-editUser" name="photo url" placeholder="photoUrl" onChange={handlePhotoUrlAndInputChange} />
+                  <select id="select_role" name="role" onChange={handleInputs} preventDefault="">
+                    <option value="100" id="Developer">Developer</option>
+                    <option value="200" id="Scrum Master">Scrum Master</option>
+                    <option value="300" id="Product Owner">Product Owner</option>
+                  </select>
+                  <div className='buttons-container'>
+                    <Button width="94px" marginRight='5px' text="Save" onClick={handleSaveButton} />
+                    <Button width="94px" marginLeft='5px' text="Cancel" onClick={handleCancelButton} />
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </>
+      );
 }

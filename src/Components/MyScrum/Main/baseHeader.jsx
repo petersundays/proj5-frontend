@@ -69,7 +69,6 @@ function BaseHeader() {
   const navigate = useNavigate();
 
   const toggleAside = () => {
-    console.log("Toggle Aside", isAsideVisible);
     UserStore.getState().toggleAside();
   };
 

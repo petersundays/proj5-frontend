@@ -23,6 +23,8 @@ function AsideAllTasks() {
     
     const { sendMessage } = StatisticsStore((state) => ({ sendMessage: state.sendMessage }));
 
+    //const isAsideVisible = UserStore((state) => state.isAsideVisible);
+
    
     useEffect(() => {
         getAllUsersFromServer(); 
@@ -329,27 +331,71 @@ function AsideAllTasks() {
     }
 
 
-    return ( 
+    return (
         <>
-            <aside>
-                <ConfirmationModal onConfirm={handleDeleteAllTasks} onCancel={handleDisplayConfirmationModal} message={message} displayModal={displayConfirmationModal} />
-                <div className="add-task-container">
-                    <h3 id="categories-h3">Search Tasks</h3>
-                    <input type="search" id="search-category" placeholder="User" onChange={handleUserSearch}/>
-                    <select id="task-category" value={selectedUser} onChange={handleUserChange} required>
-                        <option value="" >All Tasks</option>
-                        <option value="erased" >Erased Tasks</option>
-                        {createSelectOptions()}
-                    </select>
-                    <div id='category-buttons-container'>
-                        <Button text="Erase All" width="94px" onClick={handleEraseAllTasks}></Button>
-                        <Button text="Restore All" width="94px" onClick={handleRestoreAllTasks}></Button>
-                        <Button text="Delete All" width="94px" onClick={handleDisplayConfirmationModal}></Button>
-                    </div>
+          <div
+            className="offcanvas offcanvas-start"
+            //visibility={isAsideVisible ? "false" : "true"}
+            tabIndex="-1"
+            id="offcanvasExample"
+            aria-labelledby="offcanvasExampleLabel"
+          >
+            <div className="offcanvas-header">
+              <h5 id="offcanvasExampleLabel">All Tasks</h5>
+              <button
+                type="button"
+                className="btn-close text-reset"
+                data-bs-dismiss="offcanvas"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="offcanvas-body">
+              <ConfirmationModal
+                onConfirm={handleDeleteAllTasks}
+                onCancel={handleDisplayConfirmationModal}
+                message={message}
+                displayModal={displayConfirmationModal}
+              />
+              <div className="add-task-container">
+                <h3 id="categories-h3">Search Tasks</h3>
+                <input
+                  type="search"
+                  id="search-category"
+                  placeholder="User"
+                  onChange={handleUserSearch}
+                />
+                <select
+                  id="task-category"
+                  value={selectedUser}
+                  onChange={handleUserChange}
+                  required
+                >
+                  <option value="">All Tasks</option>
+                  <option value="erased">Erased Tasks</option>
+                  {createSelectOptions()}
+                </select>
+                <div id="category-buttons-container">
+                  <Button
+                    text="Erase All"
+                    width="94px"
+                    onClick={handleEraseAllTasks}
+                  ></Button>
+                  <Button
+                    text="Restore All"
+                    width="94px"
+                    onClick={handleRestoreAllTasks}
+                  ></Button>
+                  <Button
+                    text="Delete All"
+                    width="94px"
+                    onClick={handleDisplayConfirmationModal}
+                  ></Button>
                 </div>
-            </aside>
+              </div>
+            </div>
+          </div>
         </>
-    );
+      );
 }
 
 export default AsideAllTasks;

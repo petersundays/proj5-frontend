@@ -23,11 +23,13 @@ function UsersContainer() {
     const SCRUM_MASTER = 200;
     const PRODUCT_OWNER = 300;
 
-    const [displayContainer, setDisplayContainer] = useState(false);
-    const [newUser, setNewUser] = useState(AllUsersStore.getState().newUser);
+    //const [displayContainer, setDisplayContainer] = useState(false);
+    //const [newUser, setNewUser] = useState(AllUsersStore.getState().newUser);
     const [users, setUsers] = useState(AllUsersStore.getState().users);
     const [selectedUser, setSelectedUser] = useState(AllUsersStore.getState().selectedUser);
     const [userType, setUserType] = useState(AllUsersStore.getState().userType);
+
+    const isNewUserVisible = UserStore((state) => state.isNewUserVisible);
 
     const [displayConfirmationModal, setDisplayConfirmationModal] = useState(false);
     const [userToDelete, setUserToDelete] = useState({});
@@ -43,8 +45,8 @@ function UsersContainer() {
             setUsers(state.users);
             setSelectedUser(state.selectedUser);
             setUserType(state.userType);
-            setNewUser(state.newUser);
-            setDisplayContainer(state.displayContainer);
+           // setNewUser(state.newUser);
+            //setDisplayContainer(state.displayContainer);
         });
     
         return () => unsubscribe();
@@ -177,7 +179,7 @@ function UsersContainer() {
                 showSuccessMessage(feedback);
                 sendMessage();
                 AllUsersStore.getState().removeUser(username);
-                AllUsersStore.getState().setDisplayContainer(false);
+                //AllUsersStore.getState().setDisplayContainer(false);
                 AllUsersStore.getState().setDisplayConfirmationModal(false);
             } else {
                 console.log('Error', response.status);
@@ -195,6 +197,7 @@ function UsersContainer() {
             <main className="main-users">
                 <div className="details-editProfile">
                     <div className="container-table">
+                    <div className="container-table table-responsive">
                         <table className="table">
                             <thead>
                                 <tr className="table-header">
@@ -216,9 +219,9 @@ function UsersContainer() {
                                 {getUsersToDisplay()}
                             </tbody>
                         </table>
+                        </div>
                     </div>
                 </div>
-                { displayContainer && <UserDetails /> }
             </main>
             <ConfirmationModal onConfirm={handleDeleteButton} onCancel={handleDisplayConfirmationModal} message={message} displayModal={displayConfirmationModal}  />
         </>
