@@ -8,7 +8,6 @@ function MyTasksPage() {
     const navigate = useNavigate();
 
     const isAsideVisible = UserStore((state) => state.isAsideVisible);
-    console.log("my tasks page ",isAsideVisible);
 
     if (!user) {
         navigate('/');

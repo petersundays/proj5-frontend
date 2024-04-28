@@ -1,120 +1,273 @@
 header {
-    width: auto;
-    height: 80px;
-    color: white;
-    background-color: var(--green3);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  #logo-header {
-    margin-left: 90px;
-  }
-  .nav-menu-left {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-    font-size: 20px;
-    color: var(--light-grey);
-    cursor: pointer;
-  }
+  width: auto;
+  height: 80px;
+  color: white;
+  background-color: var(--green3);
+  display: flex;
+  justify-content: flex-end; /* Align all items to the right */
+  align-items: center;
+}
+
+#logo-header {
+  flex-grow: 1; /* Allow the logo to grow if there is space */
+  flex-shrink: 1; /* Allow the logo to shrink if there isn't enough space */
+  min-width: 50px; /* Set a minimum width for the logo */
+  height: auto; /* This will maintain the aspect ratio of the logo */
+  justify-content: flex-start; /* Align logo to the left */
+}
+
+.nav-menu-left {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  font-size: 20px;
+  color: var(--light-grey);
+  cursor: pointer;
+}
+
+.nav-menu-right {
+  margin-right: 100px;
+}
+
+.nav-menu-left ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  overflow: hidden;
+  background-color: var(--green3);
+}
+
+.nav-menu-left li {
+  display:inline;
+  margin-right: 40px;
+  font-size: 20px;
+  color: var(--light-grey);
+  cursor: pointer;
+}
+
+.nav-menu-left a,
+.nav-menu-right a {
+  text-decoration: var(--green2);
+  color: var(--light-grey);
+  font-size: 17px;
+}
+
+.nav-menu-left a:hover,
+.nav-menu-right a:hover {
+  color: var(--doing);
+}
+
+.nav-menu-right {
+  display: flex;
+  align-items: center;
+}
+
+#dropdown-basic {
+  color: var(--light-grey);
+  font-size: 17px;
+  cursor: pointer;
+}
+
+.dropdown-item {
+  color: var(--green2) !important;
+}
+
+.dropdown-item:hover {
+  background-color: var(--light-grey) !important;
+}
+
+.dropdown-item-date {
+  font-size:small;
+}
+
+#notification:hover{
+  color:#c8e4e751;
+}
+
+#profile-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin: 0 30px;
+  object-fit: cover;
+}
+
+/* Username */
+#username-header {
+  color: var(--light-grey);
+  font-weight: bold;
+}
+
+/* Logout button */
+.logout-button {
+  margin-right: 50px;
+  margin-left: 100px;
+  background-color: var(--green3);
+  color: var(--light-grey);
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-size: 17px;
+  border-radius: 5px;
+}
+
+.logout-button img {
+  width: 19px;
+  height: 20px;
+  max-width: 19px;
+  max-height: 20px;
+  margin-right: 9px;
+}
+
+/* Definições do link de logout no header (default e hover) */
+.logout-link {
+  margin-right: 100px;
+  color: var(--green2);
+}
+
+.logout-logo {
+  width: 25px;
+  height: 26px;
+  max-width: 25px;
+  max-height: 26px;
+  object-fit: contain;
+}
+
+.logout-button:hover {
+  background-color: var(--light-grey);
+  color: var(--green2);
+}
+
+/* CSS for larger screens */
+@media (min-width: 600px) {
   .nav-menu-right {
-    margin-right: 100px;
-  }
-  .nav-menu-left ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    overflow: hidden;
-    background-color: var(--green3);
-  }
-  .nav-menu-left li {
-    display:inline;
-    margin-right: 40px;
-    font-size: 20px;
-    color: var(--light-grey);
-    cursor: pointer;
-  }
-  .nav-menu-left a,
-  .nav-menu-right a {
-    text-decoration: var(--green2);
-    color: var(--light-grey);
-    font-size: 17px;
-  }
-  .nav-menu-left a:hover,
-  .nav-menu-right a:hover {
-    color: var(--doing);
-  }
-  .nav-menu-right {
     display: flex;
     align-items: center;
-  }
-  
-  #dropdown-basic {
-    color: var(--light-grey);
-    font-size: 17px;
-    cursor: pointer;
-  }
-
-  .dropdown-item {
-    color: var(--green2) !important;
-  }
-
-  .dropdown-item:hover {
-    background-color: var(--light-grey) !important;
-  }
-
-  .dropdown-item-date {
-    font-size:small;
-  }
-
-  #notification:hover{
-    color:#c8e4e751;
   }
 
   #profile-pic {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin: 0 30px;
-    object-fit: cover;
+    display: block;
   }
-  
-  /* Username */
-  #username-header {
-    color: var(--light-grey);
-    font-weight: bold;
-  }
-  /* Logout button */
-  .logout-button {
-    margin-right: 50px;
-    margin-left: 100px;
-    background-color: var(--green3);
-    color: var(--light-grey);
-    border: none;
-    padding: 10px 15px;
-    cursor: pointer;
+}
+
+/* CSS for smaller screens */
+@media (max-width: 599px) {
+  .nav-menu-right {
     display: flex;
     align-items: center;
-    font-size: 17px;
-    border-radius: 5px;
   }
-  .logout-button img {
-    width: 19px;
-    height: 20px;
-    margin-right: 9px;
+
+  #profile-pic {
+    display: none;
   }
-  /* Definições do link de logout no header (default e hover) */
-  .logout-link {
-    margin-right: 100px;
-    color: var(--green2);
+}
+
+#basic-navbar-nav {
+  margin-right: 750px;
+}
+
+.navbar-brand {
+  padding-left: 40px;
+}
+
+@media (max-width: 360px) {
+  .navbar-brand {
+    padding-left: 0;
   }
-  .logout-button:hover {
-    background-color: var(--light-grey);
-    color: var(--green2);
+}
+
+.mr-auto {
+  align-items: left;
+}
+
+.ml-auto {
+ align-content: end;
+}
+
+/* Updated .space-between class */
+.space-between {
+  flex-grow: 1;
+}
+
+@media (max-width: 1400px) {
+  #basic-navbar-nav {
+    margin-right: 600px; 
   }
-  .logout-button:hover img {
-    content: url("/multimedia/logout_hover.png");
+}
+
+@media (max-width: 1200px) {
+  #basic-navbar-nav {
+    margin-right: 400px; 
   }
+}
+
+@media (max-width: 1000px) {
+  #basic-navbar-nav {
+    margin-right: 200px; 
+  }
+}
+
+@media (max-width: 800px) {
+  #basic-navbar-nav {
+    margin-right: 100px; 
+  }
+}
+
+/* For screens smaller than 720px */
+@media (max-width: 720px) {
+  #basic-navbar-nav {
+    margin-right: 0px; 
+  }
+  .navbar-content {
+    flex-direction: row;
+  }
+  .navbar-external {
+    order: -1;
+  }
+  .logo-header {
+    display: none;
+  }
+  .options-text {
+    display: none;
+  }
+}
+.navbar-content {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.navbar-external {
+  order: 2;
+}
+
+@media (max-width: 576px) {
+  .navbar-external {
+    order: 1;
+  }
+}
+
+/* For screens smaller than 576px */
+@media (max-width: 576px) {
+  .space-between {
+    min-width: 0;
+  }
+}
+
+.navbar-content {
+  flex-wrap: nowrap;
+  order: 2;
+}
+
+.navbar-external {
+  order: -1;
+}
+
+@media (min-width: 576px) {
+  .navbar-external {
+    order: 2;
+  }
+}
