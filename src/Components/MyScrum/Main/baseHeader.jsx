@@ -15,7 +15,7 @@ import { FaEnvelope } from "react-icons/fa";
 import { useWebSocketClient } from "../../../Websockets/WebSocketClient";
 import useWebSocketTask from "../../../Websockets/TaskWS";
 import { Navbar, Nav, NavDropdown, Button } from "react-bootstrap";
-import AddIcon from '@mui/icons-material/Add';
+import MenuOpenIcon from '@mui/icons-material/MenuOpen';
 
 function BaseHeader() {
   const location = useLocation();
@@ -181,8 +181,8 @@ function BaseHeader() {
         />
       </Navbar.Brand> */}
       <div className="ml-2 options" style={{ color: 'white', cursor: 'pointer' }} data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" onClick={toggleAside}>
-      <AddIcon className="ml-2" style={{ color: 'white', cursor: 'pointer' }}data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" onClick={toggleAside} />
-        <span className="ml-1 options-text">Options</span>
+      <MenuOpenIcon className="ml-2" style={{ color: 'white', cursor: 'pointer' }} sx={{ fontSize: 35 }} data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" onClick={toggleAside} />
+        {/* <span className="ml-1 options-text">Options</span> */}
       </div>
     </div>
       <div className="navbar-content d-flex">
