@@ -1,14 +1,23 @@
 .container-table {
   margin-top: 20px;
-  margin-left: 30px;
   overflow: auto;
   width: 98%;
-  max-height: 89%;
+  max-height: 70vh;
   border-top-left-radius: 7px; 
   border-top-right-radius: 7px;
   position: relative;
 }
-
+.main-users {
+  width: 100%;
+  height: 90vh;
+}
+.details-editProfile {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  width: 100%;
+}
 .table {
   width: 100%;
   border-collapse: collapse;
@@ -84,12 +93,12 @@
 
 .table th:nth-child(7),
 .table td:nth-child(7) {
-  width: 13%; /* Adjusted width */
+  width: 7%; /* Adjusted width */
 }
 
 .table th:nth-child(8),
 .table td:nth-child(8) {
-  width: 7%; /* Adjusted width */
+  width: 13%; /* Adjusted width */
 }
 
 .table-body tr:hover {
@@ -127,4 +136,44 @@
   width: 25px;
   cursor: pointer;
   margin: 3px;
+}
+
+/* Hide column 3 on screens smaller than 1200px */
+@media screen and (max-width: 1200px) {
+  .table th:nth-child(3),
+  .table td:nth-child(3) {
+    display: none;
+  }
+}
+
+/* Hide column 4 on screens smaller than 992px */
+@media screen and (max-width: 992px) {
+  .table th:nth-child(4),
+  .table td:nth-child(4) {
+    display: none;
+  }
+}
+
+/* Hide column 7 on screens smaller than 768px */
+@media screen and (max-width: 768px) {
+  .table th:nth-child(7),
+  .table td:nth-child(7) {
+    display: none;
+  }
+}
+
+/* Hide column 5 on screens smaller than 576px */
+@media screen and (max-width: 576px) {
+  .table th:nth-child(5),
+  .table td:nth-child(5) {
+    display: none;
+  }
+}
+
+/* Hide column 1 on screens smaller than 480px */
+@media screen and (max-width: 480px) {
+  .table th:nth-child(1),
+  .table td:nth-child(1) {
+    display: none;
+  }
 }

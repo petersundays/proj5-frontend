@@ -29,7 +29,7 @@ function AsideAddTask() {
   const [taskCategory, setTaskCategory] = useState("");
   const [resetPriority, setResetPriority] = useState(false);
 
-  const isAsideVisible = UserStore((state) => state.isAsideVisible);
+  //const isAsideVisible = UserStore((state) => state.isAsideVisible);
 
   useEffect(() => {
     if (!categoriesLoaded) {
@@ -186,7 +186,7 @@ function AsideAddTask() {
     <>
       <div
         className="offcanvas offcanvas-start"
-        visibility={isAsideVisible ? "false" : "true"}
+        //visibility={isAsideVisible ? "false" : "true"}
         tabIndex="-1"
         id="offcanvasExample"
         aria-labelledby="offcanvasExampleLabel"

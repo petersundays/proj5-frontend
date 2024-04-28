@@ -20,6 +20,7 @@ function AsideCategories() {
     const [displayCategoryModal, setDisplayCategoryModal] = useState(false);
     const [newName, setNewName] = useState('');
     const [tasks, setTasks] = useState({ tasks: [] });
+
     
     const [displayConfirmationModal, setDisplayConfirmationModal] = useState(false);
     const message = "Are you sure you want to delete this category?";
@@ -230,42 +231,103 @@ const handleCategorySearch = (e) => {
     }
   
 
-    return ( 
+    return (
         <>
-            <ConfirmationModal onConfirm={handleDeleteCategory} onCancel={handleDisplayConfirmationModal} message={message} displayModal={displayConfirmationModal} />
-            <aside>
-                <div className="add-task-container">
-                    <h3 id="categories-h3">Categories</h3>
-                    <label className="labels-search-category" id="label-category">Search</label>
-                    <input type="search" id="search-category" placeholder="Category" onChange={handleCategorySearch}/>
-                    <select id="task-category" value={selectedCategory} onChange={handleCategoryChange} required>
-                        <option value="" >All categories</option>
-                        {createSelectOptions()}
-                    </select>
-                    <div id='category-buttons-container'>
-                        <Button text="Edit" width="120px" onClick={handleCategoryModal}></Button>
-                        <Button text="Delete" width="120px" onClick={handleDisplayConfirmationModal} ></Button>
-                    </div>
-                    <div className='space-between'></div>
-                    <label className="labels-create-category" id="label-category">New Category</label>
-                    <input type="text" id="create-category-name" placeholder="Category Name" value={newCategory} onChange={handleNewCategory}/>
-                    <Button text="Create" onClick={createCategory}></Button>
-                </div>
-                <div id="passwordModal" className={`modal ${displayCategoryModal ? 'modalShown' : ''}`}>                
-                    <div className="modalContent">
-                        <label >Current Name</label>
-                        <input type="text" id="category-current-name" value={selectedCategory}  readOnly />
-                        <label >New Name</label>
-                        <input type="text" id="category-new-name" placeholder="New Name" onChange={handleNewName}  required />
-                        <div className="modal-buttons">
-                            <Button text="Cancel" onClick={handleCategoryModal}/>
-                            <Button type="submit" text="Save" onClick={handleCategoryEdition} />
-                        </div>
-                </div>
+          <div
+            className="offcanvas offcanvas-start"
+            tabIndex="-1"
+            id="offcanvasExample"
+            aria-labelledby="offcanvasExampleLabel"
+          >
+            <div className="offcanvas-header">
+              <h5 id="offcanvasExampleLabel">Categories</h5>
+              <button
+                type="button"
+                className="btn-close text-reset"
+                data-bs-dismiss="offcanvas"
+                aria-label="Close"
+              ></button>
             </div>
-            </aside>
+            <div className="offcanvas-body">
+              <ConfirmationModal
+                onConfirm={handleDeleteCategory}
+                onCancel={handleDisplayConfirmationModal}
+                message={message}
+                displayModal={displayConfirmationModal}
+              />
+              <div className="add-task-container">
+                <h3 id="categories-h3">Categories</h3>
+                <div className="category-search-container">
+  <label className="labels-search-category" id="label-category">
+    Search
+  </label>
+  <input
+    type="search"
+    id="search-category"
+    placeholder="Category"
+    onChange={handleCategorySearch}
+  />
+</div>
+                <select
+                  id="task-category"
+                  value={selectedCategory}
+                  onChange={handleCategoryChange}
+                  required
+                >
+                  <option value="">All categories</option>
+                  {createSelectOptions()}
+                </select>
+                <div id="category-buttons-container">
+                  <Button text="Edit" width="120px" onClick={handleCategoryModal} />
+                  <Button
+                    text="Delete"
+                    width="120px"
+                    onClick={handleDisplayConfirmationModal}
+                  />
+                </div>
+                <div className="space-between"></div>
+                <label className="labels-create-category" id="label-category">
+                  New Category
+                </label>
+                <input
+                  type="text"
+                  id="create-category-name"
+                  placeholder="Category Name"
+                  value={newCategory}
+                  onChange={handleNewCategory}
+                />
+                <Button text="Create" onClick={createCategory} />
+              </div>
+              <div
+                id="passwordModal"
+                className={`modal ${displayCategoryModal ? "modalShown" : ""}`}
+              >
+                <div className="modalContent">
+                  <label>Current Name</label>
+                  <input
+                    type="text"
+                    id="category-current-name"
+                    value={selectedCategory}
+                    readOnly
+                  />
+                  <label>New Name</label>
+                  <input
+                    type="text"
+                    id="category-new-name"
+                    placeholder="New Name"
+                    onChange={handleNewName}
+                    required
+                  />
+                  <div className="modal-buttons">
+                    <Button text="Cancel" onClick={handleCategoryModal} />
+                    <Button type="submit" text="Save" onClick={handleCategoryEdition} />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </>
-    );
-}
+      );
+    }
 
 export default AsideCategories;

@@ -5,6 +5,7 @@ export const UserStore = create(
     persist(
         (set) => ({
             isAsideVisible: false,
+            isNewUserVisible: false,
             user: {
                 username: '',
                 email: '',
@@ -27,9 +28,14 @@ export const UserStore = create(
                     },
                 }));
             },
-            toggleAside: () => {
+            toggleAside: (value) => {
                 set((state) => ({
-                    isAsideVisible: !state.isAsideVisible,
+                    isAsideVisible: value !== undefined ? value : !state.isAsideVisible,
+                }));
+            },
+            toggleNewUser: (value) => {
+                set((state) => ({
+                    isNewUserVisible: value !== undefined ? value : !state.isNewUserVisible,
                 }));
             },
         }),
