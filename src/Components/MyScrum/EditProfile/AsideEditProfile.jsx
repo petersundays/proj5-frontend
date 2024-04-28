@@ -152,14 +152,13 @@ function AsideEditProfile({ photoURL }) {
     }
 
     return ( 
-
         <>
             <aside>
                 <div className='definitions-div'>
                     {isProfileOwner() ?
                     <div className='language-div'>
-                        <img src='../../../../multimedia/flag-portugal.png' alt="Portuguese" />
-                        <img src='../../../../multimedia/flag-uk.png' alt="English" />
+                        <img src='../../../../multimedia/flag-portugal.png' alt={t("Portuguese")} />
+                        <img src='../../../../multimedia/flag-uk.png' alt={t("English")} />
                     </div>
                     : 
                     null}
@@ -167,14 +166,14 @@ function AsideEditProfile({ photoURL }) {
                     <>
                     <div className='timeout-div'>
                         <div className="timeout-info">
-                            <p id="edit-profile-p-aside">Session Timeout</p>
-                            <p>{ definedTimeout } minutes</p>
+                            <p id="edit-profile-p-aside">{t('Session Timeout')}</p>
+                            <p>{ definedTimeout } {t('minutes')}</p>
                         </div> 
                         <hr /> {/* This will create a horizontal line */}
                         <div className="timeout-set">
-                            <p>Set Timeout</p>
+                            <p>{t('Set Timeout')}</p>
                             <input type="number" id="timeout-input" value={timeout} onChange={handleTimeoutChange} />                            
-                            <Button width='35px' text='set' id="timeout-button" onClick= { () => handleSetTimeout() } >Set</Button>
+                            <Button width='35px' text={t('set')} id="timeout-button" onClick= { () => handleSetTimeout() } >{t('Set')}</Button>
                         </div>
                     </div>
                     
@@ -184,16 +183,16 @@ function AsideEditProfile({ photoURL }) {
                     null}
                 </div>
                 <h3 id="username-title-aside">{profileUsername}</h3>
-                <img src={photoURL} id="edit-profile-pic-aside" draggable="false" alt="Profile Pic" />
+                <img src={photoURL} id="edit-profile-pic-aside" draggable="false" alt={t("Profile Pic")} />
                 <div id="edit-profile-tasks-aside">
-                    <h3 id="profile-h3-aside">Tasks</h3>
-                    <label className="labels-profile-aside">Total Atributed</label>
+                    <h3 id="profile-h3-aside">{t('Tasks')}</h3>
+                    <label className="labels-profile-aside">{t('Total Atributed')}</label>
                     <p className="info-profile-aside">{atributedTasks}</p>
-                    <label className="labels-profile-aside">To Do</label>
+                    <label className="labels-profile-aside">{t('To Do')}</label>
                     <p className="info-profile-aside">{toDoTasks}</p>
-                    <label className="labels-profile-aside">Doing</label>
+                    <label className="labels-profile-aside">{t('Doing')}</label>
                     <p className="info-profile-aside">{doingTasks}</p>
-                    <label className="labels-profile-aside">Done</label>
+                    <label className="labels-profile-aside">{t('Done')}</label>
                     <p className="info-profile-aside">{doneTasks}</p>
                     </div>
             </aside>

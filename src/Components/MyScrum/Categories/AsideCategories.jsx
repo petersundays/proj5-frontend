@@ -8,10 +8,14 @@ import { ConfirmationModal } from '../../General/ConfirmationModal.jsx';
 import { getTasksByCategory } from '../../../functions/Tasks/GetTasksByCategory.js';
 import { getAllTasks } from '../../../functions/Tasks/GetAllTasks.js';
 import { AllTasksStore } from '../../../Stores/AllTasksStore.jsx';
+import { useTranslation } from 'react-i18next';
 
 function AsideCategories() {
 
     const token = UserStore.getState().user.token;
+
+    const { t } = useTranslation();
+
 
     const [newCategory, setNewCategory] = useState('');
     const [categorySearch, setCategorySearch] = useState('');
@@ -240,12 +244,12 @@ const handleCategorySearch = (e) => {
             aria-labelledby="offcanvasExampleLabel"
           >
             <div className="offcanvas-header">
-              <h5 id="offcanvasExampleLabel">Categories</h5>
+              <h5 id="offcanvasExampleLabel">{t('categories')}</h5>
               <button
                 type="button"
                 className="btn-close text-reset"
                 data-bs-dismiss="offcanvas"
-                aria-label="Close"
+                aria-label={t('close')}
               ></button>
             </div>
             <div className="offcanvas-body">
@@ -256,71 +260,71 @@ const handleCategorySearch = (e) => {
                 displayModal={displayConfirmationModal}
               />
               <div className="add-task-container">
-                <h3 id="categories-h3">Categories</h3>
+                <h3 id="categories-h3">{t('categories')}</h3>
                 <div className="category-search-container">
-  <label className="labels-search-category" id="label-category">
-    Search
-  </label>
-  <input
-    type="search"
-    id="search-category"
-    placeholder="Category"
-    onChange={handleCategorySearch}
-  />
-</div>
+                  <label className="labels-search-category" id="label-category">
+                    {t('search')}
+                  </label>
+                  <input
+                    type="search"
+                    id="search-category"
+                    placeholder={t('categories')}
+                    onChange={handleCategorySearch}
+                  />
+                </div>
                 <select
                   id="task-category"
                   value={selectedCategory}
                   onChange={handleCategoryChange}
                   required
                 >
-                  <option value="">All categories</option>
+                  <option value="">{t('allCategories')}</option>
                   {createSelectOptions()}
                 </select>
                 <div id="category-buttons-container">
-                  <Button text="Edit" width="120px" onClick={handleCategoryModal} />
+                  <Button text={t('edit')} width="120px" onClick={handleCategoryModal} />
                   <Button
-                    text="Delete"
+                    text={t('delete')}
                     width="120px"
                     onClick={handleDisplayConfirmationModal}
                   />
                 </div>
                 <div className="space-between"></div>
                 <label className="labels-create-category" id="label-category">
-                  New Category
+                  {t('newCategory')}
                 </label>
                 <input
                   type="text"
                   id="create-category-name"
-                  placeholder="Category Name"
+                  placeholder={t('categories')}
                   value={newCategory}
                   onChange={handleNewCategory}
                 />
-                <Button text="Create" onClick={createCategory} />
+                <Button text={t('create')} onClick={createCategory} />
               </div>
               <div
                 id="passwordModal"
                 className={`modal ${displayCategoryModal ? "modalShown" : ""}`}
               >
                 <div className="modalContent">
-                  <label>Current Name</label>
+                  <label>{t('currentName')}</label>
                   <input
                     type="text"
                     id="category-current-name"
                     value={selectedCategory}
                     readOnly
                   />
-                  <label>New Name</label>
+                  <label>{t('newName')}</label>
                   <input
                     type="text"
                     id="category-new-name"
-                    placeholder="New Name"
+                    placeholder={t('newName')}
                     onChange={handleNewName}
                     required
                   />
                   <div className="modal-buttons">
-                    <Button text="Cancel" onClick={handleCategoryModal} />
-                    <Button type="submit" text="Save" onClick={handleCategoryEdition} />
+                    <Button text={t('cancel')} onClick={handleCategoryModal} />
+                    <Button type="submit" text={t('save')} onClick={handleCategoryEdition} />
                   </div>
                 </div>
               </div>

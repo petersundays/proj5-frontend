@@ -8,10 +8,13 @@ import { showInfoMessage } from "../../functions/Messages/InfoMessage";
 import Button from '../General/Button';
 import { SetPassword } from '../../functions/Users/SetPassword';
 import { StatisticsStore } from '../../Stores/StatisticsStore';
+import { useTranslation } from 'react-i18next';
 
 export function ConfirmAccount() {
 
     const navigate = useNavigate();
+
+    const { t } = useTranslation();
 
     const { sendMessage } = StatisticsStore((state) => ({ sendMessage: state.sendMessage }));
 
@@ -129,21 +132,21 @@ export function ConfirmAccount() {
             <div className="centered-wrapper">
                 {!passwordDefined ?
                     <div id="set-password">
-                        <h3>Please confirm your account</h3>
+                        <h3>{t('pleaseConfirm')}</h3>
                         <form id="setPasswordForm">
-                            <input type="password" id="newPassword" name="password" placeholder="Password" value={passwordData.password} onChange={handlePasswordChange} required />
-                            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" value={passwordData.confirmPassword} onChange={handlePasswordChange} required />
+                            <input type="password" id="newPassword" name="password" placeholder={t('password')} value={passwordData.password} onChange={handlePasswordChange} required />
+                            <input type="password" id="confirmPassword" name="confirmPassword" placeholder={t('confirmPassword')} value={passwordData.confirmPassword} onChange={handlePasswordChange} required />
                             <div className="password-buttons">
-                                <Button text="Cancel" onClick={handleCancelButton}/>
-                                <Button type="submit" text="Save" onClick={handlePasswordSetAndConfirmAccount} />
+                                <Button text={t('cancel')} onClick={handleCancelButton}/>
+                                <Button type="submit" text={t('save')} onClick={handlePasswordSetAndConfirmAccount} />
                             </div>
                         </form>
                     </div>
                 :
                     <div>
-                        <Button text="Go to login" onClick={() => navigate('/')} />
+                        <Button text={t('goToLogin')} onClick={() => navigate('/')} />
                     </div>
                 }
             </div>
         );
-}
+    }
