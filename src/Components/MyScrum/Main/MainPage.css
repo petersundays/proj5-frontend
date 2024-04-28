@@ -21,7 +21,9 @@ main {
   padding-bottom: 10px;
 }
 .container {
-    display: flex;
-    justify-content: space-between;
-    background-color: var(--white);
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: var(--white);
+}

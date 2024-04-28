@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import "./TasksContainer.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import TaskElement from './TaskElement';
 import { AllTasksStore } from '../../../Stores/AllTasksStore';
 import { UserStore } from '../../../Stores/UserStore';
@@ -8,6 +9,7 @@ import { getTasksFromUser } from '../../../functions/Tasks/GetTasksFromUser';
 import { getAllTasks } from '../../../functions/Tasks/GetAllTasks';
 import { showErrorMessage } from '../../../functions/Messages/ErrorMessage';
 import { StatisticsStore } from '../../../Stores/StatisticsStore';
+import { Container, Row, Col, Carousel } from 'react-bootstrap';
 
 function TasksContainer() {
     const [tasksToRender, setTasksToRender] = useState([]);
@@ -16,12 +18,27 @@ function TasksContainer() {
     const userLoggedIn = UserStore.getState().user.username;
     const { sendMessage } = StatisticsStore((state) => ({ sendMessage: state.sendMessage }));
 
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 1022);
+
     const TODO = 100;
     const DOING = 200;
     const DONE = 300;
     
     const DEVELOPER = 100;
    
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 1200);
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        // Clean up the event listener when the component is unmounted
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
 
     useEffect(() => {
         const updateTasks = () => {
@@ -50,6 +67,22 @@ function TasksContainer() {
                 .map(task => <TaskElement key={task.id} task={task} />)
         }
     }
+
+    const renderColumn = (stateId, title) => (
+        <Col 
+            onDragOver={(event) => { event.preventDefault(); }}
+            onDrop={(event) => {
+                const taskId = event.dataTransfer.getData("text/plain"); 
+                updateTaskStateId(taskId, stateId);
+            }}
+        >
+            <h2 className="main-home">{title}</h2>
+            <div className="panel" id={title.toLowerCase()}>
+                {renderTasks(stateId)}
+            </div>
+        </Col>
+    );
+
 
     const updateTaskStateId = async (taskId, newStateId) => {
 
@@ -102,44 +135,27 @@ function TasksContainer() {
     };
 
     return (
-        <>
-            <div className="titulo-main" 
-            onDragOver={(event) => { event.preventDefault(); }}
-            onDrop={(event) => {
-                const taskId = event.dataTransfer.getData("text/plain"); 
-                updateTaskStateId(taskId, TODO);
-            }}
-            >
-                <h2 className="main-home">To do</h2>
-                <div className="panel" id="todo">
-                    {renderTasks(TODO)}
-                </div>
-            </div>
-            <div className="titulo-main"
-            onDragOver={(event) => { event.preventDefault(); }}
-            onDrop={(event) => {
-                const taskId = event.dataTransfer.getData("text/plain"); 
-                updateTaskStateId(taskId, DOING );
-            }}
-            >
-                <h2 className="main-home">Doing</h2>
-                <div className="panel" id="doing">
-                    {renderTasks(DOING)}
-                </div>
-            </div>
-            <div className="titulo-main"
-            onDragOver={(event) => { event.preventDefault(); }}
-            onDrop={(event) => {
-                const taskId = event.dataTransfer.getData("text/plain"); 
-                updateTaskStateId(taskId, DONE);
-            }}
-            >
-                <h2 className="main-home">Done</h2>
-                <div className="panel" id="done">
-                    {renderTasks(DONE)}
-                </div>
-            </div>
-        </>
+        <Container fluid>
+            {isMobile ? (
+                <Carousel>
+                    <Carousel.Item>
+                        {renderColumn(TODO, 'To do')}
+                    </Carousel.Item>
+                    <Carousel.Item>
+                        {renderColumn(DOING, 'Doing')}
+                    </Carousel.Item>
+                    <Carousel.Item>
+                        {renderColumn(DONE, 'Done')}
+                    </Carousel.Item>
+                </Carousel>
+            ) : (
+                <Row>
+                    {renderColumn(TODO, 'To do')}
+                    {renderColumn(DOING, 'Doing')}
+                    {renderColumn(DONE, 'Done')}
+                </Row>
+            )}
+        </Container>
     );
 }
 

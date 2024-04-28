@@ -202,22 +202,22 @@ function AsideAddTask() {
         </div>
         <div className="offcanvas-body">
           <div className="add-task-container task-inputs-container">
-  <input
-    type="text"
-    id="taskName"
-    placeholder="Title (required)"
-    maxLength="15"
-    value={taskTitle}
-    onChange={handleTaskTitle}
-    required
-  />
-  <textarea
-    id="taskDescription"
-    placeholder="Description (required)"
-    value={taskDescription}
-    onChange={handleTaskDescription}
-    required
-  ></textarea>
+            <input
+              type="text"
+              id="taskName"
+              placeholder="Title (required)"
+              maxLength="15"
+              value={taskTitle}
+              onChange={handleTaskTitle}
+              required
+            />
+            <textarea
+              id="taskDescription"
+              placeholder="Description (required)"
+              value={taskDescription}
+              onChange={handleTaskDescription}
+              required
+            ></textarea>
 
             <label className="labels-task-priority" id="label-priority">
               Priority

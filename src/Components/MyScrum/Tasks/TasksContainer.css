@@ -18,6 +18,18 @@
     scrollbar-width: thin;
     scrollbar-color: var(--green2) var(--white);
   }
+
+  @media (max-width: 300px) {
+    .titulo-main {
+      display: flex;
+      justify-content: center;
+    }
+    .panel {
+      min-width: 150px;
+      width: 150px;
+    }
+  }
+
   /* Cor de fundo de cada painel */
   #todo {
     background-color: var(--todo);
@@ -57,4 +69,7 @@
   .table-container::-webkit-scrollbar {
     height: calc(100% - 2px);
     padding-right: 1px;
+  }
+  .carousel {
+    height: 100vh;
   }
