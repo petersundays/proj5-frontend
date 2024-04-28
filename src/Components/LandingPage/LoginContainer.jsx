@@ -9,6 +9,7 @@ import { showErrorMessage } from '../../functions/Messages/ErrorMessage';
 import { TranslationStore } from '../../Stores/TranslationStore';
 import languages from '../../translations';
 import { IntlProvider, FormattedMessage } from 'react-intl';
+import { useTranslation } from 'react-i18next';
 
 function LoginContainer() {
     
@@ -17,9 +18,10 @@ function LoginContainer() {
     const locale = TranslationStore((state) => state.language);
     const updateLocale = TranslationStore((state) => state.changeLanguage);
 
+    const { t, i18n } = useTranslation();
+
     const handleSelect = (event) => {
-        console.log(event.target.value);
-        updateLocale(event.target.value);
+        TranslationStore.getState().changeLanguage(event.target.value);
     };
 
     const handleRegisterClick = () => {
@@ -78,52 +80,43 @@ function LoginContainer() {
 
 
     return (
-<div className='container'>
-    <div className='row'>
-        <div className='col-lg-7 landingPage-image-container d-none d-lg-block'>
-            <img src="src\multimedia\logo-scrum-05.png" id="landingPage-image" />
+        <div className='container'>
+            <div className='row'>
+                <div className='col-lg-7 landingPage-image-container d-none d-lg-block'>
+                    <img src="src\multimedia\logo-scrum-05.png" id="landingPage-image" />
+                </div>
+                <div className="col-lg-5 loginpanel">
+                    <select onChange={handleSelect} defaultValue={i18n.language}>
+                        {["en", "pt"].map(language => (<option key={language}>{language}</option>))}
+                    </select>
+                    <h1 id="landingPage-welcome" width="250">{t('welcome')}</h1>
+                    <div className='landingPage-spaceBetween'></div>
+                    <h2 id="loginText">{t('signIn')}</h2>
+                    <form id="login-form" className="input-login">
+                        <div className="row">
+                            <div className="col-12">
+                                <input type="text" id="username" name="username" placeholder={t('username')} value={input.username} onChange={handleInputChange} required />
+                            </div>
+                            <div className="col-12">
+                                <input type="password" id="password" name="password" placeholder={t('password')} value={input.password} onChange={handleInputChange} required />
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-sm-6">
+                                <Button onClick={handleLoginSubmit} width="150px" text={t('confirm')}></Button>
+                            </div>
+                            <div className="col-sm-6">
+                                <Button id="registerButton" onClick={handleRegisterClick} width="150px" text={t('register')}></Button>
+                            </div>
+                        </div>
+                        <div className="forgot-password">
+                            <Link to="/recover-password" className='recover-password'>{t('forgotPassword')}</Link>
+                        </div>
+                    </form>
+                    <p id="warningMessage"></p>
+                </div>
+            </div>
         </div>
-        <div className="col-lg-5 loginpanel">
-            <select onChange={handleSelect} defaultValue={locale}>
-                {["en", "pt", "fr"].map(language => (<option key={language}>{language}</option>))}
-            </select>
-            <IntlProvider locale={locale} messages={languages[locale]}>
-                <p>
-                    <br/>
-                    <FormattedMessage id="time" values={{t: Date.now()}} />
-                    <br/>
-                    <FormattedMessage id="date" values={{d: Date.now()}} />
-                    <br/>
-                </p>
-            </IntlProvider>
-            <h1 id="landingPage-welcome" width="250">WELCOME!</h1>
-            <div className='landingPage-spaceBetween'></div>
-            <h2 id="loginText">Sign In</h2>
-            <form id="login-form" className="input-login">
-                <div className="row">
-                    <div className="col-12">
-                        <input type="text" id="username" name="username" placeholder="username" value={input.username} onChange={handleInputChange} required />
-                    </div>
-                    <div className="col-12">
-                        <input type="password" id="password" name="password" placeholder="password" value={input.password} onChange={handleInputChange} required />
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-sm-6">
-                        <Button onClick={handleLoginSubmit} width="150px" text="Confirm"></Button>
-                    </div>
-                    <div className="col-sm-6">
-                        <Button id="registerButton" onClick={handleRegisterClick} width="150px" text="Register"></Button>
-                    </div>
-                </div>
-                <div className="forgot-password">
-                    <Link to="/recover-password" className='recover-password'>Forgot your password?</Link>
-                </div>
-            </form>
-            <p id="warningMessage"></p>
-        </div>
-    </div>
-</div>
     );
 }
 

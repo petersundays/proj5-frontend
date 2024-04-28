@@ -7,10 +7,13 @@ import { SetPassword } from '../../functions/Users/SetPassword';
 import { showSuccessMessage } from '../../functions/Messages/SuccessMessage';
 import { showErrorMessage } from '../../functions/Messages/ErrorMessage';
 import { IsValidationTokenValid } from '../../functions/Users/IsValidationTokenValid';
+import { useTranslation } from 'react-i18next';
 
 function ResetPassword() {
 
     const navigate = useNavigate();
+    const { t } = useTranslation();
+
     const { token } = useParams();
   
     const [tokenValid, setTokenValid] = useState(false);
@@ -50,13 +53,13 @@ function ResetPassword() {
         <>
             {tokenValid && 
                 <div id="set-password">
-                    <h3>Please define a new password</h3>
+                    <h3>{t('defineNewPassword')}</h3>
                     <form id="setPasswordForm">
-                        <input type="password" id="newPassword" name="password" placeholder="Password" value={passwordData.password} onChange={handlePasswordChange} required />
-                        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" value={passwordData.confirmPassword} onChange={handlePasswordChange} required />
+                        <input type="password" id="newPassword" name="password" placeholder={t('password')} value={passwordData.password} onChange={handlePasswordChange} required />
+                        <input type="password" id="confirmPassword" name="confirmPassword" placeholder={t('confirmPassword')} value={passwordData.confirmPassword} onChange={handlePasswordChange} required />
                         <div className="password-buttons">
-                            <Button text="Cancel" onClick={handleCancelButton}/>
-                            <Button type="submit" text="Save" onClick={handleSetPassword} />
+                            <Button text={t('cancel')} onClick={handleCancelButton}/>
+                            <Button type="submit" text={t('save')} onClick={handleSetPassword} />
                         </div>
                     </form>
                 </div>

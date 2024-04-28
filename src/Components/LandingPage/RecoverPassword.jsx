@@ -3,9 +3,10 @@ import Button from "../General/Button";
 import { showSuccessMessage } from "../../functions/Messages/SuccessMessage";
 import { showErrorMessage } from "../../functions/Messages/ErrorMessage";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 
 function RecoverPassword() {
-
+    const { t } = useTranslation();
     const [email, setEmail] = useState('');
     const navigate = useNavigate();
 
@@ -16,7 +17,6 @@ function RecoverPassword() {
     const handleCancelButton = () => {
         navigate('/');
     };
-        
 
     const handleRecoverPassword = async () => {
         const recoverPasswordRequest = "http://localhost:8080/backend_proj5_war_exploded/rest/users/recover-password";
@@ -29,7 +29,6 @@ function RecoverPassword() {
                     'Accept': '*/*',
                     email: email
                 },
-                
             });
 
             if (response.ok) {
@@ -44,15 +43,13 @@ function RecoverPassword() {
         }
     }
 
-
-
-  return (
-    <div>
-      <h1>Recover Password</h1>
-      <input className="email-to-recover" type="text" placeholder="email" onChange={handleEmailInput} required />
-      <Button text="Cancel" onClick={handleCancelButton} />
-      <Button text="Send" onClick={ handleRecoverPassword}/>
-    </div>
-  );
+    return (
+        <div>
+            <h1>{t('recoverPassword')}</h1>
+            <input className="email-to-recover" type="text" placeholder={t('email')} onChange={handleEmailInput} required />
+            <Button text={t('cancel')} onClick={handleCancelButton} />
+            <Button text={t('send')} onClick={handleRecoverPassword} />
+        </div>
+    );
 }
 export default RecoverPassword;

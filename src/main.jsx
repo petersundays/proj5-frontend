@@ -4,12 +4,14 @@ import App from './App.jsx'
 import './index.css'
 import { BrowserRouter } from 'react-router-dom'
 import "bootstrap/dist/css/bootstrap.min.css";
+import i18n from './translations';
+import {I18nextProvider} from 'react-i18next';
 
-
-ReactDOM.createRoot(document.getElementById('root')).render(
-  //<React.StrictMode>
-    <BrowserRouter>
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <BrowserRouter>
+    <I18nextProvider i18n={i18n}>
       <App />
-    </BrowserRouter>
-  //</React.StrictMode>,
-)
+    </I18nextProvider>
+  </BrowserRouter>
+);
