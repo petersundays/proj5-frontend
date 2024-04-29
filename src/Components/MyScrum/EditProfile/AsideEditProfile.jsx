@@ -7,9 +7,14 @@ import { useParams } from 'react-router-dom';
 import Button from '../../../Components/General/Button';
 import { showSuccessMessage } from '../../../functions/Messages/SuccessMessage';
 import { showErrorMessage } from '../../../functions/Messages/ErrorMessage';
+import { useTranslation } from 'react-i18next';
+import { TranslationStore } from '../../../Stores/TranslationStore';
 
 
 function AsideEditProfile({ photoURL }) {
+
+    const { t, i18n } = useTranslation();
+
 
     const {username: profileUsername} = useParams();
     const usernameLogged = UserStore.getState().user.username;
@@ -72,6 +77,10 @@ function AsideEditProfile({ photoURL }) {
 
     const isProfileOwner = () => {
         return usernameLogged === profileUsername;
+    };
+
+    const handleSelect = (event) => {
+        TranslationStore.getState().changeLanguage(event.target.value);
     };
 
     const handleTimeoutChange = (e) => {
@@ -157,8 +166,9 @@ function AsideEditProfile({ photoURL }) {
                 <div className='definitions-div'>
                     {isProfileOwner() ?
                     <div className='language-div'>
-                        <img src='../../../../multimedia/flag-portugal.png' alt={t("Portuguese")} />
-                        <img src='../../../../multimedia/flag-uk.png' alt={t("English")} />
+                        <select onChange={handleSelect} defaultValue={i18n.language}>
+                            {["en", "pt"].map(language => (<option key={language}>{language}</option>))}
+                        </select>
                     </div>
                     : 
                     null}
