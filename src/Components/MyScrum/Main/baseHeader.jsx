@@ -15,8 +15,8 @@ import { FaEnvelope } from "react-icons/fa";
 import { useWebSocketClient } from "../../../Websockets/WebSocketClient";
 import useWebSocketTask from "../../../Websockets/TaskWS";
 import { Navbar, Nav, NavDropdown, Button } from "react-bootstrap";
-import MenuOpenIcon from '@mui/icons-material/MenuOpen';
-import { useTranslation } from 'react-i18next';
+import MenuOpenIcon from "@mui/icons-material/MenuOpen";
+import { useTranslation } from "react-i18next";
 
 function BaseHeader() {
   const location = useLocation();
@@ -25,6 +25,7 @@ function BaseHeader() {
   const isConfirmAccountPage = location.pathname === "/confirm";
   const isRecoverPasswordPage = location.pathname === "/recover-password";
   const isResetPasswordPage = location.pathname.startsWith("/reset-password/");
+  const isDashboardPage = location.pathname === "/my-scrum/dashboard";
 
   const token = UserStore.getState().user.token;
   const username = UserStore.getState().user.username;
@@ -174,9 +175,24 @@ function BaseHeader() {
   return (
     <Navbar bg="dark" variant="dark" expand="sm">
       <div className="d-flex align-items-center left-items">
-        <div className="ml-2 options" style={{ color: 'white', cursor: 'pointer' }} data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" onClick={toggleAside}>
-          <MenuOpenIcon className="ml-2" style={{ color: 'white', cursor: 'pointer' }} sx={{ fontSize: 35 }} data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" onClick={toggleAside} />
-        </div>
+        {!isDashboardPage && (
+          <div
+            className="ml-2 options"
+            style={{ color: "white", cursor: "pointer" }}
+            data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasExample"
+            onClick={toggleAside}
+          >
+            <MenuOpenIcon
+              className="ml-2"
+              style={{ color: "white", cursor: "pointer" }}
+              sx={{ fontSize: 35 }}
+              data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvasExample"
+              onClick={toggleAside}
+            />
+          </div>
+        )}
       </div>
       <div className="navbar-content d-flex">
         <div className="navbar-external">
@@ -186,7 +202,7 @@ function BaseHeader() {
                 title={
                   <>
                     <FaBell id="notification" />
-                    <span style={{ fontSize: '0.8em', color:"#2CCCD3" }}>
+                    <span style={{ fontSize: "0.8em", color: "#2CCCD3" }}>
                       {notifications.length}
                     </span>
                   </>
@@ -224,7 +240,7 @@ function BaseHeader() {
             </Button>
           </Nav>
         </div>
-        
+
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
@@ -234,17 +250,21 @@ function BaseHeader() {
                 <>
                   {userConfirmed === true ? (
                     <>
-                      <Nav.Link href="/my-scrum" id="first-link">{t('My Tasks')}</Nav.Link>
-                      <Nav.Link href="/my-scrum/all-tasks">{t('All Tasks')}</Nav.Link>
-                      <Nav.Link href="/my-scrum/users">{t('Users')}</Nav.Link>
+                      <Nav.Link href="/my-scrum" id="first-link">
+                        {t("My Tasks")}
+                      </Nav.Link>
+                      <Nav.Link href="/my-scrum/all-tasks">
+                        {t("All Tasks")}
+                      </Nav.Link>
+                      <Nav.Link href="/my-scrum/users">{t("Users")}</Nav.Link>
                       {typeOfUser === PRODUCT_OWNER && (
                         <Nav.Link href="/my-scrum/categories">
-                          {t('Categories')}
+                          {t("Categories")}
                         </Nav.Link>
                       )}
                       {typeOfUser === PRODUCT_OWNER && (
                         <Nav.Link href="/my-scrum/dashboard">
-                          {t('Dashboard')}
+                          {t("Dashboard")}
                         </Nav.Link>
                       )}
                     </>
@@ -258,5 +278,5 @@ function BaseHeader() {
       </div>
     </Navbar>
   );
-  }
-  export default BaseHeader;
+}
+export default BaseHeader;
