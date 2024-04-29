@@ -16,9 +16,11 @@ import { useWebSocketClient } from "../../../Websockets/WebSocketClient";
 import useWebSocketTask from "../../../Websockets/TaskWS";
 import { Navbar, Nav, NavDropdown, Button } from "react-bootstrap";
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
+import { useTranslation } from 'react-i18next';
 
 function BaseHeader() {
   const location = useLocation();
+  const { t } = useTranslation();
 
   const isConfirmAccountPage = location.pathname === "/confirm";
   const isRecoverPasswordPage = location.pathname === "/recover-password";
@@ -171,19 +173,11 @@ function BaseHeader() {
 
   return (
     <Navbar bg="dark" variant="dark" expand="sm">
-    <div className="d-flex align-items-center left-items">
-      {/* <Navbar.Brand className="logo-header">
-        <img
-          src="/multimedia/logo-scrum-05.png"
-          id="logo-header"
-          draggable="false"
-        />
-      </Navbar.Brand> */}
-      <div className="ml-2 options" style={{ color: 'white', cursor: 'pointer' }} data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" onClick={toggleAside}>
-      <MenuOpenIcon className="ml-2" style={{ color: 'white', cursor: 'pointer' }} sx={{ fontSize: 35 }} data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" onClick={toggleAside} />
-        {/* <span className="ml-1 options-text">Options</span> */}
+      <div className="d-flex align-items-center left-items">
+        <div className="ml-2 options" style={{ color: 'white', cursor: 'pointer' }} data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" onClick={toggleAside}>
+          <MenuOpenIcon className="ml-2" style={{ color: 'white', cursor: 'pointer' }} sx={{ fontSize: 35 }} data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" onClick={toggleAside} />
+        </div>
       </div>
-    </div>
       <div className="navbar-content d-flex">
         <div className="navbar-external">
           <Nav className="mr-auto d-flex align-items-center">
@@ -221,13 +215,13 @@ function BaseHeader() {
               )}
             </Navbar.Text>
             <Button variant="link" onClick={handleLogout} className="ml-2">
-  <img
-    src="/multimedia/log-out.png"
-    alt="Logout Icon"
-    className="logout-logo"
-    draggable="false"
-  />
-</Button>
+              <img
+                src="/multimedia/log-out.png"
+                alt="Logout Icon"
+                className="logout-logo"
+                draggable="false"
+              />
+            </Button>
           </Nav>
         </div>
         
@@ -240,17 +234,17 @@ function BaseHeader() {
                 <>
                   {userConfirmed === true ? (
                     <>
-                      <Nav.Link href="/my-scrum" id="first-link">My Tasks</Nav.Link>
-                      <Nav.Link href="/my-scrum/all-tasks">All Tasks</Nav.Link>
-                      <Nav.Link href="/my-scrum/users">Users</Nav.Link>
+                      <Nav.Link href="/my-scrum" id="first-link">{t('My Tasks')}</Nav.Link>
+                      <Nav.Link href="/my-scrum/all-tasks">{t('All Tasks')}</Nav.Link>
+                      <Nav.Link href="/my-scrum/users">{t('Users')}</Nav.Link>
                       {typeOfUser === PRODUCT_OWNER && (
                         <Nav.Link href="/my-scrum/categories">
-                          Categories
+                          {t('Categories')}
                         </Nav.Link>
                       )}
                       {typeOfUser === PRODUCT_OWNER && (
                         <Nav.Link href="/my-scrum/dashboard">
-                          Dashboard
+                          {t('Dashboard')}
                         </Nav.Link>
                       )}
                     </>

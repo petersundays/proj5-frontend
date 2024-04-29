@@ -7,8 +7,6 @@ import Button from '../General/Button';
 import { showSuccessMessage } from '../../functions/Messages/SuccessMessage';
 import { showErrorMessage } from '../../functions/Messages/ErrorMessage';
 import { TranslationStore } from '../../Stores/TranslationStore';
-import languages from '../../translations';
-import { IntlProvider, FormattedMessage } from 'react-intl';
 import { useTranslation } from 'react-i18next';
 
 function LoginContainer() {

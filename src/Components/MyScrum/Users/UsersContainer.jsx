@@ -9,10 +9,14 @@ import { showSuccessMessage } from '../../../functions/Messages/SuccessMessage.j
 import { showErrorMessage } from '../../../functions/Messages/ErrorMessage.js';
 import { getUserByUsername } from '../../../functions/Users/GetUserByUsername.js';
 import { StatisticsStore } from '../../../Stores/StatisticsStore.jsx';
+import { useTranslation } from 'react-i18next';
+
 
 function UsersContainer() {
 
     const navigate = useNavigate();
+
+    const { t } = useTranslation();
 
     const token = UserStore.getState().user.token;
     const userLoggedType = UserStore.getState().user.typeOfUser;
@@ -202,15 +206,15 @@ function UsersContainer() {
                             <thead>
                                 <tr className="table-header">
                                     <th></th>
-                                    <th>Username</th>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
+                                    <th>{t('Username')}</th>
+                                    <th>{t('First Name')}</th>
+                                    <th>{t('Last Name')}</th>
                                     { userLoggedType === PRODUCT_OWNER &&
                                         <>
-                                            <th>Email</th>
-                                            <th>Role</th>
-                                            <th>#Tasks</th>
-                                            <th>Actions</th>
+                                            <th>{t('Email')}</th>
+                                            <th>{t('Role')}</th>
+                                            <th>{t('#Tasks')}</th>
+                                            <th>{t('Actions')}</th>
                                         </>
                                     }
                                 </tr>
@@ -223,7 +227,7 @@ function UsersContainer() {
                     </div>
                 </div>
             </main>
-            <ConfirmationModal onConfirm={handleDeleteButton} onCancel={handleDisplayConfirmationModal} message={message} displayModal={displayConfirmationModal}  />
+            <ConfirmationModal onConfirm={handleDeleteButton} onCancel={handleDisplayConfirmationModal} message={t('Are you sure you want to permanently delete this user?')} displayModal={displayConfirmationModal}  />
         </>
     )
 }

@@ -4,8 +4,11 @@ import Button from '../../General/Button.jsx';
 import { AllUsersStore } from '../../../Stores/AllUsersStore.jsx';
 import { UserStore } from '../../../Stores/UserStore.jsx';
 import { getAllUsers } from '../../../functions/Users/GetAllUsers.js';
+import { useTranslation } from 'react-i18next';
 
 function AsideUsers() {
+
+    const { t } = useTranslation();
 
     const DEVELOPER = 100;
     const SCRUM_MASTER = 200;
@@ -101,74 +104,73 @@ function AsideUsers() {
     }
 
     return (
-        <>
-          <div
-            className="offcanvas offcanvas-start"
-            tabIndex="-1"
-            id="offcanvasExample"
-            aria-labelledby="offcanvasExampleLabel"
-          >
-            <div className="offcanvas-header">
-              <h5 id="offcanvasExampleLabel">Users</h5>
-              <button
-                type="button"
-                className="btn-close text-reset"
-                data-bs-dismiss="offcanvas"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div className="offcanvas-body">
-              <div className="aside-users-container">
-                <h3 id="addTask-h3">Users</h3>
-                <label className="labels-search-username" id="label-search-username">
-                  Search by username
-                </label>
-                <input
-                  type="search"
-                  id="search-input"
-                  placeholder="User"
-                  onChange={handleUserSearch}
-                />
-                <select
-                  id="select-username"
-                  value={selectedUser}
-                  onChange={handleUserChange}
-                  required
-                >
-                  <option value="">All users</option>
-                  {createSelectOptions()}
-                </select>
-                <div className="spacebetween-users"></div>
-                <label
-                  className="labels-user-role"
-                  id="label-user-role"
-                  hidden={true}
-                >
-                  Search by role
-                </label>
-                <select
-                  id="user-type"
-                  value={userType}
-                  onChange={handleUserTypeChange}
-                  hidden={true}
-                  required
-                >
-                  <option value="">All</option>
-                  <option value={DEVELOPER}>Developer</option>
-                  <option value={SCRUM_MASTER}>Scrum Master</option>
-                  <option value={PRODUCT_OWNER}>Product Owner</option>
-                </select>
-                <Button
-                  text="Register New User"
-                  width="180px"
-                  onClick={handleNewUser}
-                  hidden={userLoggedType !== PRODUCT_OWNER}
-                ></Button>
-              </div>
+      <>
+        <div
+          className="offcanvas offcanvas-start"
+          tabIndex="-1"
+          id="offcanvasExample"
+          aria-labelledby="offcanvasExampleLabel"
+        >
+          <div className="offcanvas-header">
+            <h5 id="offcanvasExampleLabel">{t('Users')}</h5>
+            <button
+              type="button"
+              className="btn-close text-reset"
+              data-bs-dismiss="offcanvas"
+              aria-label={t('Close')}
+            ></button>
+          </div>
+          <div className="offcanvas-body">
+            <div className="aside-users-container">
+              <h3 id="addTask-h3">{t('Users')}</h3>
+              <label className="labels-search-username" id="label-search-username">
+                {t('Search by username')}
+              </label>
+              <input
+                type="search"
+                id="search-input"
+                placeholder={t('User')}
+                onChange={handleUserSearch}
+              />
+              <select
+                id="select-username"
+                value={selectedUser}
+                onChange={handleUserChange}
+                required
+              >
+                <option value="">{t('All users')}</option>
+                {createSelectOptions()}
+              </select>
+              <div className="spacebetween-users"></div>
+              <label
+                className="labels-user-role"
+                id="label-user-role"
+                hidden={true}
+              >
+                {t('Search by role')}
+              </label>
+              <select
+                id="user-type"
+                value={userType}
+                onChange={handleUserTypeChange}
+                hidden={true}
+                required
+              >
+                <option value="">{t('All')}</option>
+                <option value={DEVELOPER}>{t('Developer')}</option>
+                <option value={SCRUM_MASTER}>{t('Scrum Master')}</option>
+                <option value={PRODUCT_OWNER}>{t('Product Owner')}</option>
+              </select>
+              <Button
+                text={t('Register New User')}
+                width="180px"
+                onClick={handleNewUser}
+                hidden={userLoggedType !== PRODUCT_OWNER}
+              ></Button>
             </div>
           </div>
-        </>
-      );
-}
-
+        </div>
+      </>
+    );
+  }
 export default AsideUsers;

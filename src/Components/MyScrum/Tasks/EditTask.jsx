@@ -11,8 +11,11 @@ import { showSuccessMessage } from '../../../functions/Messages/SuccessMessage';
 import { showWarningMessage } from '../../../functions/Messages/WarningMessage';
 import { AllTasksStore } from '../../../Stores/AllTasksStore.jsx';
 import { StatisticsStore } from '../../../Stores/StatisticsStore.jsx';
+import { useTranslation } from 'react-i18next';
 
 function EditTask() {
+
+    const { t } = useTranslation();
 
     const typeOfUser = UserStore.getState().user.typeOfUser;
     const userLoggedIn = UserStore.getState().user.username;
@@ -212,59 +215,132 @@ function EditTask() {
 
     return (
         <>
-            <main className="main-task">
-                <div className="detalhes-task">
-                    <div>
-                        <textarea id="titulo-task" placeholder='Task Title' value={taskTitle} onChange={handleInputChange} readOnly={ taskErased ? true : false} ></textarea>
-                    </div>
-                    <div>
-                        <textarea className="text-task" id="descricao-task" placeholder='Task Description' value={taskDescription} onChange={handleInputChange} readOnly={ taskErased ? true : false}></textarea>
-                    </div>
-                    <div className="task-save">
-                        <Button text="Save" onClick={handleSaveTask} hidden={taskErased} ></Button>
-                        <Button text={ taskErased ? "Back" : "Cancel" } onClick={handleCancel}></Button>                    
-                    </div>
+          <main className="main-task">
+            <div className="detalhes-task">
+              <div>
+                <textarea
+                  id="titulo-task"
+                  placeholder={t('Task Title')}
+                  value={taskTitle}
+                  onChange={handleInputChange}
+                  readOnly={taskErased ? true : false}
+                ></textarea>
+              </div>
+              <div>
+                <textarea
+                  className="text-task"
+                  id="descricao-task"
+                  placeholder={t('Task Description')}
+                  value={taskDescription}
+                  onChange={handleInputChange}
+                  readOnly={taskErased ? true : false}
+                ></textarea>
+              </div>
+              <div className="task-save">
+                <Button
+                  text={t('Save')}
+                  onClick={handleSaveTask}
+                  hidden={taskErased}
+                ></Button>
+                <Button
+                  text={taskErased ? t('Back') : t('Cancel')}
+                  onClick={handleCancel}
+                ></Button>
+              </div>
+            </div>
+            <div className="task-buttons">
+              <div className="status-and-priority">
+                <div className="task-status">
+                  <h4 className="taskH4">{t('Status')}</h4>
+                  <div className="status-buttons">
+                    <button
+                      className={`status-button todo ${
+                        selectedStateId === TODO ? 'selected' : ''
+                      }`}
+                      id="todo-button"
+                      value="todo"
+                      onClick={() => handleTaskStateId('Todo')}
+                      disabled={taskErased ? true : false}
+                    >
+                      {t('To do')}
+                    </button>
+                    <button
+                      className={`status-button doing ${
+                        selectedStateId === DOING ? 'selected' : ''
+                      }`}
+                      id="doing-button"
+                      value="doing"
+                      onClick={() => handleTaskStateId('Doing')}
+                      disabled={taskErased ? true : false}
+                    >
+                      {t('Doing')}
+                    </button>
+                    <button
+                      className={`status-button done ${
+                        selectedStateId === DONE ? 'selected' : ''
+                      }`}
+                      id="done-button"
+                      value="done"
+                      onClick={() => handleTaskStateId('Done')}
+                      disabled={taskErased ? true : false}
+                    >
+                      {t('Done')}
+                    </button>
+                  </div>
                 </div>
-                <div className="task-buttons">
-                    <div className="status-and-priority">
-                        <div className="task-status">
-                            <h4 className="taskH4">status</h4>
-                            <div className="status-buttons">
-                                <button className={`status-button todo ${selectedStateId === TODO ? 'selected' :'' }`} id="todo-button" value='todo' onClick={() => handleTaskStateId('Todo')} disabled={ taskErased ? true : false}>To do</button>
-                                <button className={`status-button doing ${selectedStateId === DOING ? 'selected' :'' }`} id="doing-button" value='doing' onClick={() => handleTaskStateId('Doing')} disabled={ taskErased ? true : false}>Doing</button>
-                                <button className={`status-button done ${selectedStateId === DONE ? 'selected' :'' }`} id="done-button" value='done' onClick={() => handleTaskStateId('Done')} disabled={ taskErased ? true : false}>Done</button>
-                            </div>
-                        </div>
-                        <div className="task-priority">
-                            <h4 className="taskH4">priority</h4>
-                            <div className="priority-buttons">
-                                <PriorityButtons onSelectPriority={handleTaskPriority} priority={taskToEdit.priority} disabled = {taskErased}></PriorityButtons>
-                            </div>
-                        </div>
-                        <div className="dates">
-                            <h4 className="taskH4">Dates</h4>
-                            <div className="startDateDiv">
-                                <label className="label-start-date">Start date: </label>
-                                <input type="date" id="startDate-editTask" value={taskStartDate} onChange={handleInputChange} readOnly={ taskErased ? true : false} ></input> 
-                        
-                                <label className='label-end-date'>End date: </label>
-                                <input type="date" id="endDate-editTask" value={taskEndDate} onChange={handleInputChange} readOnly={ taskErased ? true : false} ></input> 
-                            </div>
-                        </div>
-                        <div className="category">
-                            <h4 className="taskH4">Category</h4>
-                            <div id="div-dropdown">
-                                <select id="task-category-edit" value={taskCategory} onChange={handleTaskCategory} disabled={ taskErased ? true : false} required>
-                                    <option value="" disabled >Category</option>
-                                    {createSelectOptions()}
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+                <div className="task-priority">
+                  <h4 className="taskH4">{t('Priority')}</h4>
+                  <div className="priority-buttons">
+                    <PriorityButtons
+                      onSelectPriority={handleTaskPriority}
+                      priority={taskToEdit.priority}
+                      disabled={taskErased}
+                    ></PriorityButtons>
+                  </div>
                 </div>
-            </main>
-
+                <div className="dates">
+                  <h4 className="taskH4">{t('Dates')}</h4>
+                  <div className="startDateDiv">
+                    <label className="label-start-date">{t('Start date')}:</label>
+                    <input
+                      type="date"
+                      id="startDate-editTask"
+                      value={taskStartDate}
+                      onChange={handleInputChange}
+                      readOnly={taskErased ? true : false}
+                    ></input>
+    
+                    <label className="label-end-date">{t('End date')}:</label>
+                    <input
+                      type="date"
+                      id="endDate-editTask"
+                      value={taskEndDate}
+                      onChange={handleInputChange}
+                      readOnly={taskErased ? true : false}
+                    ></input>
+                  </div>
+                </div>
+                <div className="category">
+                  <h4 className="taskH4">{t('Category')}</h4>
+                  <div id="div-dropdown">
+                    <select
+                      id="task-category-edit"
+                      value={taskCategory}
+                      onChange={handleTaskCategory}
+                      disabled={taskErased ? true : false}
+                      required
+                    >
+                      <option value="" disabled>
+                        {t('Category')}
+                      </option>
+                      {createSelectOptions()}
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </main>
         </>
-    ); 
-}
+      );
+    }
 export default EditTask;

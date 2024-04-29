@@ -9,8 +9,11 @@ import { AllTasksStore } from '../../../Stores/AllTasksStore.jsx';
 import { getAllTasks } from '../../../functions/Tasks/GetAllTasks.js';
 import { ConfirmationModal } from '../../General/ConfirmationModal.jsx';
 import { StatisticsStore } from '../../../Stores/StatisticsStore.jsx';
+import { useTranslation } from 'react-i18next';
 
 function AsideAllTasks() {
+
+    const { t } = useTranslation();
 
     const token = UserStore.getState().user.token;
     
@@ -335,18 +338,17 @@ function AsideAllTasks() {
         <>
           <div
             className="offcanvas offcanvas-start"
-            //visibility={isAsideVisible ? "false" : "true"}
             tabIndex="-1"
             id="offcanvasExample"
             aria-labelledby="offcanvasExampleLabel"
           >
             <div className="offcanvas-header">
-              <h5 id="offcanvasExampleLabel">All Tasks</h5>
+              <h5 id="offcanvasExampleLabel">{t('All Tasks')}</h5>
               <button
                 type="button"
                 className="btn-close text-reset"
                 data-bs-dismiss="offcanvas"
-                aria-label="Close"
+                aria-label={t('Close')}
               ></button>
             </div>
             <div className="offcanvas-body">
@@ -357,11 +359,11 @@ function AsideAllTasks() {
                 displayModal={displayConfirmationModal}
               />
               <div className="add-task-container">
-                <h3 id="categories-h3">Search Tasks</h3>
+                <h3 id="categories-h3">{t('Search Tasks')}</h3>
                 <input
                   type="search"
                   id="search-category"
-                  placeholder="User"
+                  placeholder={t('User')}
                   onChange={handleUserSearch}
                 />
                 <select
@@ -370,23 +372,23 @@ function AsideAllTasks() {
                   onChange={handleUserChange}
                   required
                 >
-                  <option value="">All Tasks</option>
-                  <option value="erased">Erased Tasks</option>
+                  <option value="">{t('All Tasks')}</option>
+                  <option value="erased">{t('Erased Tasks')}</option>
                   {createSelectOptions()}
                 </select>
                 <div id="category-buttons-container">
                   <Button
-                    text="Erase All"
+                    text={t('Erase All')}
                     width="94px"
                     onClick={handleEraseAllTasks}
                   ></Button>
                   <Button
-                    text="Restore All"
+                    text={t('Restore All')}
                     width="94px"
                     onClick={handleRestoreAllTasks}
                   ></Button>
                   <Button
-                    text="Delete All"
+                    text={t('Delete All')}
                     width="94px"
                     onClick={handleDisplayConfirmationModal}
                   ></Button>
@@ -396,6 +398,5 @@ function AsideAllTasks() {
           </div>
         </>
       );
-}
-
+    }
 export default AsideAllTasks;

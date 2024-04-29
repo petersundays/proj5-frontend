@@ -12,8 +12,12 @@ import Button from "../../General/Button.jsx";
 import { getTasksFromUser } from "../../../functions/Tasks/GetTasksFromUser.js";
 import { AllTasksStore } from "../../../Stores/AllTasksStore.jsx";
 import { StatisticsStore } from "../../../Stores/StatisticsStore.jsx";
+import { useTranslation } from 'react-i18next';
 
 function AsideAddTask() {
+  
+  const { t } = useTranslation();
+
   const token = UserStore.getState().user.token;
   const { sendMessage } = StatisticsStore((state) => ({
     sendMessage: state.sendMessage,
@@ -186,18 +190,17 @@ function AsideAddTask() {
     <>
       <div
         className="offcanvas offcanvas-start"
-        //visibility={isAsideVisible ? "false" : "true"}
         tabIndex="-1"
         id="offcanvasExample"
         aria-labelledby="offcanvasExampleLabel"
       >
         <div className="offcanvas-header">
-          <h3 id="offcanvasExampleLabel">Add task</h3>
+          <h3 id="offcanvasExampleLabel">{t('Add task')}</h3>
           <button
             type="button"
             className="btn-close text-reset"
             data-bs-dismiss="offcanvas"
-            aria-label="Close"
+            aria-label={t('Close')}
           ></button>
         </div>
         <div className="offcanvas-body">
@@ -205,7 +208,7 @@ function AsideAddTask() {
             <input
               type="text"
               id="taskName"
-              placeholder="Title (required)"
+              placeholder={t('Title (required)')}
               maxLength="15"
               value={taskTitle}
               onChange={handleTaskTitle}
@@ -213,21 +216,21 @@ function AsideAddTask() {
             />
             <textarea
               id="taskDescription"
-              placeholder="Description (required)"
+              placeholder={t('Description (required)')}
               value={taskDescription}
               onChange={handleTaskDescription}
               required
             ></textarea>
 
             <label className="labels-task-priority" id="label-priority">
-              Priority
+              {t('Priority')}
             </label>
             <PriorityButtons
               onSelectPriority={handleTaskPriority}
               reset={resetPriority}
             />
             <label className="labels-task-dates" id="label-startDate">
-              Start date
+              {t('Start date')}
             </label>
             <input
               type="date"
@@ -237,7 +240,7 @@ function AsideAddTask() {
               required
             />
             <label className="labels-task-dates" id="label-limitDate">
-              End date
+              {t('End date')}
             </label>
             <input
               type="date"
@@ -247,7 +250,7 @@ function AsideAddTask() {
               required
             />
             <label className="labels-task-category" id="label-category">
-              Category
+              {t('Category')}
             </label>
             <select
               id="task-category"
@@ -256,11 +259,11 @@ function AsideAddTask() {
               required
             >
               <option value="" disabled>
-                Select category
+                {t('Select category')}
               </option>
               {createSelectOptions()}
             </select>
-            <Button text="Add Task" onClick={addNewTask}></Button>
+            <Button text={t('Add Task')} onClick={addNewTask}></Button>
             <p id="warningMessage2"></p>
           </div>
         </div>
