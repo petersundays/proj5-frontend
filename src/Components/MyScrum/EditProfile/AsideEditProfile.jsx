@@ -9,6 +9,7 @@ import { showSuccessMessage } from '../../../functions/Messages/SuccessMessage';
 import { showErrorMessage } from '../../../functions/Messages/ErrorMessage';
 import { useTranslation } from 'react-i18next';
 import { TranslationStore } from '../../../Stores/TranslationStore';
+import { Offcanvas } from 'react-bootstrap';
 
 
 function AsideEditProfile({ photoURL }) {
@@ -34,6 +35,9 @@ function AsideEditProfile({ photoURL }) {
     const [toDoTasks, setToDoTasks] = useState(0);
     const [doingTasks, setDoingTasks] = useState(0);
     const [doneTasks, setDoneTasks] = useState(0);
+
+    const isAsideVisible = UserStore((state) => state.isAsideVisible);
+    const handleClose = () => UserStore.getState().toggleAside();
 
     const handleAtributedTasks = async () => {
         const tasks = await GetAtributedTasks(profileUsername, token);
@@ -162,50 +166,54 @@ function AsideEditProfile({ photoURL }) {
 
     return ( 
         <>
-            <aside>
-                <div className='definitions-div'>
-                    {isProfileOwner() ?
-                    <div className='language-div'>
-                        <select onChange={handleSelect} defaultValue={i18n.language}>
-                            {["en", "pt"].map(language => (<option key={language}>{language}</option>))}
-                        </select>
-                    </div>
-                    : 
-                    null}
-                    {isProfileOwner() && typeOfUser === PRODUCT_OWNER ?
-                    <>
-                    <div className='timeout-div'>
-                        <div className="timeout-info">
-                            <p id="edit-profile-p-aside">{t('Session Timeout')}</p>
-                            <p>{ definedTimeout } {t('minutes')}</p>
-                        </div> 
-                        <hr /> {/* This will create a horizontal line */}
-                        <div className="timeout-set">
-                            <p>{t('Set Timeout')}</p>
-                            <input type="number" id="timeout-input" value={timeout} onChange={handleTimeoutChange} />                            
-                            <Button width='35px' text={t('set')} id="timeout-button" onClick= { () => handleSetTimeout() } >{t('Set')}</Button>
+            <Offcanvas show={isAsideVisible} onHide={handleClose}>
+                <Offcanvas.Header closeButton>
+                    <Offcanvas.Title>{profileUsername}</Offcanvas.Title>
+                </Offcanvas.Header>
+                <Offcanvas.Body>
+                    <div className='definitions-div'>
+                        {isProfileOwner() ?
+                        <div className='language-div'>
+                            <select onChange={handleSelect} defaultValue={i18n.language}>
+                                {["en", "pt"].map(language => (<option key={language}>{language}</option>))}
+                            </select>
                         </div>
+                        : 
+                        null}
+                        {isProfileOwner() && typeOfUser === PRODUCT_OWNER ?
+                        <>
+                        <div className='timeout-div'>
+                            <div className="timeout-info">
+                                <p id="edit-profile-p-aside">{t('Session Timeout')}</p>
+                                <p>{ definedTimeout } {t('minutes')}</p>
+                            </div> 
+                            <hr /> {/* This will create a horizontal line */}
+                            <div className="timeout-set">
+                                <p>{t('Set Timeout')}</p>
+                                <input type="number" id="timeout-input" value={timeout} onChange={handleTimeoutChange} />                            
+                                <Button width='35px' text={t('set')} id="timeout-button" onClick= { () => handleSetTimeout() } >{t('Set')}</Button>
+                            </div>
+                        </div>
+                        
+                        </>
+                        
+                        :
+                        null}
                     </div>
-                    
-                    </>
-                    
-                    :
-                    null}
-                </div>
-                <h3 id="username-title-aside">{profileUsername}</h3>
-                <img src={photoURL} id="edit-profile-pic-aside" draggable="false" alt={t("Profile Pic")} />
-                <div id="edit-profile-tasks-aside">
-                    <h3 id="profile-h3-aside">{t('Tasks')}</h3>
-                    <label className="labels-profile-aside">{t('Total Atributed')}</label>
-                    <p className="info-profile-aside">{atributedTasks}</p>
-                    <label className="labels-profile-aside">{t('To Do')}</label>
-                    <p className="info-profile-aside">{toDoTasks}</p>
-                    <label className="labels-profile-aside">{t('Doing')}</label>
-                    <p className="info-profile-aside">{doingTasks}</p>
-                    <label className="labels-profile-aside">{t('Done')}</label>
-                    <p className="info-profile-aside">{doneTasks}</p>
+                    <img src={photoURL} id="edit-profile-pic-aside" draggable="false" alt={t("Profile Pic")} />
+                    <div id="edit-profile-tasks-aside">
+                        <h3 id="profile-h3-aside">{t('Tasks')}</h3>
+                        <label className="labels-profile-aside">{t('Total Atributed')}</label>
+                        <p className="info-profile-aside">{atributedTasks}</p>
+                        <label className="labels-profile-aside">{t('To Do')}</label>
+                        <p className="info-profile-aside">{toDoTasks}</p>
+                        <label className="labels-profile-aside">{t('Doing')}</label>
+                        <p className="info-profile-aside">{doingTasks}</p>
+                        <label className="labels-profile-aside">{t('Done')}</label>
+                        <p className="info-profile-aside">{doneTasks}</p>
                     </div>
-            </aside>
+                </Offcanvas.Body>
+            </Offcanvas>
         </>
     )
 }
