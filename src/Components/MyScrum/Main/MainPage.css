@@ -22,8 +22,11 @@ main {
 }
 .container {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-between;
+  align-items: stretch;
+  width: 100%;
   min-height: 90vh;
   background-color: var(--white);
+  padding: 0;
+  
 }

@@ -45,7 +45,7 @@ function RecoverPassword() {
 
     return (
         <div>
-            <h1>{t('recoverPassword')}</h1>
+            <h1 style={{ color: 'white' }}>{t('recoverPassword')}</h1>
             <input className="email-to-recover" type="text" placeholder={t('email')} onChange={handleEmailInput} required />
             <Button text={t('cancel')} onClick={handleCancelButton} />
             <Button text={t('send')} onClick={handleRecoverPassword} />

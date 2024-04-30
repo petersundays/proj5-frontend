@@ -175,7 +175,7 @@ function BaseHeader() {
   return (
     <Navbar bg="dark" variant="dark" expand="sm">
       <div className="d-flex align-items-center left-items">
-        {!isDashboardPage && (
+        {(!isDashboardPage || !isConfirmAccountPage || !isRecoverPasswordPage || !isResetPasswordPage) && (
           <div
             className="ml-2 options"
             style={{ color: "white", cursor: "pointer" }}
